@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('occasion');
             $table->date('date');
             $table->time('time');
+            $table->integer('payment_percent');
             $table->string('receipt_img');
             $table->timestamps();
         });

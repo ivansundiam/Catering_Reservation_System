@@ -28,6 +28,7 @@ class ReservationRequest extends FormRequest
             'occasion' => 'required',
             'theme' => 'required',
             'address' => 'required',
+            'payment_percent' => 'required',
             'receipt-img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
@@ -38,6 +39,7 @@ class ReservationRequest extends FormRequest
             'package.required' => 'Choose at least one package.',
             'date.required' => 'Select a reservation date.',
             'time.required' => 'Specify a reservation time.',
+            'payment_percent' => 'Select the percentage of your payment.',
             'receipt-img.required' => 'Please upload your receipt photo for verification.',
         ];
     }

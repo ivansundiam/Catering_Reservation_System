@@ -181,7 +181,6 @@
                             <option value="40">{{ __('40') }}</option>
                             <option value="50">{{ __('50') }}</option>
                             <option value="75">{{ __('75') }}</option>
-                            <option value="75">{{ __('75') }}</option>
                             <option value="100">{{ __('Full') }}</option>
                         </select>
                         <x-input-error for="payment_percent" />

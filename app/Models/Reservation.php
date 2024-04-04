@@ -18,6 +18,7 @@ class Reservation extends Model
         'time',
         'occasion',
         'theme',
+        'payment_percent',
         'receipt_img',
     ];
 
