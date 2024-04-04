@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+
+p,
+dl {
+    @apply text-sm md:text-base;
+}
+
+.nav-link {
+    @apply px-2 py-3 font-semibold text-black lg:px-4 hover:underline hover:text-primary-active underline-offset-8 decoration-primary dark:text-white dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary;
+}
+
+.heading-text {
+    @apply capitalize font-tai leading-[1.1] text-[2rem] md:text-[3rem];
+}
+
+.title-primary {
+    @apply text-sm capitalize md:text-lg text-primary;
+}
+
+.btn-primary {
+    @apply px-4 py-2 text-xs text-white capitalize transition ease-in-out rounded-lg md:text-base bg-primary hover:bg-primary-hover active:bg-primary-active focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary outline-offset-2;
+}
+
+.btn-primary-outline {
+    @apply px-4 py-2 capitalize transition ease-in-out border border-primary text-primary hover:bg-primary active:bg-primary-active hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary;
+}
+
+.package-service {
+    @apply object-cover w-full rounded-t-lg h-52 md:h-64 lg:h-80;
+}
+
+.gallery-img {
+    @apply absolute inset-0 object-cover w-full h-full duration-300 transform hover:scale-125;
+}
+
+.package-card {
+    @apply inline-flex items-center justify-between w-full p-5 text-gray-500 transition ease-in-out bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-primary peer-checked:border-primary peer-checked:text-primary hover:text-gray-600 hover:bg-gray-100 md:peer-checked:scale-110 peer-checked:scale-105 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700;
+}
+
+.btn-success {
+    @apply inline-flex items-center justify-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out bg-green-500 border border-green-300 rounded-md shadow-sm hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-500 active:bg-green-600 focus:ring-offset-2 disabled:opacity-25;
+}
+
+.btn-info {
+    @apply inline-flex items-center justify-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out bg-blue-500 border border-blue-300 rounded-md shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 active:bg-blue-600 focus:ring-offset-2 disabled:opacity-25;
+}
+
+.btn-danger {
+    @apply inline-flex items-center justify-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out bg-red-500 border border-red-300 rounded-md shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 active:bg-red-600 focus:ring-offset-2 disabled:opacity-25;
+}
+
+/* CALENDAR CSS */
+.calendar-container {
+    @apply transition duration-200 ease-in-out transform shadow-lg bg-gray-50;
+}
+
+.calendar-container table {
+    @apply w-full border-collapse;
+}
+
+.calendar-container th {
+    @apply text-sm md:text-base;
+}
+
+.calendar-container table th,
+.calendar-container table td {
+    @apply relative p-2 text-center select-none md:p-2;
+}
+
+.calendar-container table td .day {
+    @apply flex items-center justify-center mx-auto rounded-full size-10;
+}
+
+.calendar-container table td span.today {
+    @apply after:content-['Today'] after:text-xs after:absolute after:top-0 after:text-primary;
+}
+
+.calendar-container table td span.selected {
+    @apply text-white bg-primary;
+}
+
+.calendar-container
+    table
+    td
+    span.day:not(.disabled, .selected, .reserved):hover {
+    @apply bg-gray-200 cursor-pointer;
+}
+
+.calendar-container table td span.disabled {
+    @apply text-gray-400;
+}
+
+.calendar-container table td span.reserved {
+    @apply text-gray-400 bg-gray-200;
+}
+
+.calendar-btn {
+    @apply flex items-center justify-center p-1 mx-1 rounded-full shadow-md bg-primary hover:bg-primary-hover active:bg-primary-active;
+}
