@@ -19,6 +19,10 @@ dl {
     @apply capitalize font-tai leading-[1.1] text-[2rem] md:text-[3rem];
 }
 
+.forms-heading-text {
+    @apply font-noticia text-xl md:text-3xl font-semibold;
+}
+
 .title-primary {
     @apply text-sm capitalize md:text-lg text-primary;
 }

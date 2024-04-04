@@ -26,6 +26,7 @@ export default {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
                 serif: ["ui-serif, Georgia, Cambria"],
                 tai: ["Tai Heritage Pro"],
+                noticia: ["Noticia Text"],
             },
 
             container: {

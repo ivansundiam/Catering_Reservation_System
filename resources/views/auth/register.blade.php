@@ -12,7 +12,7 @@
             @csrf
 
             <div class="flex items-center flex-col mb-5">
-                <h2 class="font-serif !text-3xl font-semibold leading-4">Register Account</h2>
+                <h2 class="forms-heading-text">Register Account</h2>
                 <span class="text-sm md:text-base text-gray-500">for full access</span>
             </div>
 
