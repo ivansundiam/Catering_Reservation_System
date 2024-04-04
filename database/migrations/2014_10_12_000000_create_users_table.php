@@ -18,9 +18,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('address');
             $table->string('phone_number');
             $table->string('user_type')->default('client');
             $table->boolean('verified')->default(false);
+            $table->string('id_type');
             $table->string('id_verify_img');
             $table->string('profile_photo_path', 2048)->nullable();
             $table->foreignId('current_team_id')->nullable();
@@ -32,7 +34,9 @@ return new class extends Migration
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'phone_number' => '09876543211',
-            'id_verify_img' => 'asdfasd',
+            'address' => '.',
+            'id_type' => '.',
+            'id_verify_img' => '.',
             'user_type' => 'admin', 
             'password' => bcrypt('123456789'),
         ]);        

@@ -12,7 +12,7 @@ dl {
 }
 
 .nav-link {
-    @apply px-2 py-3 font-semibold text-black lg:px-4 hover:underline hover:text-primary-active underline-offset-8 decoration-primary dark:text-white dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary;
+    @apply px-2 py-3 font-semibold text-black lg:px-4 hover:underline hover:text-primary-active underline-offset-8 decoration-primary dark:text-white dark:hover:text-white;
 }
 
 .heading-text {
@@ -53,6 +53,10 @@ dl {
 
 .btn-danger {
     @apply inline-flex items-center justify-center px-4 py-2 text-xs font-semibold tracking-widest text-center text-white uppercase transition duration-150 ease-in-out bg-red-500 border border-red-300 rounded-md shadow-sm hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 active:bg-red-600 focus:ring-offset-2 disabled:opacity-25;
+}
+
+.input-field {
+    @apply border-gray-300 rounded-lg focus:border-primary focus:ring-primary-hover;
 }
 
 /* CALENDAR CSS */

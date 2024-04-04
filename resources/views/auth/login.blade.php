@@ -15,6 +15,11 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
+            <div class="flex items-center flex-col mb-5">
+                <h2 class="font-serif !text-3xl font-semibold leading-4">Login</h2>
+                <span class="text-sm md:text-base text-gray-500">for full access</span>
+            </div>
+
             <div>
                 <x-label for="email" value="{{ __('Email') }}" />
                 <x-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />

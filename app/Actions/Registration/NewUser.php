@@ -22,6 +22,8 @@ class NewUser
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone_number' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'id_type' => ['required', 'string'],
             'id_verify_img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
@@ -32,6 +34,8 @@ class NewUser
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
+            'address' => $input['address'],
+            'id_type' => $input['id_type'],
             'id_verify_img' => $idVerifyPhotoPath,
             'phone_number' => $input['phone_number'],
             'password' => Hash::make($input['password']),
