@@ -63,6 +63,11 @@ dl {
     @apply border-gray-300 rounded-lg focus:border-primary focus:ring-primary-hover;
 }
 
+/* FOR DROPBOX */
+.highlight {
+    @apply bg-gray-200;
+}
+
 /* CALENDAR CSS */
 .calendar-container {
     @apply transition duration-200 ease-in-out transform shadow-lg bg-gray-50;

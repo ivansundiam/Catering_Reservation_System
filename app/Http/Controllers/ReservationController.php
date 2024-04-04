@@ -46,7 +46,8 @@ class ReservationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $reservation = Reservation::findOrFail($id);
+        return view('clients.reserve-details', compact('reservation'));
     }
 
     /**

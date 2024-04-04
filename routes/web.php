@@ -32,15 +32,13 @@ Route::post('/register', [RegisterController::class, 'create'])->name('register'
 
 Route::group(['middleware' => 'auth'], function (){
     Route::resource('reservation', ReservationController::class)
-    ->only('index', 'create', 'store')
+    ->only('index', 'create', 'store', 'show', 'update')
     ->middleware(['AllowUser:client'
     // , 'verified.id'
 ]);
 
     Route::group(['middleware' => 'AllowUser:admin', 'prefix' => 'admin'], function () {
         Route::get('/dashboard', [AdminController::class , 'dashboard'])->name('admin-dashboard');
-        Route::resource('reservation', ReservationController::class)
-        ->only('show');
         Route::resource('inventory', InventoryController::class);
         Route::resource('users', UserController::class);
     });
