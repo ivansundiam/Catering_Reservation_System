@@ -2,7 +2,8 @@
     $thisMonth = date('F Y', strtotime($year . '-' . $month . '-01'));
 @endphp
 
-<div class="overflow-hidden calendar-container">
+<div class="overflow-hidden calendar-container" 
+    x-data="{ selectedDate: @entangle('selectedDate') }">
     <div class="mx-auto">        
         <h2 class="flex justify-between px-6 !pt-5 text-lg md:text-2xl text-center">
             {{ $thisMonth }}
@@ -56,8 +57,11 @@
                                             </span>
                                         </td>
                                     @else
-                                        <td wire:click="setReservationDate('{{ $day['date'] }}')">
-                                            <span class="day {{ $isToday }} {{ $isSelected ? 'selected' : '' }}">
+                                    {{-- <td wire:click="setReservationDate('{{ $day['date'] }}')"> --}}
+                                        <td x-on:click="selectedDate = '{{ $day['date'] }}'; $wire.setReservationDate('{{ $day['date'] }}')">
+                                            <span x-bind:class="{ 
+                                                'day {{ $isToday }}' : true,
+                                                'selected': selectedDate === '{{ $day['date'] }}' }">
                                                 {{ $day['day'] }}
                                             </span>
                                         </td>
