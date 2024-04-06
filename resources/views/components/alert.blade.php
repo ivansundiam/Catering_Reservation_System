@@ -11,7 +11,7 @@ $color = $colors[$type] ?? 'green';
 @endphp
 
 @if(session($type))
-  <div id="alert-{{ $id }}" class="z-100 flex bg-{{ $color }}-100 items-center p-4 mb-4 text-{{ $color }}-800 rounded-lg w-[96%] md:w-[70%] lg:w-[40%] mx-auto fixed top-5 left-[calc(50%-48vw)] md:left-[calc(50%-35vw)] lg:left-[calc(50%-20vw)] " role="alert">
+  <div id="alert-{{ $id }}" class="z-50 flex bg-{{ $color }}-100 items-center p-4 mb-4 text-{{ $color }}-800 rounded-lg w-[96%] md:w-[70%] lg:w-[40%] mx-auto fixed top-5 left-[calc(50%-48vw)] md:left-[calc(50%-35vw)] lg:left-[calc(50%-20vw)]" role="alert">
       <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
       </svg>

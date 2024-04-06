@@ -1,7 +1,7 @@
 <x-app-layout> 
 
-    <div class="py-12">
-        <div class="mx-auto max-w-5xl sm:px-6 lg:px-8">
+    <div class="py-12 max-w-7xl mx-auto grid lg:grid-cols-3 lg:px-8 md:px-4 gap-5">
+        <div class="lg:col-span-2">
             <div class="p-5 overflow-hidden bg-white shadow-xl md:p-10 dark:bg-gray-800 sm:rounded-lg">
 
                 <form action="{{ route('reservation.update', $reservation->id) }}" 
@@ -16,130 +16,118 @@
 
                     <x-form-divider value="Personal Information & Event Details" />
 
-                    <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
+                    <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-5">
                         <div class="mt-5">
-                            <x-label for="name" required>Name:</x-label>
-                            <x-input type="text" name="name" class="w-full" id="" value="{{ auth()->user()->name }}" />
+                            <x-label for="name">Name:</x-label>
+                            <x-input type="text" name="name" class="w-full" id="" value="{{ auth()->user()->name }}" disabled />
                             <x-input-error for="name" />
                         </div>
 
                         <div class="mt-5">
-                            <x-label for="theme" required>Theme:</x-label>
-                            <select name="theme" class="w-full input-field" id="">
-                                <option selected disabled>{{ __('Select Theme') }}</option>
-                                <option value="Formal ">{{ __('Formal ') }}</option>
-                                <option value="Gold">{{ __('Gold Party') }}</option>
-                                <option value="Kanto">{{ __('Kanto Style') }}</option>
-                                <option value="Disney">{{ __('Disney') }}</option>
-                            </select>
+                            <x-label for="theme">Theme:</x-label>
+                            <x-input type="text" name="theme" class="w-full input-field" value="{{ $reservation->theme }}" id="" disabled />
                             <x-input-error for="theme" />
                         </div>
 
                         <div class="mt-5">
-                            <x-label for="address" required>Address:</x-label>
-                            <input name="address" class="w-full input-field" id="" value="{{ auth()->user()->address }}" /> 
+                            <x-label for="address">Address:</x-label>
+                            <x-input type="text" name="address" class="w-full input-field" id="" value="{{ auth()->user()->address }}" disabled /> 
                             <x-input-error for="address" />
                         </div>
                         
                         <div class="mt-5">
-                            <x-label for="occasion" required>Occasion:</x-label>
-                            <select name="occasion" class="w-full input-field" id="">
-                                <option selected disabled>{{ __('Select Occasion') }}</option>
-                                <option value="Wedding ">{{ __('Wedding ') }}</option>
-                                <option value="Debut">{{ __('Debut Party') }}</option>
-                                <option value="Christening">{{ __('Christening') }}</option>
-                                <option value="Anniversarry">{{ __('Anniversarry') }}</option>
-                                <option value="Birthday">{{ __('Birthday') }}</option>
-                            </select>
+                            <x-label for="occasion">Occasion:</x-label>
+                            <x-input type="text" name="occasion" class="w-full input-field" value="{{ $reservation->occasion }}" id="" disabled />
                             <x-input-error for="occasion" />
                         </div>
                     </div>
 
                     <x-form-divider value="Time and Date" />
 
-                    <div class="w-full mx-auto mt-5 lg:w-2/3">
-                        <x-label for="time" required>Time:</x-label>
-                        <x-input type="time" name="time" class="w-full" id="" :value="old('time')" />
-                        <x-input-error for="time" />
-                        <x-label for="date" required>
-                            Choose date:
-                        </x-label>
-                        @livewire('calendar')
-                        <x-input-error for="date" />
+                    <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-5">
+                        <div class="mt-5">
+                            <x-label for="date">Date:</x-label>
+                            <x-input type="text" name="date" class="w-full" id="" value="{{ $reservation->date->format('M d, Y') }}" disabled />
+                            <x-input-error for="date" />
+                        </div>
+
+                        <div class="mt-5">
+                            <x-label for="time">Time:</x-label>
+                            <x-input type="text" name="time" class="w-full" id="" value="{{ $reservation->time->format('g:i A') }}" disabled />
+                            <x-input-error for="time" />
+                        </div>
                     </div>
 
                     <x-form-divider value="Package Details" />
 
-                    <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
+                    <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-5">
                         <div class="mt-5">
-                            <x-label for="package" required>Package:</x-label>
-                            <select name="package" class="w-full input-field" id="">
-                                <option selected disabled>{{ __('Select Package') }}</option>
-                                <option value="Formal ">{{ __('Formal ') }}</option>
-                            </select>
+                            <x-label for="package">Package:</x-label>
+                            <x-input type="text" name="package" class="w-full input-field" value="package {{ $reservation->package }}" id="" disabled />
                             <x-input-error for="package" />
                         </div>
                         
                         <div class="mt-5">
-                            <x-label for="meat" required>Meat:</x-label>
-                            <select name="meat" class="w-full input-field" id="">
-                                <option selected disabled>{{ __('Select Meat') }}</option>
-                                <option value="Formal ">{{ __('Formal ') }}</option>
-                            </select>
+                            <x-label for="meat">Meat:</x-label>
+                            <x-input name="meat" class="w-full input-field" id="" disabled />
                             <x-input-error for="meat" />
                         </div>
 
                         <div class="mt-5">
-                            <x-label for="dishes" required>Dishes:</x-label>
-                            <select name="dishes" class="w-full input-field" id="">
-                                <option selected disabled>{{ __('Select Dishes') }}</option>
-                                <option value="Formal ">{{ __('Formal ') }}</option>
-                            </select>
+                            <x-label for="dishes">Dishes:</x-label>
+                            <x-input name="dishes" class="w-full input-field" id="" disabled />
                             <x-input-error for="dishes" />
                         </div>
 
                         <div class="mt-5">
-                            <x-label for="side_dish" required>Side Dish:</x-label>
-                            <select name="side_dish" class="w-full input-field" id="">
-                                <option selected disabled>{{ __('Select Side Dish') }}</option>
-                                <option value="Formal ">{{ __('Formal ') }}</option>
-                            </select>
+                            <x-label for="side_dish">Side Dish:</x-label>
+                            <x-input name="side_dish" class="w-full input-field" id="" disabled />
                             <x-input-error for="side_dish" />
                         </div>
 
                         <div class="mt-5">
-                            <x-label for="appetizer" required>Appetizer:</x-label>
-                            <select name="appetizer" class="w-full input-field" id="">
-                                <option selected disabled>{{ __('Select Appetizer') }}</option>
-                                <option value="Formal ">{{ __('Formal ') }}</option>
-                            </select>
+                            <x-label for="appetizer">Appetizer:</x-label>
+                            <x-input name="appetizer" class="w-full input-field" id="" disabled />
                             <x-input-error for="appetizer" />
                         </div>
 
                         <div class="mt-5">
-                            <x-label for="dessert" required>Dessert:</x-label>
-                            <select name="dessert" class="w-full input-field" id="">
-                                <option selected disabled>{{ __('Select Dessert') }}</option>
-                                <option value="Formal ">{{ __('Formal ') }}</option>
-                            </select>
+                            <x-label for="dessert">Dessert:</x-label>
+                            <x-input name="dessert" class="w-full input-field" id="" disabled />
                             <x-input-error for="dessert" />
                         </div>
 
                         <div class="mt-5">
-                            <x-label for="beverages" required>Beverages:</x-label>
-                            <select name="beverages" class="w-full input-field" id="">
-                                <option selected disabled>{{ __('Select Beverages') }}</option>
-                                <option value="Formal ">{{ __('Formal ') }}</option>
-                            </select>
+                            <x-label for="beverages">Beverages:</x-label>
+                            <x-input name="beverages" class="w-full input-field" id="" disabled />
                             <x-input-error for="beverages" />
                         </div>
                     </div>
+                    
+                </form>
+            </div>
+        </div>
 
+        <div class="lg:col-span-1">
+            <div class="p-5 overflow-hidden bg-white shadow-lg md:p-10 sm:rounded-lg">
 
-                    <x-form-divider value="Payment Details" />
+                <div class="flex items-center flex-col">
+                    <h2 class="forms-heading-text">Payment Details</h2>
+                </div>
 
-                    <div class="flex flex-col w-full mx-auto my-5 lg:w-2/3">
-                        <x-label for="payment_percent" required>Payment Percent:</x-label>
+                    <div class="flex flex-col w-full mx-auto my-5">
+                        @php
+                            $percent = $reservation->payment_percent;
+                            $completed = $percent == 100;
+                        @endphp
+
+                        <div class="w-full bg-gray-200 inline-block rounded-full dark:bg-gray-700 my-5">
+                            <div class="{{ $completed ? 'bg-green-500' : 'bg-primary' }} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: {{ $percent }}%">
+                                {{ $completed ? 'Completed' : $percent . '%' }}
+                            </div>
+                        </div>
+
+                        <x-label for="payment_percent">Payment Percent:</x-label>
                         <select name="payment_percent" class="w-full input-field" id="">
                             <option selected disabled>{{ __('Select Payment Percent') }}</option>
                             <option value="40">{{ __('40') }}</option>
@@ -149,7 +137,7 @@
                         </select>
                         <x-input-error for="payment_percent" />
 
-                        <x-label for="receipt-img" required>Receipt Photo:</x-label>
+                        <x-label for="receipt-img">Receipt Photo:</x-label>
                         <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img"/>
                         <x-input-error for="receipt-img" />
                     </div>
@@ -158,10 +146,6 @@
                         <button type="submit" class="self-center mx-auto btn-primary">Reserve</button>
                     </div>
 
-                    
-            
-  
-                </form>
             </div>
         </div>
     </div>

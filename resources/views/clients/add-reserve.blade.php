@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="mx-auto max-w-5xl sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="p-5 overflow-hidden bg-white shadow-xl md:p-10 dark:bg-gray-800 sm:rounded-lg">
 
                 <form action="{{ route('reservation.store') }}" 
@@ -12,7 +12,7 @@
                     enctype="multipart/form-data">
                 @csrf
 
-                    <div class="flex items-center flex-col">
+                    <div class="flex flex-col items-center">
                         <h2 class="forms-heading-text">Reservation Details</h2>
                     </div>
 
@@ -93,25 +93,31 @@
 
                     <x-form-divider value="Time and Date" />
 
-                    <div class="w-full mx-auto mt-5 lg:w-2/3">
-                        <x-label for="time" required>Time:</x-label>
-                        <x-input type="time" name="time" class="w-full" id="" :value="old('time')" />
-                        <x-input-error for="time" />
-                        <x-label for="date" required>
-                            Choose date:
-                        </x-label>
-                        @livewire('calendar')
-                        <x-input-error for="date" />
+                    <div class="flex flex-col items-center mt-5 md:items-start md:flex-row ">
+                        <div class="w-full mx-auto mr-2 md:w-8/12 lg:w-2/3">
+                            <x-label for="date" required>
+                                Choose date:
+                            </x-label>
+                            @livewire('calendar')
+                            <x-input-error for="date" />
+                        </div>
+    
+                        <div class="w-10/12 mt-5 ml-2 md:w-4/12 md:mt-0">
+                            @livewire('time-picker')
+                        </div>
                     </div>
 
                     <x-form-divider value="Package Details" />
+ 
 
                     <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
                         <div class="mt-5">
                             <x-label for="package" required>Package:</x-label>
                             <select name="package" class="w-full input-field" id="">
                                 <option selected disabled>{{ __('Select Package') }}</option>
-                                <option value="Formal ">{{ __('Formal ') }}</option>
+                                <option value="1">{{ __('1') }}</option>
+                                <option value="2">{{ __('2') }}</option>
+                                <option value="3">{{ __('3') }}</option>
                             </select>
                             <x-input-error for="package" />
                         </div>
@@ -193,10 +199,6 @@
                     <div class="flex w-full">
                         <button type="submit" class="self-center mx-auto btn-primary">Reserve</button>
                     </div>
-
-                    
-            
-  
                 </form>
             </div>
         </div>
