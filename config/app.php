@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Facade;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -109,6 +108,24 @@ return [
     */
 
     'faker_locale' => 'en_US',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Compressed File Settings
+    |--------------------------------------------------------------------------
+    |
+    | This section defines the settings for file compression in the application.
+    | Enable or disable compression for different file types as needed.
+    |
+    */
+    'compressed' => [
+        'html' => true, 
+        'css' => true,  
+        'js' => true,   
+        'json' => true, 
+        'xml' => true,  
+        'svg' => true,  
+    ],
 
     /*
     |--------------------------------------------------------------------------

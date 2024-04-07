@@ -55,13 +55,13 @@
                     <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
                         <div class="mt-5">
                             <x-label for="name" required>Name:</x-label>
-                            <x-input type="text" name="name" class="w-full" id="" value="{{ auth()->user()->name }}" />
+                            <x-input type="text" name="name" class="w-full" id="name" value="{{ auth()->user()->name }}" />
                             <x-input-error for="name" />
                         </div>
 
                         <div class="mt-5">
                             <x-label for="theme" required>Theme:</x-label>
-                            <select name="theme" class="w-full input-field" id="">
+                            <select name="theme" class="w-full input-field" id="theme">
                                 <option selected disabled>{{ __('Select Theme') }}</option>
                                 <option value="Formal ">{{ __('Formal ') }}</option>
                                 <option value="Gold">{{ __('Gold Party') }}</option>
@@ -73,13 +73,13 @@
 
                         <div class="mt-5">
                             <x-label for="address" required>Address:</x-label>
-                            <input name="address" class="w-full input-field" id="" value="{{ auth()->user()->address }}" /> 
+                            <input name="address" class="w-full input-field" id="address" value="{{ auth()->user()->address }}" /> 
                             <x-input-error for="address" />
                         </div>
                         
                         <div class="mt-5">
                             <x-label for="occasion" required>Occasion:</x-label>
-                            <select name="occasion" class="w-full input-field" id="">
+                            <select name="occasion" class="w-full input-field" id="occasion">
                                 <option selected disabled>{{ __('Select Occasion') }}</option>
                                 <option value="Wedding ">{{ __('Wedding ') }}</option>
                                 <option value="Debut">{{ __('Debut Party') }}</option>
@@ -113,7 +113,7 @@
                     <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
                         <div class="mt-5">
                             <x-label for="package" required>Package:</x-label>
-                            <select name="package" class="w-full input-field" id="">
+                            <select name="package" class="w-full input-field" id="package">
                                 <option selected disabled>{{ __('Select Package') }}</option>
                                 <option value="1">{{ __('1') }}</option>
                                 <option value="2">{{ __('2') }}</option>
@@ -124,7 +124,7 @@
                         
                         <div class="mt-5">
                             <x-label for="meat" required>Meat:</x-label>
-                            <select name="meat" class="w-full input-field" id="">
+                            <select name="meat" class="w-full input-field" id="meat">
                                 <option selected disabled>{{ __('Select Meat') }}</option>
                                 <option value="Formal ">{{ __('Formal ') }}</option>
                             </select>
@@ -133,7 +133,7 @@
 
                         <div class="mt-5">
                             <x-label for="dishes" required>Dishes:</x-label>
-                            <select name="dishes" class="w-full input-field" id="">
+                            <select name="dishes" class="w-full input-field" id="dishes">
                                 <option selected disabled>{{ __('Select Dishes') }}</option>
                                 <option value="Formal ">{{ __('Formal ') }}</option>
                             </select>
@@ -142,7 +142,7 @@
 
                         <div class="mt-5">
                             <x-label for="side_dish" required>Side Dish:</x-label>
-                            <select name="side_dish" class="w-full input-field" id="">
+                            <select name="side_dish" class="w-full input-field" id="side_dish">
                                 <option selected disabled>{{ __('Select Side Dish') }}</option>
                                 <option value="Formal ">{{ __('Formal ') }}</option>
                             </select>
@@ -151,7 +151,7 @@
 
                         <div class="mt-5">
                             <x-label for="appetizer" required>Appetizer:</x-label>
-                            <select name="appetizer" class="w-full input-field" id="">
+                            <select name="appetizer" class="w-full input-field" id="appetizer">
                                 <option selected disabled>{{ __('Select Appetizer') }}</option>
                                 <option value="Formal ">{{ __('Formal ') }}</option>
                             </select>
@@ -160,7 +160,7 @@
 
                         <div class="mt-5">
                             <x-label for="dessert" required>Dessert:</x-label>
-                            <select name="dessert" class="w-full input-field" id="">
+                            <select name="dessert" class="w-full input-field" id="dessert">
                                 <option selected disabled>{{ __('Select Dessert') }}</option>
                                 <option value="Formal ">{{ __('Formal ') }}</option>
                             </select>
@@ -169,7 +169,7 @@
 
                         <div class="mt-5">
                             <x-label for="beverages" required>Beverages:</x-label>
-                            <select name="beverages" class="w-full input-field" id="">
+                            <select name="beverages" class="w-full input-field" id="beverages">
                                 <option selected disabled>{{ __('Select Beverages') }}</option>
                                 <option value="Formal ">{{ __('Formal ') }}</option>
                             </select>
@@ -182,7 +182,7 @@
 
                     <div class="flex flex-col w-full mx-auto my-5 lg:w-2/3">
                         <x-label for="payment_percent" required>Payment Percent:</x-label>
-                        <select name="payment_percent" class="w-full input-field" id="">
+                        <select name="payment_percent" class="w-full input-field" id="payment_percent">
                             <option selected disabled>{{ __('Select Payment Percent') }}</option>
                             <option value="40">{{ __('40') }}</option>
                             <option value="50">{{ __('50') }}</option>

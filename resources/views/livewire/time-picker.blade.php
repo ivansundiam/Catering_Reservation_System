@@ -7,7 +7,7 @@
     selectedTime: @entangle('selectedTime'),
     }">
     <x-label for="time" required>Time:</x-label>
-    <x-input type="text" class="w-full" id="" x-model="selectedTime" readonly />
+    <x-input type="text" class="w-full" id="time" x-model="selectedTime" readonly />
     @php
     // Convert the selectedTime string to a valid time format (HH:MM)
         $timeValue = date('H:i', strtotime($selectedTime));

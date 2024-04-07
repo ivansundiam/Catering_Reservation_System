@@ -8,11 +8,11 @@
         <h2 class="flex justify-between px-6 !pt-5 text-lg md:text-2xl text-center">
             {{ $thisMonth }}
             <div class="flex items-center">
-                <button type="button" wire:click="previousMonth" class="calendar-btn">
-                    <svg class="size-[24px] lg:size-[28px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 7L10 12L15 17" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                <button type="button" wire:click="previousMonth" class="calendar-btn" aria-label="calendar-btn" role="button">
+                   <span class="sr-only">left arrow</span><svg class="size-[24px] lg:size-[28px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 7L10 12L15 17" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 </button>
-                <button type="button" wire:click="nextMonth" class="calendar-btn">
-                    <svg class="size-[24px] lg:size-[28px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 7L15 12L10 17" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                <button type="button" wire:click="nextMonth" class="calendar-btn" aria-label="calendar-btn" role="button">
+                   <span class="sr-only">right arrow</span><svg class="size-[24px] lg:size-[28px]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 7L15 12L10 17" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 </button>
             </div>
         </h2>

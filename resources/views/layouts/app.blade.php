@@ -4,11 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="description" content="Robert Camba's catering services accepts reservations">
+        <meta name="description" content="Robert Camba's catering services accepts reservations for weddings, debuts, birthdays, and other events. Log in to set up your reservations now!">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="https://www.abc/com/drive/uploads/2019/10/favicon.ico">
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
         
@@ -17,7 +19,12 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tai+Heritage+Pro:wght@400;700&display=swap" rel="stylesheet">
+
+        <!-- Preload Fonts -->
+        <link rel="preload" href="https://fonts.gstatic.com/s/figtree/v4/wla8NLaPdRpVQa4O7r6sQfEsCf2H9g.woff2" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="https://fonts.gstatic.com/s/noticiatext/v11/VuJ2dNv8oi4uGzgHDfBEGDXj1V3eFu3_3g.woff2" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v22/nuFvD-vYSZviVYUb_rj3ij__anPXDTnCj1gaGkPpcg.woff2" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="https://fonts.gstatic.com/s/taiheritagepro/v10/w8gXH2cIZvFz6W1i_fRjFHfQQ7tWtz3gdcMzak0v6Vg.woff2" as="font" type="font/woff2" crossorigin>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
