@@ -20,12 +20,18 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        <!-- Preload Fonts -->
-        <link rel="preload" href="https://fonts.gstatic.com/s/figtree/v4/wla8NLaPdRpVQa4O7r6sQfEsCf2H9g.woff2" as="font" type="font/woff2" crossorigin>
-        <link rel="preload" href="https://fonts.gstatic.com/s/noticiatext/v11/VuJ2dNv8oi4uGzgHDfBEGDXj1V3eFu3_3g.woff2" as="font" type="font/woff2" crossorigin>
-        <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v22/nuFvD-vYSZviVYUb_rj3ij__anPXDTnCj1gaGkPpcg.woff2" as="font" type="font/woff2" crossorigin>
-        <link rel="preload" href="https://fonts.gstatic.com/s/taiheritagepro/v10/w8gXH2cIZvFz6W1i_fRjFHfQQ7tWtz3gdcMzak0v6Vg.woff2" as="font" type="font/woff2" crossorigin>
-
+        <!-- Preload -->
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tai+Heritage+Pro:wght@400;700&display=swap" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/hero-bg.jpg') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/logo.png') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/service1.png') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/service2.png') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/service3.png') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/about-img1.jpg') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/about-img2.jpg') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/facility1.jpg') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/facility2.jpg') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/facility3.jpg') }}" as="image">
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
