@@ -14,7 +14,7 @@ class AddItemForm extends Component
     
     public function render()
     {
-        return view('livewire.add-item-form');
+        return view('livewire.inventory.add-item-form');
     }
 
     public function showForm()

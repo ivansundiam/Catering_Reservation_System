@@ -22,16 +22,16 @@
 
         <!-- Preload -->
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tai+Heritage+Pro:wght@400;700&display=swap" as="font" type="font/woff2" crossorigin>
-        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/hero-bg.jpg') }}" as="image">
-        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/logo.png') }}" as="image">
-        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/service1.png') }}" as="image">
-        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/service2.png') }}" as="image">
-        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/service3.png') }}" as="image">
-        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/about-img1.jpg') }}" as="image">
-        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/about-img2.jpg') }}" as="image">
-        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/facility1.jpg') }}" as="image">
-        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/facility2.jpg') }}" as="image">
-        <link rel="preload" fetchPriority="high" href="{{ asset('assets/images/facility3.jpg') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/web-images/low/hero-bg.webp') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/web-images/high/logo.webp') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/web-images/high/service1.webp') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/web-images/high/service2.webp') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/web-images/high/service3.webp') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/web-images/high/about-img1.webp') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/web-images/high/about-img2.webp') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/web-images/high/facility1.webp') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/web-images/high/facility2.webp') }}" as="image">
+        <link rel="preload" fetchPriority="high" href="{{ asset('assets/web-images/high/facility3.webp') }}" as="image">
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
