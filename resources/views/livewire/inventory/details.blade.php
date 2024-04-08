@@ -14,8 +14,8 @@
         <!-- if item has image attachment -->
         @if ($item->item_img)
             <div x-show="!fileAttached">
-                <img src="{{ asset('storage/' . $item->item_img) }}" id="item_img" class="object-cover w-full rounded-lg mb-1 h-80" alt="">
-                <label for="upload-img" class="btn-info w-full py-3 select-none" x-bind:class="{ 'pointer-events-none !bg-gray-400': fieldDisabled }">
+                <img src="{{ asset('storage/' . $item->item_img) }}" id="item_img" class="object-cover w-full mb-1 rounded-lg h-80" alt="Item Image">
+                <label for="upload-img" class="w-full py-3 select-none btn-info" x-bind:class="{ 'pointer-events-none !bg-gray-400': fieldDisabled }">
                     Update image
                 </label>
                 <input type="file" 
@@ -40,12 +40,12 @@
 
         <!-- thumbnail for attached images -->
         @if ($image)
-            <div class="relative  w-full rounded-lg mb-1 h-80">
-                <img src="{{ $image->temporaryUrl() }}" alt=""  class="object-cover rounded-lg w-full h-80"> 
+            <div class="relative w-full mb-1 rounded-lg h-80">
+                <img src="{{ $image->temporaryUrl() }}" alt="preview image"  class="object-cover w-full rounded-lg h-80" /> 
                 <button wire:click="removeImg" type="button" class="absolute flex top-2 right-2 z-10 text-white rounded-full size-8 items-center justify-center text-[1.5rem] hover:bg-gray-100 hover:bg-opacity-30 active:bg-opacity-30 active:bg-gray-300">×</button>  
             </div>
         @endif
-        <div wire:loading.flex wire:target="image" class="flex items-center justify-center w-full bg-gray-200 rounded-lg mb-1 h-80">
+        <div wire:loading.flex wire:target="image" class="flex items-center justify-center w-full mb-1 bg-gray-200 rounded-lg h-80">
             <svg class="animate-spin" width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612" stroke="#bfbfbf" stroke-width="3.55556" stroke-linecap="round"></path> </g></svg>
         </div>
     </div>
