@@ -71,9 +71,9 @@
         <div class="mt-4">
             <x-label for="quantity" value="{{ __('Quantity') }}" />
             <div class="inline-flex w-full">
-                <x-secondary-button type="button" x-on:click="count > 0 ? count-- : count = 0" class="rounded-r-none focus:!ring-transparent focus:ring-offset-0 disabled:bg-gray-300 disabled:!opacity-100 text-black font-bold !text-[1.5rem]" :disabled="$isDisabled">-</x-secondary-button>
+                <x-secondary-button type="button" x-on:click="count > 0 ? count-- : count = 0" class="rounded-r-none focus:!ring-transparent focus:ring-offset-0 disabled:bg-gray-400 disabled:opacity-100 disabled:text-white font-bold !text-[1.5rem]" :disabled="$isDisabled">-</x-secondary-button>
                 <x-input id="quantity" class="block w-full rounded-none" type="number" x-bind:value="count" name="quantity" min="0" :value="$item->quantity" disabled="{{ $isDisabled }}"/>
-                <x-secondary-button type="button" x-on:click="count++" class="rounded-l-none focus:!ring-transparent focus:ring-offset-0 disabled:bg-gray-300 disabled:!opacity-100 text-black font-bold !text-[1.5rem]" :disabled="$isDisabled">+</x-secondary-button>
+                <x-secondary-button type="button" x-on:click="count++" class="rounded-l-none focus:!ring-transparent focus:ring-offset-0 disabled:bg-gray-400 disabled:opacity-100 disabled:text-white font-bold !text-[1.5rem]" :disabled="$isDisabled">+</x-secondary-button>
             </div>
         </div>
 
