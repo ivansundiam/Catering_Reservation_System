@@ -19,7 +19,7 @@ class ReservationController extends Controller
 
         return $userReservations->isEmpty() 
             ? redirect()->route('reservation.create') 
-            : view('clients.reserve')
+            : view('clients.reserve-index')
             ->with('reservations', $userReservations);
     }
 

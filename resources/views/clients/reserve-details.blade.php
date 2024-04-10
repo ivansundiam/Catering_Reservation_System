@@ -1,6 +1,6 @@
 <x-app-layout> 
 
-    <div class="py-12 max-w-7xl mx-auto grid lg:grid-cols-3 lg:px-8 md:px-4 gap-5">
+    <div class="grid gap-5 py-12 mx-auto max-w-7xl lg:grid-cols-3 lg:px-8 md:px-4">
         <div class="lg:col-span-2">
             <div class="p-5 overflow-hidden bg-white shadow-xl md:p-10 dark:bg-gray-800 sm:rounded-lg">
 
@@ -10,7 +10,7 @@
                     @csrf
                     @method('PUT')
 
-                    <div class="flex items-center flex-col">
+                    <div class="flex flex-col items-center">
                         <h2 class="forms-heading-text">Reservation Details</h2>
                     </div>
 
@@ -111,7 +111,7 @@
         <div class="lg:col-span-1">
             <div class="p-5 overflow-hidden bg-white shadow-lg md:p-10 sm:rounded-lg">
 
-                <div class="flex items-center flex-col">
+                <div class="flex flex-col items-center">
                     <h2 class="forms-heading-text">Payment Details</h2>
                 </div>
 
@@ -121,30 +121,38 @@
                             $completed = $percent == 100;
                         @endphp
 
-                        <div class="w-full bg-gray-200 inline-block rounded-full dark:bg-gray-700 my-5">
+                        <div class="inline-block w-full mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
                             <div class="{{ $completed ? 'bg-green-500' : 'bg-primary' }} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: {{ $percent }}%">
                                 {{ $completed ? 'Completed' : $percent . '%' }}
                             </div>
                         </div>
 
-                        <x-label for="payment_percent">Payment Percent:</x-label>
-                        <select name="payment_percent" class="w-full input-field" id="">
-                            <option selected disabled>{{ __('Select Payment Percent') }}</option>
-                            <option value="40">{{ __('40') }}</option>
-                            <option value="50">{{ __('50') }}</option>
-                            <option value="75">{{ __('75') }}</option>
-                            <option value="100">{{ __('Full') }}</option>
-                        </select>
-                        <x-input-error for="payment_percent" />
+                        @if (!$completed)
+                            <div class="mt-5">
+                                <x-label for="payment_percent">Payment Percent:</x-label>
+                                <select name="payment_percent" class="w-full input-field" id="">
+                                    <option selected disabled>{{ __('Select Payment Percent') }}</option>
+                                    <option value="40">{{ __('40') }}</option>
+                                    <option value="50">{{ __('50') }}</option>
+                                    <option value="75">{{ __('75') }}</option>
+                                    <option value="100">{{ __('Full') }}</option>
+                                </select>
+                                <x-input-error for="payment_percent" />
+                            </div>
 
-                        <x-label for="receipt-img">Receipt Photo:</x-label>
-                        <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img"/>
-                        <x-input-error for="receipt-img" />
+                            <div class="mt-5">
+                                <x-label for="receipt-img">Receipt Photo:</x-label>
+                                <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img"/>
+                                <x-input-error for="receipt-img" />
+                            </div>
+
+                            <div class="mx-auto mt-5">
+                                <button type="submit" class="self-center mx-auto btn-primary">Pay</button>
+                            </div>
+                        @endif
                     </div>
 
-                    <div class="flex w-full">
-                        <button type="submit" class="self-center mx-auto btn-primary">Reserve</button>
-                    </div>
+                    
 
             </div>
         </div>
