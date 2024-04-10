@@ -7,6 +7,7 @@ use App\Services\ReservationService;
 use Illuminate\Contracts\View\View;
 use App\Actions\Uploads\StoreImage;   
 use App\Models\Reservation;
+use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
@@ -47,7 +48,9 @@ class ReservationController extends Controller
     public function show(string $id)
     {
         $reservation = Reservation::findOrFail($id);
-        return view('clients.reserve-details', compact('reservation'));
+        $payment_percentages = [20, 60, 90, 100];
+
+        return view('clients.reserve-details', compact('reservation', 'payment_percentages'));
     }
 
     /**
@@ -61,9 +64,19 @@ class ReservationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ReservationRequest $request, string $id)
+    public function update(Request $request, ReservationService $reservationService, StoreImage $storeImage, string $id)
     {
-        //
+        /*
+            In this case, I couldnt use ReservationRequest as the form request for updating
+            the reservation because I only need to update two fields. Submitting the form in
+            clients/reserve-details.blade.php adds the validation of all the fields, which
+            makes submitting only two fields invalid. For some reason, adding the ReservationRequest
+            in the parameter validates the form already and does not even let you in the update()
+            function.
+        */
+        $reservationService->updateReservation($request, $storeImage, $id);
+
+        return redirect()->route('reservation.index')->with('success', "Reservation added successfully");
     }
 
     /**

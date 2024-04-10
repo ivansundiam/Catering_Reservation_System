@@ -33,6 +33,15 @@ class ReservationRequest extends FormRequest
         ];
     }
 
+    public function updateRules(): array
+    {   
+        return [
+            'payment_percent' => 'required',
+            'receipt-img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ];
+    }
+    
+
     public function messages()
     {
         return [

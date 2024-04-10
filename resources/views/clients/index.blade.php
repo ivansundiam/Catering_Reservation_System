@@ -29,8 +29,8 @@
             x-transition:enter-end="opacity-100 translate-y-0"
             x-transition:leave="transition ease-in duration-300 transform"
             x-transition:leave-start="opacity-100 translate-y-0"
-            x-transition:leave-end="opacity-0 translate-y-12"
-        >
+            x-transition:leave-end="opacity-0 translate-y-12">
+
             <div class="flex flex-col items-center grow mb-9">
                 <p class="title-primary">services</p>
                 <h1 class="heading-text">Our services</h1>
@@ -38,25 +38,27 @@
             </div>
 
             <div class="grid mx-12 md:mx-0 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-12 gap-y-6" 
-            x-show="isOnServices"
-            x-transition:enter="transition ease-out duration-300 transform"
-            x-transition:enter-start="opacity-0 translate-y-12"
-            x-transition:enter-end="opacity-100 translate-y-0"
-            x-transition:leave="transition ease-in duration-300 transform"
-            x-transition:leave-start="opacity-100 translate-y-0"
-            x-transition:leave-end="opacity-0 translate-y-12"
-            >
-                <a href="{{ route('reservation.create') }}"  class="duration-300 ease-in-out transform bg-gray-400 rounded-lg shadow-lg hover:shadow-xl hover:scale-110">
+                x-show="isOnServices"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 translate-y-12"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-300 transform"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 translate-y-12">
+
+                <a href="{{ route('reservation.create') }}"  class="duration-300 ease-in-out transform bg-gray-400 rounded-lg shadow hover:shadow-xl hover:scale-105">
                     <img src="{{ asset('assets/web-images/high/service1.webp') }}" class="package-service"  fetchpriority="high" alt="service 1">
                     <h4 class="heading-text !text-2xl text-white mt-3 text-center">package 1</h4>
                     <p class="mb-5 text-center text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dignissimos, ea consequatur molestiae officia eligendi?</p>
                 </a>
-                <a href="{{ route('reservation.create') }}" class="duration-300 ease-in-out transform bg-gray-400 rounded-lg shadow-lg hover:shadow-xl hover:scale-110">
+
+                <a href="{{ route('reservation.create') }}" class="duration-300 ease-in-out transform bg-gray-400 rounded-lg shadow hover:shadow-xl hover:scale-105">
                     <img src="{{ asset('assets/web-images/high/service2.webp') }}" class="package-service"  fetchpriority="high" alt="service 2">
                     <h4 class="heading-text !text-2xl text-white mt-3 text-center">package 2</h4>
                     <p class="mb-5 text-center text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dignissimos, ea consequatur molestiae officia eligendi?</p>
                 </a>
-                <a href="{{ route('reservation.create') }}" class="duration-300 ease-in-out transform bg-gray-400 rounded-lg shadow-lg hover:shadow-xl hover:scale-110">
+
+                <a href="{{ route('reservation.create') }}" class="duration-300 ease-in-out transform bg-gray-400 rounded-lg shadow hover:shadow-xl hover:scale-105">
                     <img src="{{ asset('assets/web-images/high/service3.webp') }}" class="package-service"  fetchpriority="high" alt="service 3">
                     <h4 class="heading-text !text-2xl text-white mt-3 text-center">package 3</h4>
                     <p class="mb-5 text-center text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dignissimos, ea consequatur molestiae officia eligendi?</p>

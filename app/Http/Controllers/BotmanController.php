@@ -11,11 +11,22 @@ use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 use BotMan\Drivers\Web\WebDriver;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
+use BotMan\BotMan\Middleware\Wit;
 
 class BotmanController extends Controller
 {
     public function handle(){
         $botman = app('botman');
+        // $wit = Wit::create('7OKQ5YKEHRHKQI7M24VFI46Z6223ERB7');
+
+        // // Apply global "received" middleware
+        // $botman->middleware->received($wit);
+
+        // // Apply matching middleware per hears command
+        // $botman->hears('Greeting', function (BotMan $bot) {
+        //     // $bot->getResponse();
+        //     $bot->reply("this is my reply");
+        // })->middleware($wit);
 
         $botman->hears('{message}', function ($bot, $message) {
             $message = strtolower($message);
@@ -43,10 +54,7 @@ class BotmanController extends Controller
 
             }
         });
-
-
         
-
         $botman->fallback(function($bot) {
             $bot->reply("Sorry, I don't know the answer to that.");
         });

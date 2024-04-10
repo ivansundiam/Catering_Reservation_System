@@ -78,7 +78,7 @@
         </div>
     </div>
     @if($selectedDate)
-    <input type="text" name="date" hidden value="{{ date('Y-m-d', strtotime($selectedDate)) }}" id="">
+    <input type="text" x-model="date" name="date" hidden value="{{ date('Y-m-d', strtotime($selectedDate)) }}" id="">
     @endif
 
    
