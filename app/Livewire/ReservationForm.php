@@ -9,6 +9,8 @@ class ReservationForm extends Component
 {
     public $date;
     public $time;
+    public $showingGcash = false;
+    public $showingMaya = false;
 
     protected $listeners = [
         'dateSelected' => 'setDate',
@@ -23,6 +25,18 @@ class ReservationForm extends Component
     public function setTime($event)
     {
         $this->time = $event['time'];
+    }
+
+    public function showGcash()
+    {
+        $this->showingGcash = !$this->showingGcash;
+        $this->showingMaya = false;
+    }
+    
+    public function showMaya()
+    {
+        $this->showingMaya = !$this->showingMaya;
+        $this->showingGcash = false;
     }
 
     public function render()

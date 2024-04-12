@@ -236,6 +236,78 @@
             </select>
             <x-input-error for="payment_percent" />
 
+            <h2 class="my-3 text-center text-md md:text-xl font-noticia">Select Payment Method </h2>
+            <div class="flex justify-center mb-5">
+                <button type="button" wire:click="showGcash" class="px-3 py-1 rounded-lg shadow max-w-32 bg-[#087cfc] hover:shadow-lg hover:scale-[1.03] ease-in-out duration-100">
+                    <img src="{{ asset('assets/images/gcash-fill-logo.jpg') }}" alt="gcash logo">
+                </button>
+                <div class="mx-4 border-l-2 border-gray-400"></div>
+                <button type="button" wire:click="showMaya" class="px-6 py-3 bg-[#50b16b] rounded-lg shadow max-w-32 hover:shadow-lg hover:scale-[1.03] ease-in-out duration-100">
+                    <img src="{{ asset('assets/images/maya-fill-logo.png') }}" alt="maya logo">
+                </button>
+
+                <!-- gcash modal -->
+                <x-dialog-modal footerPosition="center" maxWidth="md" wire:model="showingGcash">
+                    <x-slot name="title">
+                        <div class="mx-auto">
+                            <div class="flex items-end my-2 ">
+                                <x-application-mark class="block" />
+                                <x-brand-name class="ml-2" />
+                            </div>
+                        </div>
+                    </x-slot>
+                    <x-slot name="content">
+                        <div class="flex flex-col items-center">
+                            <div class="max-w-36">
+                                <img src="{{ asset('assets/images/gcash-logo.png') }}" alt="gcash logo">
+                            </div>
+
+                            <p class="mt-5 font-semibold uppercase text-md">send your payment here</p>
+                            
+                            <div class="size-64">
+                                <img src="{{ asset('assets/images/qr.png') }}" alt="gcash qr code">
+                            </div>
+
+                            <h3 class="title-primary !text-xl !font-bold">RO***T C.</h3>
+                        </div>
+                    </x-slot>
+                    <x-slot name="footer">
+                        <x-button wire:click="showGcash" type="button">back</x-button>
+                    </x-slot>
+                </x-dialog-modal>
+
+                <!-- maya modal -->
+                <x-dialog-modal footerPosition="center" maxWidth="md" wire:model="showingMaya">
+                    <x-slot name="title">
+                        <div class="mx-auto">
+                            <div class="flex items-end my-2 ">
+                                <x-application-mark class="block" />
+                                <x-brand-name class="ml-2" />
+                            </div>
+                        </div>
+                    </x-slot>
+                    <x-slot name="content">
+                        <div class="flex flex-col items-center">
+                            <div class="max-w-36">
+                                <img src="{{ asset('assets/images/maya-logo.jpg') }}" alt="maya logo">
+                            </div>
+
+                            <p class="mt-5 font-semibold uppercase text-md">send your payment here</p>
+                            
+                            <div class="size-64">
+                                <img src="{{ asset('assets/images/qr.png') }}" alt="maya qr code">
+                            </div>
+
+                            <h3 class="title-primary !text-xl !font-bold">RO***T C.</h3>
+                        </div>
+                    </x-slot>
+                    <x-slot name="footer">
+                        <x-button wire:click="showMaya" type="button">back</x-button>
+                    </x-slot>
+                </x-dialog-modal>
+            </div>
+
+
             <x-label for="receipt-img" required>Receipt Photo:</x-label>
             <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img"/>
             <x-input-error for="receipt-img" />
@@ -257,17 +329,15 @@
                 theme: null,
                 occasion: null,
                 package: null,
-                // date: '',
-                // time: '',
-                step: 1,
+                step: 4,
 
                 nextStep() {
                     this.step++;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 180, behavior: 'smooth' });
                 },
                 prevStep() {
                     this.step--;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 180, behavior: 'smooth' });
                 }
             }));
         });
