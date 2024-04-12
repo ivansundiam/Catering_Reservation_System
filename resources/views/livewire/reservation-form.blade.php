@@ -329,7 +329,7 @@
                 theme: null,
                 occasion: null,
                 package: null,
-                step: 4,
+                step: 1,
 
                 nextStep() {
                     this.step++;

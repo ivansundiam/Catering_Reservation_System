@@ -56,7 +56,8 @@ class Calendar extends Component
                     'date' => $currentDate->format('Y-m-d'),
                     'isCurrentMonth' => $currentDate->month == $this->month,
                     'isReserved' => $reservedDates->contains($currentDate),
-                    'isPastDay' => $currentDate->lt(today())
+                    'isPastValidDay' => $currentDate->lt(today()->addWeek())
+                    // 'isPastDay' => $currentDate->lt(today())
                 ];
                 $currentDate->addDay();
             }

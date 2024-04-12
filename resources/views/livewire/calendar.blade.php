@@ -44,9 +44,9 @@
                                     $isToday = $day['day'] == date('d') && $thisMonth == date('F Y') ? 'today' : '' ;
                                 @endphp
                                 @if ($day['isCurrentMonth'])
-                                    @if ($day['isPastDay'])
+                                    @if ($day['isPastValidDay'])
                                         <td>
-                                            <span class="day disabled">
+                                            <span class="day disabled {{ $isToday }}">
                                                 {{ $day['day'] }}
                                             </span>
                                         </td>
@@ -57,7 +57,6 @@
                                             </span>
                                         </td>
                                     @else
-                                    {{-- <td wire:click="setReservationDate('{{ $day['date'] }}')"> --}}
                                         <td x-on:click="selectedDate = '{{ $day['date'] }}'; $wire.setReservationDate('{{ $day['date'] }}')">
                                             <span x-bind:class="{ 
                                                 'day {{ $isToday }}' : true,
