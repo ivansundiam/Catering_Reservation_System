@@ -26,8 +26,11 @@
                         <x-nav-link href="{{ route('inventory.index') }}" :active="request()->routeIs(['inventory.index', 'inventory.show'])">
                             {{ __('Inventory') }}
                         </x-nav-link>
-                        <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs(['users.index', 'user.show'])">
+                        <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs(['users.index', 'users.show'])">
                             {{ __('Users') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('users.archive') }}" :active="request()->routeIs('users.archive')">
+                            {{ __('Archive') }}
                         </x-nav-link>
                     @endif
                 </div>

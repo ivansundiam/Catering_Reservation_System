@@ -36,6 +36,7 @@ class Calendar extends Component
 
     public function setReservationDate($date){
         $this->selectedDate = date('Y-m-d', strtotime($date));
+        $this->dispatch('dateSelected', $date);
     }
 
     public function render()

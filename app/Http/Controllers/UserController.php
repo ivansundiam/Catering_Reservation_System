@@ -11,26 +11,18 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::whereNotIn('user_type', ['admin'])->get();
+        $search = $request->input('search');
+
+        $users = User::where(function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+        })
+        ->whereNot('user_type', 'admin')
+        ->paginate(10);
+
         return view('admin.users', compact('users'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -76,6 +68,32 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'User archived successfully.');
+    }
+
+    public function archives(Request $request)
+    {
+        $search = $request->input('search');
+
+        $users = User::onlyTrashed()->where(function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+        })
+        ->whereNot('user_type', 'admin')
+        ->paginate(10);
+    
+        return view('admin.archives', compact('users'));
+    }
+
+    public function restore($id)
+    {
+        $user = User::withTrashed()->findOrFail($id); 
+
+        $user->restore();
+        return redirect()->route('users.archive')->with('success', 'User restored successfully');
     }
 }

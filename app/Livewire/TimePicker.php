@@ -53,6 +53,7 @@ class TimePicker extends Component
     protected function updateSelectedTime()
     {
         $this->selectedTime = sprintf('%02d:%02d %s', $this->selectedHour, $this->selectedMinute, $this->selectedPeriod);
+        $this->dispatch('timeSelected', ['time' => $this->selectedTime]);
     }
 
     public function render()

@@ -69,9 +69,7 @@
                     </table>
                 </div>
                 
-                <div class="mt-5">
-                    {{ $inventoryItems->onEachSide(1)->links() }}
-                </div>                
+                <x-pagination-links :model="$inventoryItems" />            
   
             </div>
         </div>

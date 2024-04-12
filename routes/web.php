@@ -34,12 +34,14 @@ Route::group(['middleware' => 'auth'], function (){
     Route::resource('reservation', ReservationController::class)
     ->only('index', 'create', 'store', 'show', 'update')
     ->middleware(['AllowUser:client'
-    // , 'verified.id'
+    , 'verified.id'
 ]);
 
     Route::group(['middleware' => 'AllowUser:admin', 'prefix' => 'admin'], function () {
         Route::get('/dashboard', [AdminController::class , 'dashboard'])->name('admin-dashboard');
         Route::resource('inventory', InventoryController::class);
         Route::resource('users', UserController::class);
+        Route::get('/archive', [UserController::class, 'archives'])->name('users.archive');
+        Route::post('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
     });
 });

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('id_verify_img');
             $table->string('profile_photo_path', 2048)->nullable();
             $table->foreignId('current_team_id')->nullable();
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
