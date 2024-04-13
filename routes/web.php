@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::resource('reservation', ReservationController::class)
     ->only('index', 'create', 'store', 'show', 'update')
     ->middleware(['AllowUser:client'
-    , 'verified.id'
+    // , 'verified.id'
 ]);
 
     Route::group(['middleware' => 'AllowUser:admin', 'prefix' => 'admin'], function () {

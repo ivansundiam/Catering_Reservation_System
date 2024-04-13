@@ -20,11 +20,13 @@ class Reservation extends Model
         'theme',
         'payment_percent',
         'receipt_img',
+        'payment_dates'
     ];
 
     protected $casts = [
         'date' => 'datetime',
         'time' => 'datetime:H:i:s',
+        'payment_dates' => 'array'
     ];
 
     public function user():BelongsTo
