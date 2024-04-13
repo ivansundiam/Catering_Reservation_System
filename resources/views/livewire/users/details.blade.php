@@ -8,13 +8,13 @@
 
     <div class="flex flex-col items-center w-64 h-full">
         <x-label for="id_verify_img" value="{{ __('User Verification Id') }}" class="mb-3 text-xl font-semibold" />
-        <div type="button" x-on:click="viewImage = !viewImage" class="bg-gray-200 hover:bg-gray-300 rounded-lg ">
-            <img src="{{ asset('storage/' . $user->id_verify_img) }}" id="id_verify_img" class="object-contain w-full h-80" alt="">
+        <div type="button" x-on:click="viewImage = !viewImage" class="bg-gray-200 rounded-lg hover:bg-gray-300 ">
+            <img src="{{ asset('storage/' . $user->id_verify_img) }}" id="id_verify_img" class="object-contain w-full h-80" alt="id image">
         </div>
     </div>
 
     <!-- full image view -->
-    <div x-show="viewImage" x-on:click="viewImage = !viewImage" class="z-40 flex justify-center items-center">
+    <div x-show="viewImage" x-on:click="viewImage = !viewImage" class="z-40 flex items-center justify-center">
         <div x-show="viewImage" class="fixed inset-0 transition-all transform"
             x-transition:enter="ease-out duration-300"
             x-transition:enter-start="opacity-0"
@@ -25,7 +25,7 @@
             <div class="absolute inset-0 bg-gray-500 opacity-75 dark:bg-gray-900"></div>
             <button type="button" class="absolute flex top-2 right-2 z-10 text-white rounded-full size-8 items-center justify-center text-[1.5rem] hover:bg-gray-100 hover:bg-opacity-30 active:bg-opacity-30 active:bg-gray-300">×</button>  
         </div>
-        <img src="{{ asset('storage/' . $user->id_verify_img) }}" id="id_verify_img" class="fixed top-[15vh] z-50 object-contain left-[15vw] w-[70vw] h-[70vh]" alt="">
+        <img src="{{ asset('storage/' . $user->id_verify_img) }}" id="id_verify_img" class="fixed top-[15vh] z-50 object-contain left-[15vw] w-[70vw] h-[70vh]" alt="id photo view">
     </div>
 
     <div class="ml-10 grow">

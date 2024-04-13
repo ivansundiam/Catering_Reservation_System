@@ -1,4 +1,4 @@
-<x-app-layout> 
+<x-admin-layout>
     <div class="grid gap-5 py-12 mx-auto max-w-7xl lg:grid-cols-3 lg:px-8 md:px-4">
         <div class="lg:col-span-2">
             <div class="p-5 overflow-hidden bg-white shadow-xl md:p-10 dark:bg-gray-800 sm:rounded-lg">
@@ -102,33 +102,13 @@
                     @livewire('reservation.attachment-modal', ['reservation' => $reservation])
 
                     @if (!$completed)
-                        <div class="mt-5">
-                            <x-label for="payment_percent">Payment Percent:</x-label>
-                            <select name="payment_percent" class="w-full input-field" id="payment_percent">
-                                <option selected disabled>{{ __('Select Payment Percent') }}</option>
-                                @foreach ($payment_percentages as $percent)
-                                    @if ($percent > $reservation->payment_percent)
-                                    <option value="{{ $percent }}" {{ old('payment_percent') == $percent ? 'selected' : '' }}>
-                                        {{ $percent == 100 ? 'Full' : $percent }}
-                                    </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                            <x-input-error for="payment_percent" />
-                        </div>
-
-                        <div class="mt-5">
-                            <x-label for="receipt-img">Receipt Photo:</x-label>
-                            <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img"/>
-                            <x-input-error for="receipt-img" />
-                        </div>
 
                         <div class="mx-auto mt-5">
-                            <button type="submit" class="self-center mx-auto btn-primary">Pay</button>
+                            {{-- <button type="submit" class="self-center mx-auto btn-primary">Pay</button> --}}
                         </div>
                     @endif
                 </form>
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-admin-layout>

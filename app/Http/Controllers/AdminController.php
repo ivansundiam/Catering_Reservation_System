@@ -9,10 +9,15 @@ use App\Models\User;
 
 class AdminController extends Controller
 {
-    public function dashboard() : View{
-
+    public function dashboard() : View
+    {
         $reservations = Reservation::all();
         return view('admin.dashboard', compact('reservations'));
     }
 
+    public function showReservation($id) : View
+    {
+        $reservation = Reservation::findOrFail($id);
+        return view('admin.reserve-details', compact('reservation'));
+    }
 }

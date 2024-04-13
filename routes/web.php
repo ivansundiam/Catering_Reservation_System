@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::group(['middleware' => 'AllowUser:admin', 'prefix' => 'admin'], function () {
         Route::get('/dashboard', [AdminController::class , 'dashboard'])->name('admin-dashboard');
+        Route::get('/reservation/{id}', [AdminController::class , 'showReservation'])->name('admin.reservation.show');
         Route::resource('inventory', InventoryController::class);
         Route::resource('users', UserController::class);
         Route::get('/archive', [UserController::class, 'archives'])->name('users.archive');

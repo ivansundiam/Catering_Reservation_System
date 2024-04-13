@@ -160,6 +160,18 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('inventory.index') }}" :active="request()->routeIs(['inventory.index', 'inventory.show'])">
+                {{ __('Inventory') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs(['users.index', 'users.show'])">
+                {{ __('Users') }}
+            </x-responsive-nav-link>
+            
+            <x-responsive-nav-link href="{{ route('users.archive') }}" :active="request()->routeIs('users.archive')">
+                {{ __('Archive') }}
+            </x-responsive-nav-link> 
         </div>
 
         <!-- Responsive Settings Options -->
