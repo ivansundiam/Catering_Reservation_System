@@ -21,12 +21,14 @@ class NewUser
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone_number' => ['required', 'string'],
+            'phone_number' => ['required', 'string', 'min:11'],
             'address' => ['required', 'string'],
             'id_type' => ['required', 'string'],
             'id_verify_img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+        ],[
+            'id_verify_img' => 'ID verification photo is required'
         ])->validate();
 
         $idVerifyPhotoPath = $storeImage->execute($request, 'id_verify_img', 'ids');
