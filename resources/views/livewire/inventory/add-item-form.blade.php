@@ -1,9 +1,7 @@
 <div>
-    <div class="mt-5">
-        <button class="px-3 py-2 btn-success" wire:click="showForm" wire:loading.attr="disabled">
-            {{ __('Add Item') }}
-        </button>
-    </div>
+    <button class="px-3 py-2 btn-success" wire:click="showForm" wire:loading.attr="disabled">
+        {{ __('Add Item') }}
+    </button>
 
     <!-- Add Item  Modal -->
     <x-dialog-modal maxWidth="lg" wire:model="showingForm">

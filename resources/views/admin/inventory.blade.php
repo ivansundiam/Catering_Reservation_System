@@ -2,7 +2,7 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="p-10 overflow-hidden bg-white shadow-xl dark:bg-gray-800 sm:rounded-lg">
-                <div class="flex items-center justify-between mb-5">
+                <div class="flex items-start justify-between mb-5">
                    <p class="text-xl ">Inventory  </p>
 
                    @livewire('inventory.add-item-form')

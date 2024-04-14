@@ -2,7 +2,10 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="p-10 overflow-hidden bg-white shadow-xl dark:bg-gray-800 sm:rounded-lg">
-                <p class="mb-5 text-xl">Reservations</p>
+                <div class="flex justify-between align-baseline mb-5">
+                    <p class="text-xl">Reservations</p>
+                    <a href="{{ route('generate-pdf') }}" type="button" class="btn-info flex">print</a>
+                </div>
 
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 rtl:text-right">
