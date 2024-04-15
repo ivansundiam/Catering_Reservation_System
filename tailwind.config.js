@@ -73,7 +73,7 @@ export default {
         },
     },
     // toggle dark mode
-    darkMode: "class",
+    // darkMode: "class",
 
     plugins: [forms, typography, require("flowbite/plugin")],
 };

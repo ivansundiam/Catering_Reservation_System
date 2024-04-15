@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\GeneratePDFController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 
@@ -45,6 +45,6 @@ Route::group(['middleware' => 'auth'], function (){
         Route::resource('users', UserController::class);
         Route::get('/archive', [UserController::class, 'archives'])->name('users.archive');
         Route::post('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
-        Route::get('/pdf', GeneratePDFController::class)->name('generate-pdf');
+        Route::get('/pdf', [PDFController::class, 'generatePdf'])->name('generate-pdf');
     });
 });
