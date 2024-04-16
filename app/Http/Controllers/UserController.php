@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AccountVerified;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
     /**
@@ -52,6 +53,8 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             $user->verified = true;
             $user->update();
+
+            event(new AccountVerified($user));
     
             return redirect()->back()->with('success', 'User verification status updated successfully.');
         } catch (ModelNotFoundException $e) {
@@ -59,6 +62,9 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'User not found.');
         } catch (\Exception $e) {
             // Handle any other exceptions
+            Log::error('An error occurred while updating the user verification status: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
             return redirect()->back()->with('error', 'An error occurred while updating the user verification status.');
         }
     }
