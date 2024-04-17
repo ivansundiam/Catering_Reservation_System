@@ -10,7 +10,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon/favicon.ico') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon/favicon.ico') }}">
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
         
         <!-- Fonts -->

@@ -20,24 +20,6 @@
             </div>
 
             <div class="mt-5">
-                <x-label for="theme" required>Theme:</x-label>
-                <select x-model.fill="theme" name="theme" class="w-full input-field" id="theme">
-                    <option selected disabled>{{ __('Select Theme') }}</option>
-                    <option value="Formal ">{{ __('Formal ') }}</option>
-                    <option value="Gold">{{ __('Gold Party') }}</option>
-                    <option value="Kanto">{{ __('Kanto Style') }}</option>
-                    <option value="Disney">{{ __('Disney') }}</option>
-                </select>
-                <x-input-error for="theme" />
-            </div>
-
-            <div class="mt-5">
-                <x-label for="address" required>Address:</x-label>
-                <input x-model="address" name="address" class="w-full input-field" id="address" /> 
-                <x-input-error for="address" />
-            </div>
-            
-            <div class="mt-5">
                 <x-label for="occasion" required>Occasion:</x-label>
                 <select x-model.fill="occasion" name="occasion" class="w-full input-field" id="occasion">
                     <option selected disabled>{{ __('Select Occasion') }}</option>
@@ -48,6 +30,41 @@
                     <option value="Birthday">{{ __('Birthday') }}</option>
                 </select>
                 <x-input-error for="occasion" />
+            </div>
+            
+            <div class="mt-5">
+                <x-label for="address" required>Address:</x-label>
+                <input x-model="address" name="address" class="w-full input-field" id="address" /> 
+                <x-input-error for="address" />
+            </div>
+            
+
+            <div class="mt-5">
+                <x-label for="package" required>Package:</x-label>
+                <select x-model.fill="package" x-on:change="package = $event.target.selectedOptions[0].text" name="package" class="w-full input-field" id="package">
+                    <option selected disabled>{{ __('Select Package') }}</option>
+                    <option value="Wedding_Sapphire">{{ __('Wedding Elegant Sapphire Package') }}</option>
+                    <option value="Wedding_Silver">{{ __('Wedding Elegant Silver Package') }}</option>
+                    <option value="Wedding_Ruby">{{ __('Wedding Elegant Ruby Package') }}</option>
+                    <option value="Wedding_Gold">{{ __('Wedding Elegant Gold Package') }}</option>
+                    <option value="Wedding_Tiffany">{{ __('Wedding Elegant Tiffany Package') }}</option>
+                    <option value="Debut_Sapphire">{{ __('Debut Elegant Sapphire Package') }}</option>
+                    <option value="Debut_Silver">{{ __('Debut Elegant Silver Package') }}</option>
+                    <option value="Debut_Ruby">{{ __('Debut Elegant Ruby Package') }}</option>
+                    <option value="Debut_Gold">{{ __('Debut Elegant Gold Package') }}</option>
+                    <option value="Debut_Tiffany">{{ __('Debut Elegant Tiffany Package') }}</option>
+                    <option value="Ordinary">{{ __('Dinner / Lunch Buffet (Ordinary)') }}</option>
+                    <option value="Special">{{ __('Dinner / Lunch Buffet (Special)') }}</option>
+                    <option value="Cocktail_&_Merienda">{{ __('Cocktail & Merienda') }}</option>
+                    <option value="Economy_Kiddie">{{ __('Economy Kiddie') }}</option>
+                </select>
+                <x-input-error for="package" />
+            </div>
+
+            <div class="mt-5">
+                <x-label for="pax" required>Number of Attendees:</x-label>
+                <input x-model="pax" name="pax" type="number" min="1" class="w-full input-field" id="pax" /> 
+                {{-- <x-input-error for="pax" /> --}}
             </div>
         </div>
 
@@ -74,73 +91,17 @@
 
     
     <div x-show="step == 2">
-        <x-form-divider value="Package Details" />
-        
+        <x-form-divider value="Menu Details" />
+
+        <h2 class="text-md md:text-xl font-noticia">
+            Menus for 
+            <span class="underline underline-offset-4" x-text="package"></span>:
+        </h2>
+
         <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
-            <div class="mt-5">
-                <x-label for="package" required>Package:</x-label>
-                <select x-model.fill="package" name="package" class="w-full input-field" id="package">
-                    <option selected disabled>{{ __('Select Package') }}</option>
-                    <option value="1">{{ __('1') }}</option>
-                    <option value="2">{{ __('2') }}</option>
-                    <option value="3">{{ __('3') }}</option>
-                </select>
-                <x-input-error for="package" />
-            </div>
+           
             
-            <div class="mt-5">
-                <x-label for="meat" required>Meat:</x-label>
-                <select name="meat" class="w-full input-field" id="meat">
-                    <option selected disabled>{{ __('Select Meat') }}</option>
-                    <option value="Formal ">{{ __('Formal ') }}</option>
-                </select>
-                <x-input-error for="meat" />
-            </div>
-
-            <div class="mt-5">
-                <x-label for="dishes" required>Dishes:</x-label>
-                <select name="dishes" class="w-full input-field" id="dishes">
-                    <option selected disabled>{{ __('Select Dishes') }}</option>
-                    <option value="Formal ">{{ __('Formal ') }}</option>
-                </select>
-                <x-input-error for="dishes" />
-            </div>
-
-            <div class="mt-5">
-                <x-label for="side_dish" required>Side Dish:</x-label>
-                <select name="side_dish" class="w-full input-field" id="side_dish">
-                    <option selected disabled>{{ __('Select Side Dish') }}</option>
-                    <option value="Formal ">{{ __('Formal ') }}</option>
-                </select>
-                <x-input-error for="side_dish" />
-            </div>
-
-            <div class="mt-5">
-                <x-label for="appetizer" required>Appetizer:</x-label>
-                <select name="appetizer" class="w-full input-field" id="appetizer">
-                    <option selected disabled>{{ __('Select Appetizer') }}</option>
-                    <option value="Formal ">{{ __('Formal ') }}</option>
-                </select>
-                <x-input-error for="appetizer" />
-            </div>
-
-            <div class="mt-5">
-                <x-label for="dessert" required>Dessert:</x-label>
-                <select name="dessert" class="w-full input-field" id="dessert">
-                    <option selected disabled>{{ __('Select Dessert') }}</option>
-                    <option value="Formal ">{{ __('Formal ') }}</option>
-                </select>
-                <x-input-error for="dessert" />
-            </div>
-
-            <div class="mt-5">
-                <x-label for="beverages" required>Beverages:</x-label>
-                <select name="beverages" class="w-full input-field" id="beverages">
-                    <option selected disabled>{{ __('Select Beverages') }}</option>
-                    <option value="Formal ">{{ __('Formal ') }}</option>
-                </select>
-                <x-input-error for="beverages" />
-            </div>
+            
         </div>
 
         <div class="flex justify-center w-full mt-8 md:justify-end">
@@ -334,7 +295,7 @@
                 address: '{{ auth()->user()->address }}',
                 theme: null,
                 occasion: null,
-                package: null,
+                package: '',
                 step: 1,
 
                 nextStep() {
