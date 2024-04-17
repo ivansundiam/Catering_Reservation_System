@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="relative selection:bg-primary selection:text-white h-[420px] lg:h-[620px]" >
-        {{-- <img src="{{ asset('assets/web-images/high/hero-bg.webp') }}"  fetchpriority="high" class="z-0 w-full bg-cover absolute h-[420px] lg:h-[620px]" alt="Hero image"> --}}
+        <img src="{{ asset('assets/web-web-images/lowages/high/hero-bg.webp') }}"  fetchpriority="high" class="z-0 w-full bg-cover absolute h-[420px] lg:h-[620px]" alt="Hero image">
         <img src="{{ asset('assets/web-images/low/hero-bg.webp') }}" width="620px" height="420px" fetchpriority="high" class="z-0 w-full bg-cover absolute h-[420px] lg:h-[620px]" alt="Hero image">
 
         <div class="relative z-10 flex items-center w-full h-full bg-gradient-to-r from-black to-transparent" >
@@ -37,34 +37,58 @@
                 <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. At quibusdam eaque, quis eligendi tenetur deserunt.</p>
             </div>
 
-            <div class="grid mx-12 md:mx-0 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-12 gap-y-6" 
-                x-show="isOnServices"
-                x-transition:enter="transition ease-out duration-300 transform"
-                x-transition:enter-start="opacity-0 translate-y-12"
-                x-transition:enter-end="opacity-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-300 transform"
-                x-transition:leave-start="opacity-100 translate-y-0"
-                x-transition:leave-end="opacity-0 translate-y-12">
+            {{-- <div class="grid mx-12 md:mx-0 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-12 gap-y-6"  --}}
+            <div class="relative">
+                <div class="flex p-5 pb-12 mx-12 overflow-x-scroll md:mx-0 no-scrollbar" 
+                    x-show="isOnServices"
+                    x-transition:enter="transition ease-out duration-300 transform"
+                    x-transition:enter-start="opacity-0 translate-y-12"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-300 transform"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 translate-y-12">
+    
+                    <a href="{{ asset('assets/packages/sapphire.pdf') }}" target="_blank" class="mx-2 duration-300 ease-in-out bg-gray-600 shadow cursor-pointer hover:shadow-xl hover:scale-105 min-w-72">
+                        <h4 class="text-lg text-white my-3 text-center !font-noticia">Wedding & Debut: Sapphire</h4>
+                        <img src="{{ asset('assets/web-images/low/package-sapphire.webp') }}" class="package-service"  fetchpriority="high" alt="package sapphire">
+                    </a>
+                    
+                    <a href="{{ asset('assets/packages/silver.pdf') }}" target="_blank" class="mx-2 duration-300 ease-in-out bg-gray-600 shadow cursor-pointer hover:shadow-xl hover:scale-105 min-w-72">
+                        <h4 class="text-lg text-white my-3 text-center !font-noticia">Wedding & Debut: Silver</h4>
+                        <img src="{{ asset('assets/web-images/low/package-silver.webp') }}" class="package-service"  fetchpriority="high" alt="package silver">
+                    </a>
+                    
+                    <a href="{{ asset('assets/packages/ruby.pdf') }}" target="_blank" class="mx-2 duration-300 ease-in-out bg-gray-600 shadow cursor-pointer hover:shadow-xl hover:scale-105 min-w-72">
+                        <h4 class="text-lg text-white my-3 text-center !font-noticia">Wedding & Debut: Ruby</h4>
+                        <img src="{{ asset('assets/web-images/low/package-ruby.webp') }}" class="package-service"  fetchpriority="high" alt="package ruby">
+                    </a>
+                    
+                    <a href="{{ asset('assets/packages/gold.pdf') }}" target="_blank" class="mx-2 duration-300 ease-in-out bg-gray-600 shadow cursor-pointer hover:shadow-xl hover:scale-105 min-w-72">
+                        <h4 class="text-lg text-white my-3 text-center !font-noticia">Wedding & Debut: Gold</h4>
+                        <img src="{{ asset('assets/web-images/low/package-gold.webp') }}" class="package-service"  fetchpriority="high" alt="package gold">
+                    </a>
+                    
+                    <a href="{{ asset('assets/packages/tiffany.pdf') }}" target="_blank" class="mx-2 duration-300 ease-in-out bg-gray-600 shadow cursor-pointer hover:shadow-xl hover:scale-105 min-w-72">
+                        <h4 class="text-lg text-white my-3 text-center !font-noticia">Wedding & Debut: Tiffany</h4>
+                        <img src="{{ asset('assets/web-images/low/package-tiffany.webp') }}" class="package-service"  fetchpriority="high" alt="package tiffany">
+                    </a>
+    
+                    <a href="{{ asset('assets/packages/ordinary.pdf') }}" target="_blank" class="mx-2 duration-300 ease-in-out bg-gray-600 shadow cursor-pointer hover:shadow-xl hover:scale-105 min-w-72">
+                        <h4 class="text-lg text-white my-3 text-center !font-noticia">Dinner / Lunch Buffet: Ordinary</h4>
+                        <img src="{{ asset('assets/web-images/low/package-ordinary.webp') }}" class="package-service"  fetchpriority="high" alt="package ordinary">
+                    </a>
+    
+                    <a href="{{ asset('assets/packages/special.pdf') }}" target="_blank" class="mx-2 duration-300 ease-in-out bg-gray-600 shadow cursor-pointer hover:shadow-xl hover:scale-105 min-w-72">
+                        <h4 class="text-lg text-white my-3 text-center !font-noticia">Dinner / Lunch Buffet: Special</h4>
+                        <img src="{{ asset('assets/web-images/low/package-special.webp') }}" class="package-service"  fetchpriority="high" alt="package special">
+                    </a>
+    
+                </div>
 
-                <a href="{{ route('reservation.create') }}"  class="duration-300 ease-in-out transform bg-gray-400 rounded-lg shadow hover:shadow-xl hover:scale-105">
-                    <img src="{{ asset('assets/web-images/high/service1.webp') }}" class="package-service"  fetchpriority="high" alt="service 1">
-                    <h4 class="heading-text !text-2xl text-white mt-3 text-center">package 1</h4>
-                    <p class="mb-5 text-center text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dignissimos, ea consequatur molestiae officia eligendi?</p>
-                </a>
-
-                <a href="{{ route('reservation.create') }}" class="duration-300 ease-in-out transform bg-gray-400 rounded-lg shadow hover:shadow-xl hover:scale-105">
-                    <img src="{{ asset('assets/web-images/high/service2.webp') }}" class="package-service"  fetchpriority="high" alt="service 2">
-                    <h4 class="heading-text !text-2xl text-white mt-3 text-center">package 2</h4>
-                    <p class="mb-5 text-center text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dignissimos, ea consequatur molestiae officia eligendi?</p>
-                </a>
-
-                <a href="{{ route('reservation.create') }}" class="duration-300 ease-in-out transform bg-gray-400 rounded-lg shadow hover:shadow-xl hover:scale-105">
-                    <img src="{{ asset('assets/web-images/high/service3.webp') }}" class="package-service"  fetchpriority="high" alt="service 3">
-                    <h4 class="heading-text !text-2xl text-white mt-3 text-center">package 3</h4>
-                    <p class="mb-5 text-center text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis dignissimos, ea consequatur molestiae officia eligendi?</p>
-                </a>
+                <!-- fade sides -->
+                <div class="absolute inset-y-0 left-0 w-8 pointer-events-none bg-gradient-to-r from-primary-light to-trasparent"></div>
+                <div class="absolute inset-y-0 right-0 w-8 pointer-events-none bg-gradient-to-l to-trasparent from-primary-light"></div>
             </div>
-
         </div>
     </section>
 
