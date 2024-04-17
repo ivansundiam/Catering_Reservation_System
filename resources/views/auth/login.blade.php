@@ -17,9 +17,9 @@
             x-on:submit="buttonDisabled = true">
             @csrf
 
-            <div class="flex items-center flex-col mb-5">
+            <div class="flex flex-col items-center mb-5">
                 <h2 class="forms-heading-text">Login</h2>
-                <span class="text-sm md:text-base text-gray-500">for full access</span>
+                <span class="text-sm text-gray-500 md:text-base">for full access</span>
             </div>
 
             <div>

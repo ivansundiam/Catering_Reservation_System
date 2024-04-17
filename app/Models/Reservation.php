@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Reservation extends Model
 {
@@ -12,12 +13,15 @@ class Reservation extends Model
 
     protected $fillable = [
         'user_id',
-        'package',
+        'package_id',
+        'menu_id',
         'address',
         'date',
         'time',
         'occasion',
-        'theme',
+        'pax',
+        'total_cost',
+        'amount_paid',
         'payment_percent',
         'receipt_img',
         'payment_dates'

@@ -14,17 +14,20 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('package');
+            $table->foreignId('package_id')->constrained()->onDelete('cascade');
+            $table->foreignId('menu_id')->constrained()->onDelete('cascade');
             $table->string('address');
-            $table->string('theme');
+            $table->integer('pax');
             $table->string('occasion');
             $table->date('date');
             $table->time('time');
+            $table->decimal('total_cost', 8, 2);
+            $table->decimal('amount_paid', 8, 2)->nullable();
             $table->integer('payment_percent');
             $table->string('receipt_img');
             $table->json('payment_dates')->nullable();
             $table->timestamps();
-        });
+        });        
     }
 
     /**

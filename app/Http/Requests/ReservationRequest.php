@@ -22,11 +22,13 @@ class ReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'package' => 'required',
+            'package_id' => 'required',
+            'menu_id' => 'required',
             'date' => 'required|date',
             'time' => 'required|date_format:H:i|after:09:59|before:20:01',
             'occasion' => 'required',
-            'theme' => 'required',
+            'total_cost' => 'required',
+            'pax' => 'required|numeric|max:300',
             'address' => 'required',
             'payment_percent' => 'required',
             'receipt-img' => 'required|image|mimes:jpeg,png,jpg|max:2048',

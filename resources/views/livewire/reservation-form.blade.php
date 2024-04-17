@@ -2,14 +2,18 @@
     method="post" 
     enctype="multipart/form-data"
     x-data="reservationForm()"
+    x-on:submit="buttonDisabled = true"
     x-cloak>
     @csrf
+
+    <x-validation-errors class="mb-4" />
 
     <div class="flex flex-col items-center">
         <h2 class="forms-heading-text" x-text="step == 3 ? 'Reservation Summary' : 'Reservation Details'"></h2>
     </div>
 
     <div x-show="step == 1">
+
         <x-form-divider value="Personal Information & Event Details" />
 
         <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
@@ -41,30 +45,19 @@
 
             <div class="mt-5">
                 <x-label for="package" required>Package:</x-label>
-                <select x-model.fill="package" x-on:change="package = $event.target.selectedOptions[0].text" name="package" class="w-full input-field" id="package">
+                <select x-model.fill="package"  x-on:change="packageText = $event.target.options[$event.target.selectedIndex].textContent; $wire.selectedPackage($event.target.value)" name="package_id" class="w-full input-field" id="package">
                     <option selected disabled>{{ __('Select Package') }}</option>
-                    <option value="Wedding_Sapphire">{{ __('Wedding Elegant Sapphire Package') }}</option>
-                    <option value="Wedding_Silver">{{ __('Wedding Elegant Silver Package') }}</option>
-                    <option value="Wedding_Ruby">{{ __('Wedding Elegant Ruby Package') }}</option>
-                    <option value="Wedding_Gold">{{ __('Wedding Elegant Gold Package') }}</option>
-                    <option value="Wedding_Tiffany">{{ __('Wedding Elegant Tiffany Package') }}</option>
-                    <option value="Debut_Sapphire">{{ __('Debut Elegant Sapphire Package') }}</option>
-                    <option value="Debut_Silver">{{ __('Debut Elegant Silver Package') }}</option>
-                    <option value="Debut_Ruby">{{ __('Debut Elegant Ruby Package') }}</option>
-                    <option value="Debut_Gold">{{ __('Debut Elegant Gold Package') }}</option>
-                    <option value="Debut_Tiffany">{{ __('Debut Elegant Tiffany Package') }}</option>
-                    <option value="Ordinary">{{ __('Dinner / Lunch Buffet (Ordinary)') }}</option>
-                    <option value="Special">{{ __('Dinner / Lunch Buffet (Special)') }}</option>
-                    <option value="Cocktail_&_Merienda">{{ __('Cocktail & Merienda') }}</option>
-                    <option value="Economy_Kiddie">{{ __('Economy Kiddie') }}</option>
+                    @foreach ($packages as $package)
+                        <option value="{{ $package->id }}">{{ __($package->name) }}</option>
+                    @endforeach
                 </select>
                 <x-input-error for="package" />
             </div>
 
             <div class="mt-5">
-                <x-label for="pax" required>Number of Attendees:</x-label>
-                <input x-model="pax" name="pax" type="number" min="1" class="w-full input-field" id="pax" /> 
-                {{-- <x-input-error for="pax" /> --}}
+                <x-label for="pax" required>Pax:</x-label>
+                <input x-model="pax" wire:model.change="pax" x-on:change="$wire.setPax()" name="pax" type="number" min="1" max="300" class="w-full input-field" id="pax" placeholder="Enter Number of Attendees" /> 
+                <x-input-error for="pax" />
             </div>
         </div>
 
@@ -84,7 +77,10 @@
             </div>
         </div>
 
-        <div class="flex justify-center w-full mt-8 md:justify-end">
+        <div class="relative flex justify-center w-full mt-8 md:justify-end">
+            <div x-show="incompleteFields" class="absolute p-2 mb-1 text-sm text-gray-400 bg-gray-100 rounded-md shadow-lg top-[-45px]" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
+                {{ __('Fill required fields before proceeding') }}
+            </div>
             <x-button x-on:click="nextStep()" type="button">next</x-button>
         </div>
     </div>
@@ -94,17 +90,43 @@
         <x-form-divider value="Menu Details" />
 
         <h2 class="text-md md:text-xl font-noticia">
-            Menus for 
-            <span class="underline underline-offset-4" x-text="package"></span>:
+            Choose Menus for 
+            <span class="underline underline-offset-4" x-text="packageText"></span>:
         </h2>
 
-        <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
-           
-            
-            
+        <div class="flex w-[85%] mx-auto flex-col justify-between pb-12 md:flex-row">
+            <div class="w-full">
+                <ul class="grid w-full gap-4 p-8 mt-5 overflow-y-scroll font-noticia no-scrollbar max-h-72 md:max-h-80 lg:max-h-96">
+                    @if ($menus)
+                        @foreach ($menus as $menu)
+                            <li>
+                                <input type="radio" x-model="menu" x-on:click="menuName = '{{ $menu->name }}'; $wire.selectedMenu({{ $menu->price }})" id="menu-{{ $menu->name }}" name="menu_id" value="{{ $menu->id }}" class="hidden peer" />
+                                <label for="menu-{{ $menu->name }}" class="menu-card">                           
+                                    <div class="flex justify-between w-full">
+                                        <div class="text-lg font-semibold ">Menu {{ $menu->name }}</div>
+                                        <div class="">₱{{ $menu->price }} / HEAD + 12%</div>
+                                    </div>
+                                </label>
+                            </li>
+                        @endforeach
+                    @endif
+                </ul>
+            </div>
+
+            <div class="flex flex-col items-center w-full lg:w-72">
+                @if ($packageName)
+                    <h2 class="mb-3 text-md md:text-lg font-noticia">View full menu</h2>
+                    <a href="{{ asset('assets/packages/' . $packageName . '.pdf') }}" target="_blank" class="mx-2 duration-300 ease-in-out bg-gray-600 shadow cursor-pointer max-w-72 hover:shadow-xl hover:scale-105">
+                        <img src="{{ asset('assets/web-images/low/package-' . $packageName . '.webp') }}" class="package-service"  fetchpriority="high" alt="package sapphire">
+                    </a>
+                @endif
+            </div>
         </div>
 
-        <div class="flex justify-center w-full mt-8 md:justify-end">
+        <div class="relative flex justify-center w-full mt-8 md:justify-end">
+            <div x-show="incompleteFields" class="absolute p-2 mb-1 text-sm text-gray-400 bg-gray-100 rounded-md shadow-lg top-[-45px]" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
+                {{ __('Fill required fields before proceeding') }}
+            </div>
             <x-secondary-button x-on:click="prevStep()" type="button" class="mr-3">back</x-secondary-button>
             <x-button x-on:click="nextStep()" type="button">next</x-button>
         </div>    
@@ -123,10 +145,10 @@
                 <p>Address: <span x-text="address"></span></p>
             </li>
             <li>
-                <p>Theme: <span x-text="theme"></span></p>
+                <p>Occasion: <span x-text="occasion"></span></p>
             </li>
             <li>
-                <p>Occasion: <span x-text="occasion"></span></p>
+                <p>Pax: <span x-text="pax"></span></p>
             </li>
         </ul>
 
@@ -146,35 +168,25 @@
         <ul class="grid grid-cols-2 m-0 text-base lg:mx-10 font-noticia">
             <div>
                 <li>
-                    <p>Package: <span x-text="package"></span></p>
+                    <p>Package: <span x-text="packageText"></span></p>
                 </li>
                 <li>
-                    <p>Meat: <span></span></p>
+                    <p>Menu: <span x-text="menuName"></span></p>
                 </li>
                 <li>
-                    <p>Dessert: <span></span></p>
+                    <p>Price: ₱<span>{{ $menuPrice }}.00</span></p>
                 </li>
-                <li>
-                    <p>Appetizer: <span></span></p>
-                </li>
+                
             </div>
             <div>
-                <li>
-                    <p>Dishes: <span></span></p>
-                </li>
-                <li>
-                    <p>Side dish: <span></span></p>
-                </li>
-                <li>
-                    <p>Beverages: <span></span></p>
-                </li>
+                
             </div>
         </ul>
 
         <x-form-divider />
         
         <div class="flex justify-end w-full px-10 font-semibold font-noticia">
-            <p>Total Cost:</p>
+            <p>Total Cost: ₱{{ $totalCost }}</p>
         </div>
 
         <div class="flex justify-center w-full mt-8 md:justify-end">
@@ -187,8 +199,13 @@
         <x-form-divider value="Payment Details" />
 
         <div class="flex flex-col w-full mx-auto my-5 lg:w-2/3">
+            <h2 class="text-md md:text-lg font-noticia">
+                Total Cost: ₱{{ $totalCost }}
+                <input type="text" name="total_cost" value="{{ $totalCost }}" class="hidden" />
+            </h2>
+
             <x-label for="payment_percent" required>Payment Percent:</x-label>
-            <select name="payment_percent" class="w-full input-field" id="payment_percent">
+            <select name="payment_percent" x-on:change="$wire.calculateAmountToPay($event.target.value)" class="w-full input-field" id="payment_percent">
                 <option selected disabled>{{ __('Select Payment Percent') }}</option>
                 <option value="20">{{ __('20') }}</option>
                 <option value="60">{{ __('60') }}</option>
@@ -196,6 +213,12 @@
                 <option value="100">{{ __('Full') }}</option>
             </select>
             <x-input-error for="payment_percent" />
+
+            <h2 x-show="$wire.amountToPay" class="mt-5 text-md md:text-lg font-noticia">
+                Amount to pay: ₱{{ $amountToPay }}
+                <input type="text" name="amount_paid" value="{{ $amountToPay }}" class="hidden" />
+
+            </h2>
 
             <h2 class="my-3 text-center text-md md:text-xl font-noticia">Select Payment Method </h2>
             <div class="flex justify-center mb-5">
@@ -282,7 +305,12 @@
 
         <div class="flex justify-center w-full mt-8 md:justify-end">
             <x-secondary-button x-on:click="prevStep()" type="button" class="mr-3">back</x-secondary-button>
-            <button type="submit" class="btn-success">Reserve</button>
+            <button class="min-w-24 btn-success" x-bind:disabled="buttonDisabled">
+                <div role="status" x-show="buttonDisabled" class="w-full">
+                    <svg class="mx-auto animate-spin" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612" stroke="#e2e8f0" stroke-width="3.55556" stroke-linecap="round"></path> </g></svg>
+                </div>
+                <span x-show="!buttonDisabled">{{ __('Reserve') }}</span>
+            </button>
         </div>
     </div>
 </form>
@@ -293,14 +321,43 @@
             Alpine.data('reservationForm', () => ({
                 name: '{{ auth()->user()->name  }}',
                 address: '{{ auth()->user()->address }}',
-                theme: null,
-                occasion: null,
+                pax: '',
+                occasion: '',
+                packageText: '',
                 package: '',
+                menu: '',
+                menuName: '',
+                buttonDisabled: false,
+                incompleteFields: false,
                 step: 1,
 
+                fieldsValidated(){
+                    if(this.step === 1){
+                        // return this.address 
+                        // && this.occasion != "Select Occasion" 
+                        // && this.package != "Select Package" 
+                        // && this.pax;
+                        return true;
+                    }
+                    else if(this.step === 2){
+                        // return this.menu
+                        return true;
+                    }
+                    else{
+                     return true;   
+                    }
+                },
+
                 nextStep() {
-                    this.step++;
-                    window.scrollTo({ top: 180, behavior: 'smooth' });
+                    if (this.fieldsValidated()) {
+                        this.step++;
+                        this.incompleteFields = false;
+                        window.scrollTo({ top: 180, behavior: 'smooth' });
+                    }
+                    else
+                    {
+                        this.incompleteFields = true;
+                    }
                 },
                 prevStep() {
                     this.step--;

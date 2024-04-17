@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ReservationRequest;
 use App\Services\ReservationService;
 use Illuminate\Contracts\View\View;
-use App\Actions\Uploads\StoreImage;   
+use App\Actions\Uploads\StoreImage;
+use App\Models\Package;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,9 @@ class ReservationController extends Controller
      * Show the form for creating a new resource.
      */
     public function create() : View{
-        return view('clients.add-reserve');
+        return view('clients.add-reserve', [
+            'packages' => Package::all()
+        ]);
     }
 
     /**
