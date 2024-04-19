@@ -17,10 +17,10 @@
                             <p>Address: <span>{{ $reservation->address }}</span></p>
                         </li>
                         <li>
-                            <p>Theme: <span>{{ $reservation->theme }}</span></p>
+                            <p>Occasion: <span>{{ $reservation->occasion }}</span></p>
                         </li>
                         <li>
-                            <p>Occasion: <span>{{ $reservation->occasion }}</span></p>
+                            <p>Pax: <span>{{ $reservation->pax }}</span></p>
                         </li>
                     </ul>
             
@@ -40,35 +40,27 @@
                     <ul class="grid grid-cols-2 m-0 text-base lg:mx-10 font-noticia">
                         <div>
                             <li>
-                                <p>Package: <span>{{ $reservation->package }}</span></p>
+                                <p>Package: <span>{{ $reservation->package->name }}</span></p>
                             </li>
                             <li>
-                                <p>Meat: <span></span></p>
+                                <p>Menu: <span>{{ $reservation->menu->name }}</span></p>
                             </li>
                             <li>
-                                <p>Dessert: <span></span></p>
+                                <p>Price: ₱<span>{{ $reservation->menu->price }}</span></p>
                             </li>
                             <li>
-                                <p>Appetizer: <span></span></p>
+                                <p>Amount Paid: ₱<span>{{ $reservation->amount_paid }} ({{ $reservation->payment_percent }}%)</span></p>
                             </li>
                         </div>
                         <div>
-                            <li>
-                                <p>Dishes: <span></span></p>
-                            </li>
-                            <li>
-                                <p>Side dish: <span></span></p>
-                            </li>
-                            <li>
-                                <p>Beverages: <span></span></p>
-                            </li>
+                            
                         </div>
                     </ul>
             
                     <x-form-divider />
                     
                     <div class="flex justify-end w-full px-10 font-semibold font-noticia">
-                        <p>Total Cost:</p>
+                        <p>Total Cost: ₱{{ $reservation->total_cost }}</p>
                     </div>
                 </div>
             </div>

@@ -38,13 +38,18 @@
             
             <div class="mt-5">
                 <x-label for="address" required>Address:</x-label>
-                <input x-model="address" name="address" class="w-full input-field" id="address" /> 
+                <x-input x-model="address" name="address" class="w-full" id="address" /> 
                 <x-input-error for="address" />
             </div>
             
 
             <div class="mt-5">
-                <x-label for="package" required>Package:</x-label>
+                <div class="flex justify-between">
+                    <x-label for="package" required>Package:</x-label>
+                    <a href="{{ asset('assets/packages/packages.pdf') }}" target="_blank" class="text-blue-500 hover:underline decoration-blue-500 underline-offset-2 text-sm">
+                        View all packages
+                    </a>
+                </div>
                 <select x-model.fill="package"  x-on:change="packageText = $event.target.options[$event.target.selectedIndex].textContent; $wire.selectedPackage($event.target.value)" name="package_id" class="w-full input-field" id="package">
                     <option selected disabled>{{ __('Select Package') }}</option>
                     @foreach ($packages as $package)
@@ -56,7 +61,7 @@
 
             <div class="mt-5">
                 <x-label for="pax" required>Pax:</x-label>
-                <input x-model="pax" wire:model.change="pax" x-on:change="$wire.setPax()" name="pax" type="number" min="1" max="300" class="w-full input-field" id="pax" placeholder="Enter Number of Attendees" /> 
+                <x-input x-model="pax" wire:model.change="pax" x-on:change="$wire.setPax()" name="pax" type="number" min="1" max="300" :value="old('pax')" class="w-full" id="pax" placeholder="Enter Number of Attendees" /> 
                 <x-input-error for="pax" />
             </div>
         </div>
@@ -85,7 +90,6 @@
         </div>
     </div>
 
-    
     <div x-show="step == 2">
         <x-form-divider value="Menu Details" />
 
@@ -96,7 +100,7 @@
 
         <div class="flex w-[85%] mx-auto flex-col justify-between pb-12 md:flex-row">
             <div class="w-full">
-                <ul class="grid w-full gap-4 p-8 mt-5 overflow-y-scroll font-noticia no-scrollbar max-h-72 md:max-h-80 lg:max-h-96">
+                <ul class="grid w-full gap-4 p-8 mt-5 overflow-y-scroll font-noticia max-h-72 md:max-h-80 lg:max-h-96">
                     @if ($menus)
                         @foreach ($menus as $menu)
                             <li>
@@ -333,15 +337,13 @@
 
                 fieldsValidated(){
                     if(this.step === 1){
-                        // return this.address 
-                        // && this.occasion != "Select Occasion" 
-                        // && this.package != "Select Package" 
-                        // && this.pax;
-                        return true;
+                        return this.address 
+                        && this.occasion != "Select Occasion" 
+                        && this.package != "Select Package" 
+                        && this.pax;
                     }
                     else if(this.step === 2){
-                        // return this.menu
-                        return true;
+                        return this.menu
                     }
                     else{
                      return true;   

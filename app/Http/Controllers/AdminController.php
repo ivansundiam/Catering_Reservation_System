@@ -6,7 +6,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\User;
-
+use App\Models\Package;
+use App\Models\Menu;
 class AdminController extends Controller
 {
     public function dashboard() : View
@@ -17,7 +18,8 @@ class AdminController extends Controller
 
     public function showReservation($id) : View
     {
-        $reservation = Reservation::findOrFail($id);
+        $reservation = Reservation::with('package', 'menu')->findOrFail($id);
+
         return view('admin.reserve-details', compact('reservation'));
     }
 }

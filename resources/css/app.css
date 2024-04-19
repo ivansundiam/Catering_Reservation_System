@@ -43,7 +43,7 @@ dl {
 }
 
 .btn-primary-outline {
-    @apply px-4 py-2 capitalize transition ease-in-out border border-primary text-primary hover:bg-primary active:bg-primary-active hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary;
+    @apply px-4 py-2 capitalize transition font-semibold bg-primary ease-in-out border border-primary text-primary hover:bg-primary-hover active:bg-primary-active text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary;
 }
 
 .package-service {
