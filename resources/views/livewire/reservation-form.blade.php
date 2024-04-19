@@ -333,15 +333,13 @@
 
                 fieldsValidated(){
                     if(this.step === 1){
-                        // return this.address 
-                        // && this.occasion != "Select Occasion" 
-                        // && this.package != "Select Package" 
-                        // && this.pax;
-                        return true;
+                        return this.address 
+                        && this.occasion != "Select Occasion" 
+                        && this.package != "Select Package" 
+                        && this.pax;
                     }
                     else if(this.step === 2){
-                        // return this.menu
-                        return true;
+                        return this.menu
                     }
                     else{
                      return true;   

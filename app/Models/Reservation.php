@@ -37,4 +37,14 @@ class Reservation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function package() : BelongsTo
+    {
+        return $this->belongsTo(Package::class);
+    }
+
+    public function menu() : BelongsTo
+    {
+        return $this->belongsTo(Menu::class);
+    }
 }

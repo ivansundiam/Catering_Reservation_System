@@ -27,6 +27,7 @@ class ReservationRequest extends FormRequest
             'date' => 'required|date',
             'time' => 'required|date_format:H:i|after:09:59|before:20:01',
             'occasion' => 'required',
+            'amount_paid' => 'numeric',
             'total_cost' => 'required',
             'pax' => 'required|numeric|max:300',
             'address' => 'required',

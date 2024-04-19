@@ -18,7 +18,7 @@
                             <div class="bg-white w-[75%] border-r border-gray-200">
                                 <div class="flex flex-col justify-center p-3">
                                     <span class="text-sm {{ $completed ? 'text-green-500' : 'text-primary'}}">{{ $completed ? 'Payment Completed' : 'Pending Payment' }}</span>
-                                    <p class="text-base">Package {{ $reservation->package }}</p>
+                                    <p class="text-base">{{ $reservation->package->name }}</p>
                                     <div class="flex justify-between">
                                         <div>
                                             <span class="text-sm text-gray-500">Occasion</span>

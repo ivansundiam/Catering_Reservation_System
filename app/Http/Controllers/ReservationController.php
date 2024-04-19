@@ -6,6 +6,7 @@ use App\Http\Requests\ReservationRequest;
 use App\Services\ReservationService;
 use Illuminate\Contracts\View\View;
 use App\Actions\Uploads\StoreImage;
+use App\Models\Menu;
 use App\Models\Package;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -50,8 +51,10 @@ class ReservationController extends Controller
      */
     public function show(string $id)
     {
-        $reservation = Reservation::findOrFail($id);
+        $reservation = Reservation::with('package', 'menu')->findOrFail($id);
         $payment_percentages = [20, 60, 90, 100];
+        // $package = Package::findOrFail($reservation->package_id);
+        // $menu = Menu::findOrFail($reservation->menu_id);
 
         return view('clients.reserve-details', compact('reservation', 'payment_percentages'));
     }
