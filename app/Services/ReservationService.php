@@ -12,14 +12,18 @@ class ReservationService {
     
     public function createReservation(ReservationRequest $request, StoreImage $storeImage) 
     {
+        $resData = $request->validated();
+        $userId = Auth::id();
         // stores image via StoreImage action
         $receiptPhotoPath = $storeImage->execute($request, 'receipt-img', 'receipts');
         
-        $resData = $request->validated();
+        // generate transaction number
+        $transactionNumber = $this->generateTransactionNumber($userId);
 
         // Initialize array with the current date/time
+        $resData['transaction_number'] = $transactionNumber;
         $resData['payment_dates'] = [now()->toDateTimeString()]; 
-        $resData['user_id'] = Auth::id();
+        $resData['user_id'] = $userId;
         $resData['receipt_img'] = $receiptPhotoPath;
 
         Reservation::create($resData);
@@ -52,5 +56,18 @@ class ReservationService {
             'receipt_img' => implode(',', $receiptImagePaths),
             'payment_dates' => $paymentDates,
         ]);
+    }
+
+    private function generateTransactionNumber($userId) {
+        $components = [
+            date('YmdHi'),
+            str_pad(random_int(0, 99999), 4, '0', STR_PAD_LEFT),    
+            str_pad($userId, 4, '0', STR_PAD_LEFT),    
+            
+        ];
+
+        $transactionNumber = implode('-', $components);
+
+        return $transactionNumber;
     }
 }

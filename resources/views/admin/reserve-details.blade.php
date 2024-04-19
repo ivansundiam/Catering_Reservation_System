@@ -7,6 +7,12 @@
                 </div>
 
                 <div>
+                    <x-form-divider />
+                    
+                    <h2 class="font-noticia text-base m-0 lg:mx-10 mt-5">Transaction no.: 
+                        <span>{{ $reservation->transaction_number }}</span>
+                    </h2>
+                    
                     <x-form-divider value="Personal Information & Event Details" />
             
                     <ul class="m-0 text-base lg:mx-10 font-noticia">
@@ -103,4 +109,4 @@
             </div>
         </div>
     </div>
-</x-admin-layout>
+</x-admin-layout>-layout>-layout>

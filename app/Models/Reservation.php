@@ -13,6 +13,7 @@ class Reservation extends Model
 
     protected $fillable = [
         'user_id',
+        'transaction_number',
         'package_id',
         'menu_id',
         'address',
