@@ -1,6 +1,8 @@
 <div>
-    <button class="px-3 py-2 btn-success" wire:click="showForm" wire:loading.attr="disabled">
-        {{ __('Add Item') }}
+    <button class="!p-1 text-center !font-bold btn-success" wire:click="showForm" wire:loading.attr="disabled">
+        <span class="text-xl">
+            <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+        </span>
     </button>
 
     <!-- Add Item  Modal -->

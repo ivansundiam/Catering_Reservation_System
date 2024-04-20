@@ -8,24 +8,27 @@ use App\Services\InventoryService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\InventoryRequest;
+use Illuminate\Http\Request;
 
 class InventoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index() : View
+    public function index(Request $request) : View
     {
-        $inventory = Inventory::orderBy('id', 'desc')->paginate(10);
-        return view('admin.inventory')->with('inventoryItems', $inventory);
-    }
+        $search = $request->input('search');
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $inventory = Inventory::where(function ($query) use ($search) {
+            $query->where('item_name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('quantity', 'like', "%{$search}%")
+                  ->orWhere('category', 'like', "%{$search}%");
+        })
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
+        return view('admin.inventory')->with('inventoryItems', $inventory);
     }
 
     /**
@@ -51,14 +54,6 @@ class InventoryController extends Controller
     {
         $item = Inventory::findOrFail($id);
         return view('admin.inventory-details', compact('item'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Inventory $inventory)
-    {
-        //
     }
 
     /**

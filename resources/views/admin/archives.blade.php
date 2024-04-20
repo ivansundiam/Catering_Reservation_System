@@ -39,8 +39,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($users as $user)
-                                <tr class="bg-white border-b">
+                            @forelse ($users as $index => $user)
+                                <tr class="border-b {{ $index % 2 == 0 ? 'bg-gray-100' : 'bg-white'; }}">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $user->name }}
                                     </th>

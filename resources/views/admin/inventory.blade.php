@@ -5,12 +5,17 @@
 
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="p-10 overflow-hidden bg-white shadow-xl dark:bg-gray-800 sm:rounded-lg">
-                <div class="flex items-start justify-between mb-5">
-                   <p class="text-xl ">Inventory  </p>
-
-                   @livewire('inventory.add-item-form')
-                    
+            <div class="p-8 overflow-hidden bg-white shadow-xl dark:bg-gray-800 sm:rounded-lg">
+                <div class="flex items-center justify-between mb-5">
+                    <div class="flex items-center">
+                        <p class="text-xl mr-3">Inventory  </p>
+     
+                        @livewire('inventory.add-item-form')
+                         
+                     </div>
+                     <form action="{{ route('inventory.index') }}" method="get">
+                         <x-input type="text" name="search" class="input-field" placeholder="Search" id="search field" />
+                     </form>
                 </div>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 rtl:text-right">
@@ -37,8 +42,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($inventoryItems as $item)
-                                <tr class="bg-white border-b">
+                            @forelse ($inventoryItems as $index => $item)
+                                <tr class="border-b {{ $index % 2 == 0 ? 'bg-gray-100' : 'bg-white'; }}">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $item->id }}
                                     </th>

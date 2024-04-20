@@ -39,9 +39,10 @@ Route::group(['middleware' => 'auth'], function (){
 ]);
 
     Route::group(['middleware' => 'AllowUser:admin', 'prefix' => 'admin'], function () {
-        Route::get('/dashboard', [AdminController::class , 'dashboard'])->name('admin-dashboard');
+        Route::get('/reservations', [AdminController::class , 'reservations'])->name('admin.reservations');
         Route::get('/reservation/{id}', [AdminController::class , 'showReservation'])->name('admin.reservation.show');
         Route::resource('inventory', InventoryController::class);
+        Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
         Route::resource('users', UserController::class);
         Route::get('/archive', [UserController::class, 'archives'])->name('users.archive');
         Route::post('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
