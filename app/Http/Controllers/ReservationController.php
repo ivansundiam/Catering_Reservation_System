@@ -9,6 +9,9 @@ use App\Actions\Uploads\StoreImage;
 use App\Models\Menu;
 use App\Models\Package;
 use App\Models\Reservation;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
+use Exception;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -18,7 +21,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $userReservations = Reservation::where('user_id', auth()->user()->id)->get();
+        $userReservations = Reservation::where('user_id', auth()->user()->id)->paginate(6);
 
         return $userReservations->isEmpty() 
             ? redirect()->route('reservation.create') 
@@ -41,9 +44,21 @@ class ReservationController extends Controller
 
      public function store(ReservationRequest $request, ReservationService $reservationService, StoreImage $storeImage)
     {
-        $reservationService->createReservation($request, $storeImage);
+        try {
+            $reservationService->createReservation($request, $storeImage);
 
-        return redirect()->route('reservation.index')->with('success', "Reservation added successfully");
+            return redirect()->route('reservation.index')->with('success', "Reservation added successfully");
+        } catch (ModelNotFoundException $e) {
+            Log::error('An error occurred while creating a reservation: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            return redirect()->back()->with('error', 'User not found.');
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while creating a reservation: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while creating a reservation.');
+        }
     }
 
     /**
@@ -53,9 +68,7 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::with('package', 'menu')->findOrFail($id);
         $payment_percentages = [20, 60, 90, 100];
-        // $package = Package::findOrFail($reservation->package_id);
-        // $menu = Menu::findOrFail($reservation->menu_id);
-
+        
         return view('clients.reserve-details', compact('reservation', 'payment_percentages'));
     }
 

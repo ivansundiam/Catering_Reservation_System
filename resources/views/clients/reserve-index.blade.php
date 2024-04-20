@@ -48,8 +48,9 @@
                             </div>
                         </a>
                     @endforeach
-                    
+
                 </div>
+                    <x-pagination-links :model="$reservations"/>
             </div>
         </div>
     </div>

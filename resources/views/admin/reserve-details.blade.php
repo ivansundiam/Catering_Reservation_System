@@ -9,7 +9,7 @@
                 <div>
                     <x-form-divider />
                     
-                    <h2 class="font-noticia text-base m-0 lg:mx-10 mt-5">Transaction no.: 
+                    <h2 class="m-0 mt-5 text-base font-noticia lg:mx-10">Transaction no.: 
                         <span>{{ $reservation->transaction_number }}</span>
                     </h2>
                     
@@ -52,10 +52,10 @@
                                 <p>Menu: <span>{{ $reservation->menu->name }}</span></p>
                             </li>
                             <li>
-                                <p>Price: ₱<span>{{ $reservation->menu->price }}</span></p>
+                                <p>Price: ₱<span>{{ number_format($reservation->menu->price, 2, '.', ',') }}</span></p>
                             </li>
                             <li>
-                                <p>Amount Paid: ₱<span>{{ $reservation->amount_paid }} ({{ $reservation->payment_percent }}%)</span></p>
+                                <p>Amount Paid: ₱<span>{{ number_format($reservation->amount_paid, 2, '.', ',') }} ({{ $reservation->payment_percent }}%)</span></p>
                             </li>
                         </div>
                         <div>
@@ -66,7 +66,7 @@
                     <x-form-divider />
                     
                     <div class="flex justify-end w-full px-10 font-semibold font-noticia">
-                        <p>Total Cost: ₱{{ $reservation->total_cost }}</p>
+                        <p>Total Cost: ₱{{ number_format($reservation->total_cost, 2, '.', ',') }}</p>
                     </div>
                 </div>
             </div>
@@ -109,4 +109,4 @@
             </div>
         </div>
     </div>
-</x-admin-layout>-layout>-layout>
+</x-admin-layout>

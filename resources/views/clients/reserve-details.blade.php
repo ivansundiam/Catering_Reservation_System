@@ -52,10 +52,11 @@
                                 <p>Menu: <span>{{ $reservation->menu->name }}</span></p>
                             </li>
                             <li>
-                                <p>Price: ₱<span>{{ $reservation->menu->price }}</span></p>
+                                <p>Price: ₱<span>{{ number_format($reservation->menu->price, 2, '.', ',') }}</span></p>
                             </li>
                             <li>
-                                <p>Amount Paid: ₱<span>{{ $reservation->amount_paid }} ({{ $reservation->payment_percent }}%)</span></p>
+                                <p>Amount Paid: ₱<span>{{ number_format($reservation->amount_paid
+, 2, '.', ',') }} ({{ $reservation->payment_percent }}%)</span></p>
                             </li>
                         </div>
                         <div>

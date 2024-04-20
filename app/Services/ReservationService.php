@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Reservation;
 use App\Http\Requests\ReservationRequest;
 use App\Actions\Uploads\StoreImage;
+use App\Events\ReservationComplete;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ReservationService {
@@ -14,6 +16,8 @@ class ReservationService {
     {
         $resData = $request->validated();
         $userId = Auth::id();
+        $user = User::findOrFail($userId);
+
         // stores image via StoreImage action
         $receiptPhotoPath = $storeImage->execute($request, 'receipt-img', 'receipts');
         
@@ -26,7 +30,11 @@ class ReservationService {
         $resData['user_id'] = $userId;
         $resData['receipt_img'] = $receiptPhotoPath;
 
-        Reservation::create($resData);
+        
+        $reservation = Reservation::create($resData);
+
+        // Event that sends user email of reservation receipt
+        event(new ReservationComplete($user, $reservation));
     }
 
     public function updateReservation(Request $request, StoreImage $storeImage, $id) 

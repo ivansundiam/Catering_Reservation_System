@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('/archive', [UserController::class, 'archives'])->name('users.archive');
         Route::post('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
         Route::get('/pdf', [PDFController::class, 'generatePdf'])->name('generate-pdf');
+        Route::get('/receipt-pdf', [PDFController::class, 'ReceiptPdf'])->name('receipt-pdf');
         Route::get('/mail', [AdminController::class, 'sendMail'])->name('send-mail');
     });
 });
