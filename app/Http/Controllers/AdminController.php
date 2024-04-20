@@ -35,7 +35,6 @@ class AdminController extends Controller
             });
         })
             ->with(['user', 'package'])
-            ->withTrashed()
             ->paginate(10);
         return view('admin.reservations', compact('reservations'));
     }
