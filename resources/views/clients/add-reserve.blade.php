@@ -1,4 +1,8 @@
 <x-app-layout> 
+    <x-slot name="title">
+        {{ __('Add reservation | ' . config('app.name')) }}
+    </x-slot>
+
     <x-slot name="header">
         {{ __('Add reservation') }}
     </x-slot>

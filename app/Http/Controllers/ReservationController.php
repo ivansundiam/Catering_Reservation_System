@@ -23,10 +23,7 @@ class ReservationController extends Controller
     {
         $userReservations = Reservation::where('user_id', auth()->user()->id)->paginate(6);
 
-        return $userReservations->isEmpty() 
-            ? redirect()->route('reservation.create') 
-            : view('clients.reserve-index')
-            ->with('reservations', $userReservations);
+        return view('clients.reserve-index')->with('reservations', $userReservations);
     }
 
     /**

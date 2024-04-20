@@ -1,4 +1,8 @@
 <x-app-layout> 
+    <x-slot name="title">
+        {{ __('My reservations | ' . config('app.name')) }}
+    </x-slot>
+
     <x-slot name="header">
         {{ __('My reservations') }}
     </x-slot>
@@ -6,9 +10,12 @@
     <div class="pt-6 pb-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="px-5 overflow-hidden md:px-10 dark:bg-gray-800 sm:rounded-lg">
-                <div class="grid gap-4 p-5 md:grid-cols-2 lg:grid-cols-3">
+                <div @class([
+                    "grid gap-4 p-5 md:grid-cols-2 lg:grid-cols-3" => !$reservations->isEmpty(),
+                    "text-center py-12"
+                    ])>
                     
-                    @foreach ($reservations as $reservation)
+                    @forelse ($reservations as $reservation)
                         @php
                             $percent = $reservation->payment_percent;
                             $completed = $percent == 100;
@@ -47,7 +54,12 @@
 
                             </div>
                         </a>
-                    @endforeach
+
+                    @empty
+                        <div class="text-2xl text-gray-400">
+                            <span class="m-auto">No Reservation Found</span>
+                        </div>
+                    @endforelse
 
                 </div>
                     <x-pagination-links :model="$reservations"/>
