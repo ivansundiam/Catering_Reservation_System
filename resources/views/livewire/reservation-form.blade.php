@@ -178,7 +178,7 @@
                     <p>Menu: <span x-text="menuName"></span></p>
                 </li>
                 <li>
-                    <p>Price: ₱<span>{{ $menuPrice }}.00</span></p>
+                    <p>Price: ₱<span>{{ number_format($menuPrice, 2, '.', ',') }}.00</span></p>
                 </li>
                 
             </div>
@@ -190,7 +190,7 @@
         <x-form-divider />
         
         <div class="flex justify-end w-full px-10 font-semibold font-noticia">
-            <p>Total Cost: ₱{{ $totalCost }}</p>
+            <p>Total Cost: ₱{{ number_format($totalCost, 2, '.', ',') }}</p>
         </div>
 
         <div class="flex justify-center w-full mt-8 md:justify-end">
@@ -204,7 +204,7 @@
 
         <div class="flex flex-col w-full mx-auto my-5 lg:w-2/3">
             <h2 class="text-md md:text-lg font-noticia">
-                Total Cost: ₱{{ $totalCost }}
+                Total Cost: ₱{{ number_format($totalCost, 2, '.', ',') }}
                 <input type="text" name="total_cost" value="{{ $totalCost }}" class="hidden" />
             </h2>
 
@@ -219,7 +219,7 @@
             <x-input-error for="payment_percent" />
 
             <h2 x-show="$wire.amountToPay" class="mt-5 text-md md:text-lg font-noticia">
-                Amount to pay: ₱{{ $amountToPay }}
+                Amount to pay: ₱{{ number_format($amountToPay, 2, '.', ',') }}
                 <input type="text" name="amount_paid" value="{{ $amountToPay }}" class="hidden" />
 
             </h2>
