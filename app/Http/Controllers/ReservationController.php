@@ -7,6 +7,7 @@ use App\Services\ReservationService;
 use Illuminate\Contracts\View\View;
 use App\Actions\Uploads\StoreImage;
 use App\Models\Menu;
+use App\Models\Inventory;
 use App\Models\Package;
 use App\Models\Reservation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -31,7 +32,8 @@ class ReservationController extends Controller
      */
     public function create() : View{
         return view('clients.add-reserve', [
-            'packages' => Package::all()
+            'packages' => Package::all(),
+            'inventoryItems' => Inventory::all()
         ]);
     }
 

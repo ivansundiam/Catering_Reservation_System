@@ -5,11 +5,13 @@ namespace App\Livewire;
 use App\Models\Menu;
 use Livewire\Component;
 use Carbon\Carbon;
+use App\Models\Inventory;
 
 class ReservationForm extends Component
 {
     public $date;
     public $time;
+    public $inventoryItems;
     public $showingGcash = false;
     public $showingMaya = false;
     public $packages;
@@ -19,6 +21,8 @@ class ReservationForm extends Component
     public $menuPrice;
     public $totalCost;
     public $amountToPay;
+    public $inclusionType;
+    public $additionalItems = [];
 
     protected $listeners = [
         'dateSelected' => 'setDate',
@@ -33,6 +37,55 @@ class ReservationForm extends Component
     public function setTime($event)
     {
         $this->time = $event['time'];
+    }
+
+    public function addItem($id, $quantity)
+    {
+        $item = Inventory::find($id);
+
+        // If the item doesn't exist or the quantity is less than or equal to 0, return
+        if (!$item || $quantity <= 0) {
+            return;
+        }
+
+        // Check if the item already exists in the additionalItems array
+        $existingItemIndex = null;
+        foreach ($this->additionalItems as $index => $existingItem) {
+            if ($existingItem['item']->id == $id) {
+                $existingItemIndex = $index;
+                break;
+            }
+        }
+
+        // If the item already exists, update its quantity, otherwise add a new item
+        if ($existingItemIndex !== null) {
+            $this->additionalItems[$existingItemIndex]['quantity']++;
+        } else {
+            $this->additionalItems[] = [
+                'item' => $item,
+                'quantity' => $quantity
+            ];
+        }
+
+        $this->calculateCost();
+    }
+
+    public function updateQuantity($id, $quantity)
+    {
+        // Update the quantity of the item in the additionalItems array
+        foreach ($this->additionalItems as $key => $item) {
+            if ($item['item']->id == $id) {
+                // If quantity becomes zero, remove the item from the array
+                if ($quantity == 0) {
+                    unset($this->additionalItems[$key]);
+                } else {
+                    $this->additionalItems[$key]['quantity'] = $quantity;
+                }
+                break;
+            }
+        }
+
+        $this->calculateCost();
     }
 
     public function showGcash()
@@ -80,6 +133,16 @@ class ReservationForm extends Component
                 break;
             default: $this->packageName = '';
         }
+
+        // sets the inclusion text depending on what is the selected package
+        if($id <= 5)
+            $this->inclusionType = 'wedding ' . $this->packageName;
+        else if($id <= 10 && $id >= 6)
+            $this->inclusionType = 'debut ' . $this->packageName;
+        else
+            $this->inclusionType = $this->packageName;
+
+            
     }
 
     public function selectedMenu($price)
@@ -95,10 +158,18 @@ class ReservationForm extends Component
 
     public function calculateCost()
     {
+        // Calculate the cost based on menu price and number of pax
         $totalCost = $this->menuPrice * $this->pax;
-        $tax = $totalCost * 0.12;
-        $this->totalCost = $totalCost + $tax;
 
+        // Calculate the amount of applicable tax
+        $tax = $totalCost * 0.12;
+
+        // Add the prices of additional items
+        foreach ($this->additionalItems as $item) {
+            $totalCost += $item['item']->price * $item['quantity'];
+        }
+
+        $this->totalCost = $totalCost + $tax;
     }
 
     public function calculateAmountToPay($percent)

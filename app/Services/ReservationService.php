@@ -8,6 +8,7 @@ use App\Http\Requests\ReservationRequest;
 use App\Actions\Uploads\StoreImage;
 use App\Events\ReservationComplete;
 use App\Models\User;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 
 class ReservationService {
@@ -23,6 +24,21 @@ class ReservationService {
         
         // generate transaction number
         $transactionNumber = $this->generateTransactionNumber($userId);
+
+        // Automatically deduct the quantity of Inventory items used as rental items
+        $additionalItems = $request->input('additionalItems');
+
+        // Loop through each additional item
+        foreach ($additionalItems as $item) {
+            // Retrieve the inventory item from the database
+            $inventoryItem = Inventory::find($item['id']);
+
+            // Calculate the new quantity after deduction
+            $newQuantity = $inventoryItem->quantity - $item['quantity'];
+
+            // Update the quantity in the inventory database
+            $inventoryItem->update(['quantity' => $newQuantity]);
+        }
 
         // Initialize array with the current date/time
         $resData['transaction_number'] = $transactionNumber;
