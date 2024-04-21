@@ -67,6 +67,11 @@
             <x-label for="category" value="{{ __('Category') }}" />
             <x-input id="category" class="block w-full mt-1" type="text" name="category" :value="$item->category" disabled="{{ $isDisabled }}"/>
         </div>
+        
+        <div class="mt-4">
+            <x-label for="price" value="{{ __('Price') }}" />
+            <x-input id="price" class="block w-full mt-1" type="text" name="price" :value="$item->price" disabled="{{ $isDisabled }}"/>
+        </div>
 
         <div class="mt-4">
             <x-label for="quantity" value="{{ __('Quantity') }}" />
@@ -78,11 +83,6 @@
         </div>
 
         <div class="mt-4 float-end">
-            {{-- <a href="{{ route('inventory.index') }}">
-                <x-secondary-button>
-                    {{ __('Back') }}
-                </x-secondary-button>
-            </a> --}}
 
             @if($editing)
                 <button type="submit" wire:click="" class="px-3 py-1 ms-2 btn-success">

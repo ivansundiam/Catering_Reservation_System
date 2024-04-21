@@ -25,6 +25,7 @@ class InventoryRequest extends FormRequest
             'item_name' => 'required',
             'description' => 'max:100',
             'category' => 'required',
+            'price' => 'required|numeric',
             'quantity' => 'required|numeric',
             'item_img' => 'image|mimes:jpeg,png,jpg|max:2048',
         ];

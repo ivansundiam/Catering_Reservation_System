@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('category');
             $table->integer('quantity')->unsigned();
+            $table->decimal('price', 8, 2);
             $table->string('item_img')->nullable();
             $table->timestamps();
         });

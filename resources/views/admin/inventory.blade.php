@@ -8,7 +8,7 @@
             <div class="p-8 overflow-hidden bg-white shadow-xl dark:bg-gray-800 sm:rounded-lg">
                 <div class="flex items-center justify-between mb-5">
                     <div class="flex items-center">
-                        <p class="text-xl mr-3">Inventory  </p>
+                        <p class="mr-3 text-xl">Inventory  </p>
      
                         @livewire('inventory.add-item-form')
                          
@@ -30,13 +30,16 @@
                                 <th class="px-6 py-3">
                                     Description
                                 </th>
-                                <th class="px-6 py-3">
+                                <th class="px-6 py-3 text-center">
                                     Category
                                 </th>
-                                <th class="px-6 py-3">
+                                <th class="px-6 py-3 text-center">
+                                    Price
+                                </th>
+                                <th class="px-6 py-3 text-center">
                                     Quantity
                                 </th>
-                                <th class="px-6 py-3">
+                                <th class="px-6 py-3 text-center">
                                     Action
                                 </th>
                             </tr>
@@ -53,8 +56,11 @@
                                     <td class="px-6 py-4">
                                         {{ $item->description }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-6 py-4 text-center">
                                         {{ $item->category }}
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        {{ number_format($item->price, 2, '.', ',') }}
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         {{ $item->quantity }}
