@@ -43,7 +43,7 @@ dl {
 }
 
 .btn-primary-outline {
-    @apply px-4 py-2 capitalize transition font-semibold bg-primary ease-in-out border border-primary text-primary hover:bg-primary-hover active:bg-primary-active text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary;
+    @apply px-4 py-2 font-semibold text-white capitalize transition ease-in-out border bg-primary border-primary text-primary hover:bg-primary-hover active:bg-primary-active focus:outline focus:outline-2 focus:rounded-sm focus:outline-primary;
 }
 
 .package-service {
@@ -72,6 +72,26 @@ dl {
 
 .input-field {
     @apply border-gray-300 rounded-lg focus:border-primary focus:ring-primary-hover;
+}
+
+.blade-table th,
+.blade-table td {
+    @apply px-6 py-3;
+}
+
+.blade-table tr {
+    @apply bg-white rounded-lg shadow-md;
+}
+
+/* Apply border-radius to the first row */
+.blade-table thead tr:first-child th:first-child,
+.blade-table tbody tr td:first-child {
+    @apply rounded-l-lg;
+}
+
+.blade-table thead tr:first-child th:last-child,
+.blade-table tbody tr td:last-child {
+    @apply rounded-r-lg;
 }
 
 /* FOR DROPBOX */

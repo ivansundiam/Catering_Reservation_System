@@ -5,7 +5,7 @@
 
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="p-8 overflow-hidden bg-white shadow-xl dark:bg-gray-800 sm:rounded-lg">
+            <div class="px-5 md:px-10 dark:bg-gray-800 sm:rounded-lg">
                 <div class="flex items-center justify-between mb-5">
                     <div class="flex items-center">
                         <p class="mr-3 text-xl">Inventory  </p>
@@ -17,71 +17,81 @@
                          <x-input type="text" name="search" class="input-field" placeholder="Search" id="search field" />
                      </form>
                 </div>
-                <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500 rtl:text-right">
-                        <thead class="text-base text-gray-700 uppercase bg-primary-light">
+                <div class="relative">
+                    <x-table>
+                        <x-slot name="thead">
                             <tr>
-                                <th class="px-6 py-3">
+                                <th>
                                     Id
                                 </th>
-                                <th class="px-6 py-3">
+                                <th>
                                     Item Name
                                 </th>
-                                <th class="px-6 py-3">
+                                <th>
                                     Description
                                 </th>
-                                <th class="px-6 py-3 text-center">
+                                <th class="text-center">
                                     Category
                                 </th>
-                                <th class="px-6 py-3 text-center">
+                                <th class="text-center">
                                     Price
                                 </th>
-                                <th class="px-6 py-3 text-center">
+                                <th class="text-center">
                                     Quantity
                                 </th>
-                                <th class="px-6 py-3 text-center">
-                                    Action
+                                <th class="text-center">
                                 </th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($inventoryItems as $index => $item)
-                                <tr class="border-b {{ $index % 2 == 0 ? 'bg-gray-100' : 'bg-white'; }}">
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                        </x-slot>
+                        <x-slot name="tbody">
+                            @forelse ($inventoryItems as $item)
+                                <tr class="rounded-lg">
+                                    <td class="font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $item->id }}
-                                    </th>
-                                    <td class="px-6 py-4">
+                                    </td>
+                                    <td>
                                         {{ $item->item_name }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td>
                                         {{ $item->description }}
                                     </td>
-                                    <td class="px-6 py-4 text-center">
+                                    <td class="text-center">
                                         {{ $item->category }}
                                     </td>
-                                    <td class="px-6 py-4 text-center">
+                                    <td class="text-center">
                                         {{ number_format($item->price, 2, '.', ',') }}
                                     </td>
-                                    <td class="px-6 py-4 text-center">
+                                    <td class="text-center">
                                         {{ $item->quantity }}
                                     </td>
-                                    <td class="px-6 py-1 ">
-                                        <div class="flex justify-center">
-                                            <a href="{{ route('inventory.show', $item) }}" class="size-8 !p-0 btn-info">
-                                                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                                            </a>
-                                        </div>
+                                    <td class="text-2xl text-right">
+                                        <x-dropdown width="48" align="right">
+                                            <x-slot name="trigger">
+                                                <button type="button" class="font-bold text-gray-400 select-none">&#8942;</button>
+                                            </x-slot>
+                    
+                                            <x-slot name="content" class="absolute z-50">
+                                                <x-dropdown-link href="{{ route('inventory.show', $item->id) }}">
+                                                    {{ __('View') }}
+                                                </x-dropdown-link>
+                    
+                                                <x-dropdown-link href="{{ route('inventory.show', $item->id) }}">
+                                                    {{ __('Delete') }}
+                                                </x-dropdown-link>
+                                            </x-slot>
+                    
+                                        </x-dropdown>
                                     </td>
                                 </tr>
                             @empty
                             <tr class="bg-white border-b">
-                                <td colspan="6" class="px-6 py-4 text-xl text-center text-gray-400">
+                                <td colspan="6" class="text-xl text-center text-gray-400">
                                     No items
                                 </td>
                             </tr>
                             @endforelse
-                        </tbody>
-                    </table>
+                        </x-slot>
+                    </x-table>
                 </div>
                 
                 <x-pagination-links :model="$inventoryItems" />            
