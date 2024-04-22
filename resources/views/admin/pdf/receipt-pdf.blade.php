@@ -121,6 +121,40 @@
                     </div>
                     <div></div>
                 </div>
+                    @if ($reservation->rentals)
+                    <div style="border-bottom: 1px solid #ccc; padding: 10px 0; margin-bottom: 10px;"><p style=" font-family: 'Noticia Text' !important; font-size: 18px">Rentals</p></div>
+
+                    <div class="flex justify-center">
+                        <table style="width: 100%; font-size: 14px; text-align: left; font-family: 'Noticia Text">
+                            <thead class="text-base font-size: 16px">
+                                <td>Item Name</td>
+                                <td>Quantity</td>
+                                <td>Price</td>
+                                <td>Total Cost</td>
+                            </thead>
+                            <tbody>
+                                @foreach (json_decode($reservation->rentals, true) as $item)
+                                    @php
+                                        $inventoryItem = json_decode($item['item'], true); // Decode the nested JSON string
+                                    @endphp
+                                    {{-- Debugging --}}
+                                    @if (!isset($inventoryItem['item_name']) || !isset($inventoryItem['price']))
+                                        @php
+                                            dd($item); // Dump the contents of $item for debugging
+                                        @endphp
+                                    @endif
+                                    <tr>
+                                        <td>{{ $inventoryItem['item_name'] }}</td>
+                                        <td>{{ $item['quantity'] }}</td>
+                                        <td>₱{{ number_format($inventoryItem['price'], 2, '.', ',') }}</td>
+                                        <td>₱{{ number_format(intval($item['itemTotalCost']), 2, '.', ',') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+
                 <div style="border-bottom: 1px solid #ccc; margin-bottom: 10px;"></div>
                 <div style="text-align: right; padding-right: 20px; font-size: 16px;">
                     <p style="font-family: 'Noticia Text' !important; ">Total Cost: ₱ {{ number_format($reservation->total_cost, 2, '.', ',') }}</p>

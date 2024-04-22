@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('menu_id')->constrained()->onDelete('cascade');
             $table->string('address');
             $table->integer('pax');
+            $table->json('rentals')->nullable();
             $table->string('occasion');
             $table->date('date');
             $table->time('time');

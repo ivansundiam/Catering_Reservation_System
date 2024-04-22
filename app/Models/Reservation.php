@@ -21,6 +21,7 @@ class Reservation extends Model
         'time',
         'occasion',
         'pax',
+        'rentals',
         'total_cost',
         'amount_paid',
         'payment_percent',

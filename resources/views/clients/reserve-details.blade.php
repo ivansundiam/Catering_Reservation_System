@@ -59,14 +59,47 @@
                                 <p>Price: ₱<span>{{ number_format($reservation->menu->price, 2, '.', ',') }}</span></p>
                             </li>
                             <li>
-                                <p>Amount Paid: ₱<span>{{ number_format($reservation->amount_paid
-, 2, '.', ',') }} ({{ $reservation->payment_percent }}%)</span></p>
+                                <p>Amount Paid: ₱<span>{{ number_format($reservation->amount_paid, 2, '.', ',') }} ({{ $reservation->payment_percent }}%)</span></p>
                             </li>
                         </div>
                         <div>
                             
                         </div>
                     </ul>
+
+                    @if ($reservation->rentals)
+                        <x-form-divider value="Rentals" />
+        
+                        <div class="flex justify-center">
+                            <table class="w-full md:w-[90%] text-sm text-left rtl:text-right lg:mx-10 font-noticia">
+                                <thead class="text-base">
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total Cost</th>
+                                </thead>
+                                <tbody>
+                                    @foreach (json_decode($reservation->rentals, true) as $item)
+                                        @php
+                                            $inventoryItem = json_decode($item['item'], true); // Decode the nested JSON string
+                                        @endphp
+                                        {{-- Debugging --}}
+                                        @if (!isset($inventoryItem['item_name']) || !isset($inventoryItem['price']))
+                                            @php
+                                                dd($item); // Dump the contents of $item for debugging
+                                            @endphp
+                                        @endif
+                                        <tr>
+                                            <td>{{ $inventoryItem['item_name'] }}</td>
+                                            <td>{{ $item['quantity'] }}</td>
+                                            <td>₱{{ number_format($inventoryItem['price'], 2, '.', ',') }}</td>
+                                            <td>₱{{ number_format(intval($item['itemTotalCost']), 2, '.', ',') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
             
                     <x-form-divider />
                     

@@ -18,6 +18,7 @@ class ReservationService {
         $resData = $request->validated();
         $userId = Auth::id();
         $user = User::findOrFail($userId);
+        $rentals = $request->input('rentals');
 
         // stores image via StoreImage action
         $receiptPhotoPath = $storeImage->execute($request, 'receipt-img', 'receipts');
@@ -25,19 +26,16 @@ class ReservationService {
         // generate transaction number
         $transactionNumber = $this->generateTransactionNumber($userId);
 
-        // Automatically deduct the quantity of Inventory items used as rental items
-        $additionalItems = $request->input('additionalItems');
-
-        // Loop through each additional item
-        foreach ($additionalItems as $item) {
-            // Retrieve the inventory item from the database
-            $inventoryItem = Inventory::find($item['id']);
-
-            // Calculate the new quantity after deduction
-            $newQuantity = $inventoryItem->quantity - $item['quantity'];
-
-            // Update the quantity in the inventory database
-            $inventoryItem->update(['quantity' => $newQuantity]);
+        if($rentals){
+            foreach ($rentals as &$addedItem) {            
+                // Automatically deduct the quantity of Inventory items used as rental items
+                $inventoryItem = Inventory::find($addedItem['id']);
+                $newQuantity = $inventoryItem->quantity - $addedItem['quantity'];
+                $inventoryItem->update(['quantity' => $newQuantity]);
+            
+                // Add the inventory item details to the rental item
+                $addedItem['item'] = $inventoryItem;
+            }
         }
 
         // Initialize array with the current date/time
@@ -46,6 +44,10 @@ class ReservationService {
         $resData['user_id'] = $userId;
         $resData['receipt_img'] = $receiptPhotoPath;
 
+        if($rentals){
+            // convert the rentals data as JSON
+            $resData['rentals'] = json_encode($resData['rentals']);
+        }
         
         $reservation = Reservation::create($resData);
 

@@ -540,17 +540,19 @@
             <x-form-divider value="Rentals" />
 
             <div class="flex justify-center">
-                <table class="w-full md:w-[70%] text-sm text-left rtl:text-right lg:mx-10 font-noticia">
+                <table class="w-full md:w-[90%] text-sm text-left rtl:text-right lg:mx-10 font-noticia">
                     <thead class="text-base">
                         <th>Item Name</th>
                         <th>Quantity</th>
                         <th>Price</th>
+                        <th>Total Cost</th>
                     </thead>
                     <tbody>
                         @foreach ($additionalItems as $item)
                             <tr>
                                 <td>{{ $item['item']->item_name }}</td>
                                 <td>{{ $item['quantity'] }}</td>
+                                <td>{{ $item['item']->price }}</td>
                                 <td>₱{{ number_format($item['item']->price * $item['quantity'], 2, '.', ',') }}</td>
                             </tr>
                         @endforeach
@@ -559,8 +561,10 @@
             </div>
 
             @foreach ($additionalItems as $index => $item)
-                <input type="hidden" name="additionalItems[{{ $index }}][id]" value="{{ $item['item']->id }}">
-                <input type="hidden" name="additionalItems[{{ $index }}][quantity]" value="{{ $item['quantity'] }}">
+                <input type="hidden" name="rentals[{{ $index }}][id]" value="{{ $item['item']->id }}">
+                <input type="hidden" name="rentals[{{ $index }}][item]" value="{{ $item['item'] }}">
+                <input type="hidden" name="rentals[{{ $index }}][quantity]" value="{{ $item['quantity'] }}">
+                <input type="hidden" name="rentals[{{ $index }}][itemTotalCost]" value="{{ $item['quantity'] * $item['item']->price }}">
             @endforeach
         @endif
 

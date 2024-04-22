@@ -29,7 +29,7 @@ class ReservationRequest extends FormRequest
             'occasion' => 'required',
             'amount_paid' => 'numeric',
             'total_cost' => 'required',
-            'additionalItems' => 'array',
+            'rentals' => 'array',
             'pax' => 'required|numeric|max:300',
             'address' => 'required',
             'payment_percent' => 'required',
