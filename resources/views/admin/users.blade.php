@@ -6,15 +6,31 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="px-5 md:px-10 dark:bg-gray-800 sm:rounded-lg">
-                <div class="flex justify-between">
-                    <p class="mb-5 text-xl">Users</p>
+                <div class="px-6 rounded-t-lg py-3 shadow-md w-full bg-white">
+                    <div class="flex flex-col md:flex-row items-start md:justify-between divide-x-2 overflow-x-scroll no-scrollbar">
+                        <p class="mb-5 text-xl font-semibold">Users</p>
 
-                    <form action="{{ route('users.index') }}" method="get">
-                        <x-input type="text" name="search" class="input-field" placeholder="Search" id="" />
-                    </form>
+                        <div class="divide-x-2 flex justify-between items-center mt-5 md:m-0 relative">
+
+                            <div class="relative md:pb-5">
+                                <div class="md:before:content-['filter'] before:absolute before:bottom-0 before:text-sm before:text-gray-400 before:left-[37%]">
+                                    <select name="" id="" class="w-auto input-field mx-1 md:my-1 md:mx-4">
+                                        <option value="">fasdf</option>
+                                    </select>
+                                </div>    
+                            </div>
+
+                            <div class="relative md:pb-5">
+                                <form action="{{ route('users.index') }}" method="get" class="md:before:content-['search'] before:absolute before:bottom-0 before:text-sm before:text-gray-400 before:left-[45%]" >
+                                    <x-input type="text" name="search" class="input-field mx-1 md:my-1 md:ml-4" placeholder="Search" id="" />
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
-                <div class="relative">
+                <div class="relative overflow-x-scroll no-scrollbar pb-16">
                     <x-table>
                         <x-slot name="thead">
                             <tr>

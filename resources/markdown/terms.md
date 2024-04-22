@@ -1,3 +1,5 @@
-# Terms of Service
+## Terms and Conditions (upon payment)
 
-Edit this file to define the terms of service for your application.
+**Non-refundable:** All payments made towards our services are non-refundable under any circumstances.
+
+**Cancellations:** In the event of cancellation by the client, payments made are non-refundable.

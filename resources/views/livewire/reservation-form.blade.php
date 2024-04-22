@@ -31,7 +31,7 @@
                     <option value="Wedding ">{{ __('Wedding ') }}</option>
                     <option value="Debut">{{ __('Debut Party') }}</option>
                     <option value="Christening">{{ __('Christening') }}</option>
-                    <option value="Anniversarry">{{ __('Anniversarry') }}</option>
+                    <option value="Anniversary">{{ __('Anniversary') }}</option>
                     <option value="Birthday">{{ __('Birthday') }}</option>
                 </select>
                 <x-input-error for="occasion" />
@@ -110,7 +110,7 @@
             <div class="relative w-full">
                 <!-- tooltip -->
                 <div class="absolute top-0 right-7">
-                    <x-tooltip id="menu-tooltip" placement="left" width="15rem">
+                    <x-tooltip id="menu-tooltip" placement="left" width="60">
                         <p>Example:</p>
                         <p>Price :	P590.00 / Head + 12%</p>
                         <div class="flex justify-end w-full">
@@ -724,16 +724,16 @@
 
                 fieldsValidated(){
                     if(this.step === 1){
-                        // return this.address 
-                        // && this.occasion != "Select Occasion" 
-                        // && this.package != "Select Package" 
-                        // && this.pax;
+                        return this.address 
+                        && this.occasion != "Select Occasion" 
+                        && this.package != "Select Package" 
+                        && this.pax;
 
-                        return true;   
+                       // return true;   
                     }
                     else if(this.step === 2){
-                        // return this.menu
-                        return true;   
+                        return this.menu
+                        // return true;   
                     }
                     else{
                      return true;   
