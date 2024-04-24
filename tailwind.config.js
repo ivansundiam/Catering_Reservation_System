@@ -27,6 +27,7 @@ export default {
                 serif: ["ui-serif, Georgia, Cambria"],
                 tai: ["Tai Heritage Pro"],
                 noticia: ["Noticia Text"],
+                roman: ["Tinos"],
             },
 
             container: {
