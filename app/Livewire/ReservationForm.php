@@ -23,6 +23,7 @@ class ReservationForm extends Component
     public $amountToPay;
     public $inclusionType;
     public $additionalItems = [];
+    public $addOns = [];
 
     protected $listeners = [
         'dateSelected' => 'setDate',
@@ -83,6 +84,23 @@ class ReservationForm extends Component
                 }
                 break;
             }
+        }
+
+        $this->calculateCost();
+    }
+
+    public function addOption($option)
+    {
+        if (in_array($option, array_column($this->addOns, 'option'))) {
+            // If the option is already in the array, remove it
+            $this->addOns = array_values(array_filter($this->addOns, function ($item) use ($option) {
+                return $item['option'] !== $option;
+            }));
+        } else {
+            $this->addOns[] = [
+                'option' => $option,
+                'price' => $option === "Emcee" ? 4000 : 15000
+            ];
         }
 
         $this->calculateCost();
@@ -167,6 +185,11 @@ class ReservationForm extends Component
         // Add the prices of additional items
         foreach ($this->additionalItems as $item) {
             $totalCost += $item['item']->price * $item['quantity'];
+        }
+
+        // Add the prices of additional options
+        foreach($this->addOns as $option){
+            $totalCost += $option['price'];
         }
 
         $this->totalCost = $totalCost + $tax;

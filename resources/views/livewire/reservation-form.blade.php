@@ -443,6 +443,7 @@
         </div>    
     </div>
 
+    <!-- Rentals -->
     <div x-show="step == 3">
         <x-form-divider value="Chairs & Tables Rentals" />
 
@@ -483,6 +484,19 @@
                 </div>
             @endforeach
         </div>
+
+        <x-form-divider value="Options / Additional Charge" />
+
+        <ul>
+            <li><x-checkbox name="add-ons" x-model="emcee" wire:click="addOption('Emcee')" value="Emcee" id="emcee" /><label for="emcee" class="ms-2">Emcee - ₱4,000.00</label></li>
+            <li><x-checkbox name="add-ons" x-model="christianWedding" wire:click="addOption('Christian Wedding Set-up')" value="Christian Wedding Set-up" id="christian-wedding" /><label for="christian-wedding" class="ms-2">Christian Wedding Set-up - ₱15,000.00</label></li>
+        </ul>
+
+        @if ($addOns)
+            @foreach ($addOns as $option)
+        tangina{{        $option['option']}}
+            @endforeach
+        @endif
 
         <div class="relative flex justify-center w-full mt-8 md:justify-end">
             <x-secondary-button x-on:click="prevStep()" type="button" class="mr-3">back</x-secondary-button>
@@ -566,6 +580,18 @@
                 <input type="hidden" name="rentals[{{ $index }}][quantity]" value="{{ $item['quantity'] }}">
                 <input type="hidden" name="rentals[{{ $index }}][itemTotalCost]" value="{{ $item['quantity'] * $item['item']->price }}">
             @endforeach
+        @endif
+
+        @if($addOns)
+            <x-form-divider value="Options / Additional Charge" />
+
+            <ul class="m-0 text-base lg:mx-10 font-noticia">
+                @foreach ($addOns as $option)
+                    <li>
+                        <p><span>- {{ $option['option'] }}</span></p>
+                    </li>
+                @endforeach
+            </ul>
         @endif
 
         <x-form-divider />
@@ -715,6 +741,8 @@
                 menuName: '',
                 buttonDisabled: false,
                 incompleteFields: false,
+                emcee: '',
+                christianWedding: '',
                 step: 1,
 
                 formHeading() {
