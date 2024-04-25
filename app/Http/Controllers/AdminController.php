@@ -17,10 +17,8 @@ class AdminController extends Controller
         $statusFilter = $request->input('status');
         $dateFilter = $request->input('date');
     
-        // Initialize the query to fetch all reservations
         $query = Reservation::query()->with(['user', 'package']);
     
-        // Apply search filter
         if ($search) {
             $query->whereHas('user', function ($userQuery) use ($search) {
                 $userQuery->where('name', 'like', "%{$search}%")
@@ -38,54 +36,58 @@ class AdminController extends Controller
                             $innerPaymentQuery->where('payment_percent', 100);
                         }
                     });
-            });
+            })
+            ->orWhere('transaction_number', $search);
         }
     
-        // Apply package filter if selected
         if ($packageFilter !== 'all') {
             $query->where('package_id', $packageFilter);
         }
     
-        // Apply status filter if selected
         if ($statusFilter === '1') {
             $query->where('payment_percent', '<', 100);
         } elseif ($statusFilter === '2') {
             $query->where('payment_percent', 100);
         }
         
-        // Apply date filter if selected
         if ($dateFilter) {
             $currentDate = now();
 
             switch ($dateFilter) {
                 case 'week':
-                    // Filter reservations for the current week
+                    // Filter reservations from today to the next week
+                    $nextWeek = $currentDate->copy()->addDays(7);
                     $query->whereBetween('date', [
                         $currentDate->startOfWeek()->format('Y-m-d'),
-                        $currentDate->endOfWeek()->format('Y-m-d'),
+                        $nextWeek->format('Y-m-d'),
                     ]);
                     break;
                 case 'month':
-                    // Filter reservations for the current month
-                    $query->whereYear('date', $currentDate->year)
-                        ->whereMonth('date', $currentDate->month);
+                    // Filter reservations from today to the next month
+                    $nextMonth = $currentDate->copy()->addDays(30);
+                    $query->whereBetween('date', [
+                        $currentDate->format('Y-m-d'),
+                        $nextMonth->format('Y-m-d'),
+                    ]);
                     break;
                 case 'year':
                     // Filter reservations for the current year
                     $query->whereYear('date', $currentDate->year);
                     break;
                 default:
-                    // No date filter
                     break;
             }
         }
     
-        // Load paginated reservations
-        $reservations = $query->paginate(10);
+        $reservations = $query
+            ->latest()
+            ->paginate(10);
     
         // If no filters or search terms are provided, load all reservations
         if (!$search && !$packageFilter && !$statusFilter && !$dateFilter) {
-            $reservations = Reservation::with(['user', 'package'])->paginate(10);
+            $reservations = Reservation::with(['user', 'package'])
+                ->latest()
+                ->paginate(10);
         }
         return view('admin.reservations', [
             'reservations' => $reservations,
