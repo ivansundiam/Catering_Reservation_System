@@ -34,7 +34,7 @@
             <div class="flex flex-col items-center grow mb-9">
                 <p class="title-primary">services</p>
                 <h1 class="heading-text">Our services</h1>
-                <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. At quibusdam eaque, quis eligendi tenetur deserunt.</p>
+                <p class="text-center">Discover our comprehensive range of catering packages tailored to make your special occasion truly unforgettable</p>
             </div>
 
             {{-- <div class="grid mx-12 md:mx-0 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-12 gap-y-6"  --}}
@@ -120,8 +120,8 @@
                 x-transition:leave-end="opacity-0 translate-y-12">
                     <p class="title-primary">About us</p>
                     <h1 class="heading-text !text-[1.5rem] md:!text-[1.8rem] lg:!text-[3rem]">elegant yet inexpensive, have it experienced and be surprised</h1>
-                    <p class="mb-8 text-sm md:text-base">Lorem ipsum dolor sit amet consectetur adipisicing elit. At quibusdam eaque, quis eligendi tenetur deserunt.</p>
-                    <a href="" class="md:px-4 md:!py-3 lg:px-6 lg:!py-4 btn-primary-outline text-sm md:text-base ">More About Us</a>
+                    <p class="mb-8 text-sm md:text-base">With years of experience and a passion for culinary excellence, our team is dedicated to crafting exceptional dining experiences that exceed your expectations while respecting your budget</p>
+                    <a href="{{ url('about') }}" class="md:px-4 md:!py-3 lg:px-6 lg:!py-4 btn-primary-outline text-sm md:text-base ">More About Us</a>
                 </div>
             </div>
         </div>
@@ -143,7 +143,7 @@
                     x-transition:leave-end="opacity-0 translate-y-12">
                     <p class="title-primary">gallery</p>
                     <h1 class="heading-text">Our gallery</h1>
-                    <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. At quibusdam eaque, quis eligendi tenetur deserunt.</p>
+                    <p class="text-center">Immerse yourself in the enchanting ambiance of our meticulously curated event spaces, where every detail is designed to create lasting memories.</p>
                 </div>
             </div>
 

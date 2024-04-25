@@ -28,6 +28,7 @@ Route::view('/botman-frame', 'botman-frame');
 
 Route::get('/', [GuestController::class, 'index'])->name('index');
 Route::get('/dashboard',  [GuestController::class, 'index'])->name('dashboard')->middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified']);
+Route::view('/about', 'about');
 
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 
@@ -36,7 +37,7 @@ Route::group(['middleware' => 'auth'], function (){
     ->only('index', 'create', 'store', 'show', 'update')
     ->middleware(['AllowUser:client'
     // , 'verified.id'
-]);
+    ]);
 
     Route::group(['middleware' => 'AllowUser:admin', 'prefix' => 'admin'], function () {
         Route::get('/reservations', [AdminController::class , 'reservations'])->name('admin.reservations');
