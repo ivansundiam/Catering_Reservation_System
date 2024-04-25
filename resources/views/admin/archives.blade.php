@@ -6,29 +6,19 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="px-5 md:px-10shadow-xl dark:bg-gray-800 sm:rounded-lg">
-                <div class="px-6 rounded-t-lg py-3 shadow-md w-full bg-white">
-                    <div class="flex flex-col md:flex-row items-start md:justify-between divide-x-2 overflow-x-scroll no-scrollbar">
-                        <p class="mb-5 font-semibold text-xl">Archived Users</p>
+                <div class="w-full px-6 py-3 bg-white rounded-t-lg shadow-md">
+                    <div class="flex flex-col items-start overflow-x-scroll md:flex-row md:justify-between no-scrollbar">
+                        <p class="mb-5 text-xl font-semibold">Archived Users</p>
                         
-                        <div class="divide-x-2 flex justify-between items-center mt-5 md:m-0 relative">
-                            <div class="relative md:pb-5">
-                                <div class="md:before:content-['filter'] before:absolute before:bottom-0 before:text-sm before:text-gray-400 before:left-[37%]">
-                                    <select name="" id="" class="w-auto input-field mx-1 md:my-1 md:mx-4">
-                                        <option value="">fasdf</option>
-                                    </select>
-                                </div>    
-                            </div>
-    
-                            <div class="relative md:pb-5">
-                                <form action="{{ route('users.archive') }}" method="get" class="md:before:content-['search'] before:absolute before:bottom-0 before:text-sm before:text-gray-400 before:left-[45%]" >
-                                    <x-input type="text" name="search" class="input-field mx-1 md:my-1 md:ml-4" placeholder="Search" id="" />
-                                </form>
-                            </div>
+                        <div class="relative flex items-center justify-between mt-5 md:m-0">
+                            <form action="{{ route('users.archive') }}" method="get" class="" >
+                                <x-input type="text" name="search" class="mx-1 input-field md:my-1 md:ml-4" placeholder="Search" id="search" />
+                            </form>
                         </div>
                     </div>
                 </div>
 
-                <div class="relative overflow-x-scroll no-scrollbar pb-16">
+                <div class="relative pb-16 overflow-x-scroll no-scrollbar">
                     <x-table>
                         <x-slot name="thead">
                             <tr>
@@ -84,24 +74,23 @@
                                 </tr>
                             @empty
                             <tr class="bg-white border-b">
-                                <td colspan="6" class="py-2 text-xl text-center text-gray-400">No archived</td>
+                                <td colspan="6" class="py-2 text-xl text-center text-gray-400">No archived user</td>
                             </tr>
                             @endforelse
                         </x-slot>
                     </x-table>
-                    <table class="w-full text-sm text-left text-gray-500 rtl:text-right">
-                        <thead class="text-base text-gray-700 uppercase bg-primary-light">
-
-                        </thead>
-                        <tbody>
-                           
-                        </tbody>
-                    </table>
-
                     <x-pagination-links :model="$users" />
                 </div>
                 
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            function submitForm() {
+                document.getElementById('filter-form').submit();
+            }
+        </script>
+    @endpush
 </x-admin-layout>

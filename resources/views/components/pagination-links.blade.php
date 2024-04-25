@@ -1,5 +1,5 @@
 @props(['model'])
 
 <div class="mt-5">
-    {{ $model->onEachSide(1)->links() }}
+    {{ $model->appends(request()->query())->links() }}
 </div>    

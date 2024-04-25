@@ -15,13 +15,33 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $userStatusFilter = request()->input('user-status');
 
-        $users = User::where(function ($query) use ($search) {
+        $query = User::query();
+
+        if($search){
             $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
-        })
-        ->whereNot('user_type', 'admin')
-        ->paginate(10);
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('phone_number', 'like', "%{$search}%");
+        }
+
+        if($userStatusFilter === "verified"){
+            $query->where('verified', 1);
+        }
+        else if($userStatusFilter === "unverified"){
+            $query->where('verified', 0);
+
+        }
+        
+        $users = $query
+            ->whereNot('user_type', 'admin')
+            ->latest()
+            ->paginate(10);
+
+        // If no filters or search terms are provided, load all inventory
+        if(!$search && !$userStatusFilter){
+            $users = User::whereNot('user_type', 'admin')->latest()->paginate(10);
+        }
 
         return view('admin.users', compact('users'));
     }

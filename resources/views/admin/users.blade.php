@@ -6,31 +6,31 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="px-5 md:px-10 dark:bg-gray-800 sm:rounded-lg">
-                <div class="px-6 rounded-t-lg py-3 shadow-md w-full bg-white">
-                    <div class="flex flex-col md:flex-row items-start md:justify-between divide-x-2 overflow-x-scroll no-scrollbar">
+                <div class="w-full px-6 py-3 bg-white rounded-t-lg shadow-md">
+                    <div class="flex flex-col items-start overflow-x-scroll md:flex-row md:justify-between no-scrollbar">
                         <p class="mb-5 text-xl font-semibold">Users</p>
 
-                        <div class="divide-x-2 flex justify-between items-center mt-5 md:m-0 relative">
+                        <form method="GET" id="filter-form" action="{{ route('users.index') }}" class="relative flex items-center justify-between mt-5 divide-x-2 md:m-0">
 
-                            <div class="relative md:pb-5">
-                                <div class="md:before:content-['filter'] before:absolute before:bottom-0 before:text-sm before:text-gray-400 before:left-[37%]">
-                                    <select name="" id="" class="w-auto input-field mx-1 md:my-1 md:mx-4">
-                                        <option value="">fasdf</option>
-                                    </select>
-                                </div>    
+                            <div class="px-1 md:py-1 md:px-4">
+                                <x-label for="user-status">User status</x-label>
+                                <select name="user-status" id="user-status" class="w-auto input-field" onchange="submitForm()">
+                                    <option value="all" {{ request('user-status') == 'all' ? 'selected' : '' }}>all</option>
+                                    <option value="verified" {{ request('user-status') == 'verified' ? 'selected' : '' }}>verified</option>
+                                    <option value="unverified" {{ request('user-status') == 'unverified' ? 'selected' : '' }}>unverified</option>
+                                </select>
+                            </div>    
+
+                            <div class="self-end md:py-1 md:pl-4">
+                                <x-input type="text" name="search" class="mx-1 input-field" placeholder="Search" id="search" />
+
                             </div>
 
-                            <div class="relative md:pb-5">
-                                <form action="{{ route('users.index') }}" method="get" class="md:before:content-['search'] before:absolute before:bottom-0 before:text-sm before:text-gray-400 before:left-[45%]" >
-                                    <x-input type="text" name="search" class="input-field mx-1 md:my-1 md:ml-4" placeholder="Search" id="" />
-                                </form>
-                            </div>
-
-                        </div>
+                        </form>
                     </div>
                 </div>
 
-                <div class="relative overflow-x-scroll no-scrollbar pb-16">
+                <div class="relative pb-16 overflow-x-scroll no-scrollbar">
                     <x-table>
                         <x-slot name="thead">
                             <tr>
@@ -99,4 +99,11 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            function submitForm() {
+                document.getElementById('filter-form').submit();
+            }
+        </script>
+    @endpush
 </x-admin-layout>

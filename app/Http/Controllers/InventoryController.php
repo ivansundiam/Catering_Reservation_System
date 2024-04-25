@@ -18,15 +18,36 @@ class InventoryController extends Controller
     public function index(Request $request) : View
     {
         $search = $request->input('search');
+        $categoryFilter = $request->input('category');
+        $quantityStatusFilter = $request->input('quantity-status');
 
-        $inventory = Inventory::where(function ($query) use ($search) {
+        $query = Inventory::query();
+            
+        if($search) {
             $query->where('item_name', 'like', "%{$search}%")
                   ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('quantity', 'like', "%{$search}%")
-                  ->orWhere('category', 'like', "%{$search}%");
-        })
+                  ->orWhere('id', 'like', "%{$search}%");   
+        }
+
+        if($categoryFilter !== 'all'){
+            $query->where('category', $categoryFilter);
+        }
+
+        if($quantityStatusFilter === "low"){
+            $query->where('quantity', '<', 100);
+        }
+        else if($quantityStatusFilter === "very low"){
+            $query->where('quantity', '<', 50);
+        }
+
+        $inventory = $query
             ->orderBy('id', 'desc')
             ->paginate(10);
+
+        // If no filters or search terms are provided, load all inventory
+        if(!$search && !$categoryFilter && !$quantityStatusFilter){
+            $inventory = Inventory::orderBy('id', 'desc')->paginate(10);
+        }
 
         return view('admin.inventory')->with('inventoryItems', $inventory);
     }
