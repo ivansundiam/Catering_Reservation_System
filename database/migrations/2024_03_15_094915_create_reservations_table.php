@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('address');
             $table->integer('pax');
             $table->json('rentals')->nullable();
+            $table->json('add_ons')->nullable();
             $table->string('occasion');
             $table->date('date');
             $table->time('time');

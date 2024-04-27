@@ -10,6 +10,7 @@ use App\Events\ReservationComplete;
 use App\Models\User;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ReservationService {
     
@@ -19,6 +20,7 @@ class ReservationService {
         $userId = Auth::id();
         $user = User::findOrFail($userId);
         $rentals = $request->input('rentals');
+        $addOns = $request->input('addOns');
 
         // stores image via StoreImage action
         $receiptPhotoPath = $storeImage->execute($request, 'receipt-img', 'receipts');
@@ -47,6 +49,12 @@ class ReservationService {
         if($rentals){
             // convert the rentals data as JSON
             $resData['rentals'] = json_encode($resData['rentals']);
+        }
+        
+        if($addOns){
+            // convert the add ons data as JSON
+            $resData['add_ons'] = json_encode($addOns);
+            Log::info("ADDONS: " . $resData['add_ons']);
         }
         
         $reservation = Reservation::create($resData);
