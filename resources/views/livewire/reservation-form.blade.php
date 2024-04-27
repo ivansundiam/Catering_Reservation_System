@@ -640,7 +640,8 @@
         <ul class="m-0 text-base lg:mx-10 font-noticia">
             @foreach ($addOns as $index => $option)
             <li>
-                <p><span>- {{ $option['option'] }}</span></p>
+                <p>- {{ $option['option'] }} <span>(₱{{ number_format(intval($option['price']), 2, '.', ',') }})</span>
+                </p>
             </li>
 
             {{-- the value is from livewire ReservationForm --}}

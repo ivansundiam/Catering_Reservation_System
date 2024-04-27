@@ -1,4 +1,4 @@
-<x-app-layout> 
+<x-app-layout>
     <x-slot name="title">
         {{ __('Reservation Details | ' . config('app.name')) }}
     </x-slot>
@@ -10,15 +10,15 @@
                     <h2 class="forms-heading-text">Reservation Details</h2>
                 </div>
 
-                <div> 
+                <div>
                     <x-form-divider />
-                    
-                    <h2 class="font-noticia text-base m-0 lg:mx-10 mt-5">Transaction no.: 
+
+                    <h2 class="m-0 mt-5 text-base font-noticia lg:mx-10">Transaction no.:
                         <span>{{ $reservation->transaction_number }}</span>
                     </h2>
 
                     <x-form-divider value="Personal Information & Event Details" />
-            
+
                     <ul class="m-0 text-base lg:mx-10 font-noticia">
                         <li>
                             <p>Name: <span>{{ $reservation->user->name }}</span></p>
@@ -33,9 +33,9 @@
                             <p>Pax: <span>{{ $reservation->pax }}</span></p>
                         </li>
                     </ul>
-            
+
                     <x-form-divider value="Time and Date" />
-            
+
                     <ul class="m-0 text-base lg:mx-10 font-noticia">
                         <li>
                             <p>Date: <span>{{ $reservation->date->format('M d, Y') }}</span></p>
@@ -44,9 +44,9 @@
                             <p>Time: <span>{{ $reservation->time->format('g : i A') }}</span></p>
                         </li>
                     </ul>
-            
+
                     <x-form-divider value="Package Details" />
-            
+
                     <ul class="grid grid-cols-2 m-0 text-base lg:mx-10 font-noticia">
                         <div>
                             <li>
@@ -59,17 +59,18 @@
                                 <p>Price: ₱<span>{{ number_format($reservation->menu->price, 2, '.', ',') }}</span></p>
                             </li>
                             <li>
-                                <p>Amount Paid: ₱<span>{{ number_format($reservation->amount_paid, 2, '.', ',') }} ({{ $reservation->payment_percent }}%)</span></p>
+                                <p>Amount Paid: ₱<span>{{ number_format($reservation->amount_paid, 2, '.', ',') }}
+                                        ({{ $reservation->payment_percent }}%)</span></p>
                             </li>
                         </div>
                         <div>
-                            
+
                         </div>
                     </ul>
 
                     @if ($reservation->rentals)
                         <x-form-divider value="Rentals" />
-        
+
                         <div class="flex justify-center">
                             <table class="w-full md:w-[90%] text-sm text-left rtl:text-right lg:mx-10 font-noticia">
                                 <thead class="text-base">
@@ -83,12 +84,6 @@
                                         @php
                                             $inventoryItem = json_decode($item['item'], true); // Decode the nested JSON string
                                         @endphp
-                                        {{-- Debugging --}}
-                                        @if (!isset($inventoryItem['item_name']) || !isset($inventoryItem['price']))
-                                            @php
-                                                dd($item); // Dump the contents of $item for debugging
-                                            @endphp
-                                        @endif
                                         <tr>
                                             <td>{{ $inventoryItem['item_name'] }}</td>
                                             <td>{{ $item['quantity'] }}</td>
@@ -100,9 +95,24 @@
                             </table>
                         </div>
                     @endif
-            
+
+                    @if ($reservation->add_ons)
+                        <x-form-divider value="Options / Additional Charge" />
+
+                        <ul class="m-0 text-base lg:mx-10 font-noticia">
+                            @foreach (json_decode($reservation->add_ons, true) as $option)
+                                <li>
+                                    <p>- {{ $option['option'] }}<span>
+                                            (₱{{ number_format(intval($option['price']), 2, '.', ',') }})
+                                        </span>
+                                    </p>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+
                     <x-form-divider />
-                    
+
                     <div class="flex justify-end w-full px-10 font-semibold font-noticia">
                         <p>Total Cost: ₱{{ $reservation->total_cost }}</p>
                     </div>
@@ -117,10 +127,8 @@
                     <h2 class="forms-heading-text">Payment Details</h2>
                 </div>
 
-                <form action="{{ route('reservation.update', $reservation->id) }}" 
-                    method="post" 
-                    enctype="multipart/form-data"
-                    class="flex flex-col w-full mx-auto my-5">
+                <form action="{{ route('reservation.update', $reservation->id) }}" method="post"
+                    enctype="multipart/form-data" class="flex flex-col w-full mx-auto my-5">
                     @csrf
                     @method('PUT')
 
@@ -130,7 +138,8 @@
                     @endphp
 
                     <div class="inline-block w-full mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
-                        <div class="{{ $completed ? 'bg-green-500' : 'bg-primary' }} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style="width: {{ $percent }}%">
+                        <div class="{{ $completed ? 'bg-green-500' : 'bg-primary' }} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                            style="width: {{ $percent }}%">
                             {{ $completed ? 'Completed' : $percent . '%' }}
                         </div>
                     </div>
@@ -144,9 +153,10 @@
                                 <option selected disabled>{{ __('Select Payment Percent') }}</option>
                                 @foreach ($payment_percentages as $percent)
                                     @if ($percent > $reservation->payment_percent)
-                                    <option value="{{ $percent }}" {{ old('payment_percent') == $percent ? 'selected' : '' }}>
-                                        {{ $percent == 100 ? 'Full' : $percent }}
-                                    </option>
+                                        <option value="{{ $percent }}"
+                                            {{ old('payment_percent') == $percent ? 'selected' : '' }}>
+                                            {{ $percent == 100 ? 'Full' : $percent }}
+                                        </option>
                                     @endif
                                 @endforeach
                             </select>
@@ -155,7 +165,7 @@
 
                         <div class="mt-5">
                             <x-label for="receipt-img">Receipt Photo:</x-label>
-                            <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img"/>
+                            <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img" />
                             <x-input-error for="receipt-img" />
                         </div>
 
