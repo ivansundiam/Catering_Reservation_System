@@ -66,14 +66,21 @@ class ReservationService {
     public function updateReservation(Request $request, StoreImage $storeImage, $id) 
     {
         $reservation = Reservation::findOrFail($id);
+        $amountPaid = (float) str_replace(',', '', $request->input('amount_paid'));
+
+        Log::info("AMOUNT PAID: " . $amountPaid);
+        Log::info("Is Numeric: " . is_numeric($amountPaid));
         
         $request->validate([
             'payment_percent' => 'required',
+            'amount_paid' => 'required|numeric',
             'receipt-img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'receipt-img.required' => 'Upload the receipt image.',
         ]);
 
+       
+  
         $newReceiptPhotoPath = $storeImage->execute($request, 'receipt-img', 'receipts');
 
         // concatenates receipt image paths
@@ -87,6 +94,7 @@ class ReservationService {
         // Update reservation with validated data and updated receipt image paths
         $reservation->update([
             'payment_percent' => $request->input('payment_percent'),
+            'amount_paid' => $amountPaid + $reservation->amount_paid,
             'receipt_img' => implode(',', $receiptImagePaths),
             'payment_dates' => $paymentDates,
         ]);

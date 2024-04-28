@@ -53,7 +53,7 @@
                     name="package_id" class="w-full input-field" id="package">
                     <option selected disabled>{{ __('Select Package') }}</option>
                     @foreach ($packages as $package)
-                    <option value="{{ $package->id }}">{{ __($package->name) }}</option>
+                        <option value="{{ $package->id }}">{{ __($package->name) }}</option>
                     @endforeach
                 </select>
                 <x-input-error for="package" />
@@ -61,8 +61,8 @@
 
             <div class="mt-5">
                 <x-label for="pax" required>Pax:</x-label>
-                <x-input x-model="pax" wire:model.change="pax" x-on:change="$wire.setPax()" name="pax" type="number"
-                    min="1" max="300" :value="old('pax')" class="w-full" id="pax"
+                <x-input x-model="pax" wire:model.change="pax" x-on:change="$wire.setPax()" name="pax"
+                    type="number" min="1" max="300" :value="old('pax')" class="w-full" id="pax"
                     placeholder="Enter Number of Attendees" />
                 <x-input-error for="pax" />
             </div>
@@ -130,31 +130,32 @@
                     class="grid w-full gap-4 px-5 py-3 mt-10 overflow-y-scroll font-noticia max-h-72 md:max-h-80 lg:max-h-96">
 
                     @if ($menus)
-                    @foreach ($menus as $menu)
-                    <li>
-                        <input type="radio" x-model="menu"
-                            x-on:click="menuName = '{{ $menu->name }}'; $wire.selectedMenu({{ $menu->price }})"
-                            id="menu-{{ $menu->name }}" name="menu_id" value="{{ $menu->id }}" class="hidden peer" />
-                        <label for="menu-{{ $menu->name }}" class="menu-card">
-                            <div class="flex justify-between w-full">
-                                <div class="text-lg font-semibold ">Menu {{ $menu->name }}</div>
-                                <div class="">₱{{ $menu->price }} / HEAD + 12%</div>
-                            </div>
-                        </label>
-                    </li>
-                    @endforeach
+                        @foreach ($menus as $menu)
+                            <li>
+                                <input type="radio" x-model="menu"
+                                    x-on:click="menuName = '{{ $menu->name }}'; $wire.selectedMenu({{ $menu->price }})"
+                                    id="menu-{{ $menu->name }}" name="menu_id" value="{{ $menu->id }}"
+                                    class="hidden peer" />
+                                <label for="menu-{{ $menu->name }}" class="menu-card">
+                                    <div class="flex justify-between w-full">
+                                        <div class="text-lg font-semibold ">Menu {{ $menu->name }}</div>
+                                        <div class="">₱{{ $menu->price }} / HEAD + 12%</div>
+                                    </div>
+                                </label>
+                            </li>
+                        @endforeach
                     @endif
                 </ul>
             </div>
 
             <div class="flex flex-col items-center w-full lg:w-72">
                 @if ($packageName)
-                <h2 class="mb-3 text-md md:text-lg font-noticia">View full menu</h2>
-                <a href="{{ asset('assets/packages/' . $packageName . '.pdf') }}" target="_blank"
-                    class="mx-2 duration-300 ease-in-out bg-gray-600 shadow cursor-pointer max-w-72 hover:shadow-xl hover:scale-105">
-                    <img src="{{ asset('assets/web-images/low/package-' . $packageName . '.webp') }}"
-                        class="package-service" fetchpriority="high" alt="package sapphire">
-                </a>
+                    <h2 class="mb-3 text-md md:text-lg font-noticia">View full menu</h2>
+                    <a href="{{ asset('assets/packages/' . $packageName . '.pdf') }}" target="_blank"
+                        class="mx-2 duration-300 ease-in-out bg-gray-600 shadow cursor-pointer max-w-72 hover:shadow-xl hover:scale-105">
+                        <img src="{{ asset('assets/web-images/low/package-' . $packageName . '.webp') }}"
+                            class="package-service" fetchpriority="high" alt="package sapphire">
+                    </a>
                 @endif
             </div>
         </div>
@@ -164,292 +165,293 @@
                 class="flex flex-col items-center w-full p-5 mx-auto capitalize bg-gray-200 border-2 border-gray-300 rounded-lg">
 
                 @switch($inclusionType)
-                @case('wedding sapphire')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
-                    wedding</span>
-                <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
-                    <li>With chairs and full length chair cover and ribbon</li>
-                    <li>With tables and floor length clothe and toppings</li>
-                    <li>With motif color</li>
-                    <li>With complete catering equipment</li>
-                    <li>With buffet table and décor</li>
-                    <li>With presidential table, gift table, cake table</li>
-                    <li>With two tiffany for couples</li>
-                    <li>With cage and dove</li>
-                    <li>With wine for toast</li>
-                    <li>With uniformed waiters</li>
-                    <li>With colored napkins</li>
-                    <li>With gazebo for the couples</li>
-                    <li>With very elegant flower arrangement</li>
-                    <li>With free food tasting for two persons</li>
-                    <li>With purified water and ice</li>
-                </ol>
+                    @case('wedding sapphire')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
+                            wedding</span>
+                        <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
+                            <li>With chairs and full length chair cover and ribbon</li>
+                            <li>With tables and floor length clothe and toppings</li>
+                            <li>With motif color</li>
+                            <li>With complete catering equipment</li>
+                            <li>With buffet table and décor</li>
+                            <li>With presidential table, gift table, cake table</li>
+                            <li>With two tiffany for couples</li>
+                            <li>With cage and dove</li>
+                            <li>With wine for toast</li>
+                            <li>With uniformed waiters</li>
+                            <li>With colored napkins</li>
+                            <li>With gazebo for the couples</li>
+                            <li>With very elegant flower arrangement</li>
+                            <li>With free food tasting for two persons</li>
+                            <li>With purified water and ice</li>
+                        </ol>
+                    @break
 
-                @break
-                @case('wedding silver')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
-                    wedding</span>
-                <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
-                    <li>With chairs and full-length chair cover and ribbon</li>
-                    <li>With tables and floor-length cloth and toppings</li>
-                    <li>With motif color</li>
-                    <li>With complete catering equipment</li>
-                    <li>With buffet table and décor</li>
-                    <li>With presidential table, gift table, cake table</li>
-                    <li>With couch for the couples</li>
-                    <li>With cage and dove</li>
-                    <li>With wine for toasting</li>
-                    <li>With uniformed waiters</li>
-                    <li>With colored napkins</li>
-                    <li>With carpet</li>
-                    <li>With gazebo for the couples</li>
-                    <li>With torch or sword parade</li>
-                    <li>With very elegant flower arrangement</li>
-                    <li>With free food tasting for two persons</li>
-                    <li>With purified water and ice</li>
-                    <li>All tiffany chairs</li>
-                </ol>
+                    @case('wedding silver')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
+                            wedding</span>
+                        <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
+                            <li>With chairs and full-length chair cover and ribbon</li>
+                            <li>With tables and floor-length cloth and toppings</li>
+                            <li>With motif color</li>
+                            <li>With complete catering equipment</li>
+                            <li>With buffet table and décor</li>
+                            <li>With presidential table, gift table, cake table</li>
+                            <li>With couch for the couples</li>
+                            <li>With cage and dove</li>
+                            <li>With wine for toasting</li>
+                            <li>With uniformed waiters</li>
+                            <li>With colored napkins</li>
+                            <li>With carpet</li>
+                            <li>With gazebo for the couples</li>
+                            <li>With torch or sword parade</li>
+                            <li>With very elegant flower arrangement</li>
+                            <li>With free food tasting for two persons</li>
+                            <li>With purified water and ice</li>
+                            <li>All tiffany chairs</li>
+                        </ol>
+                    @break
 
-                @break
-                @case('wedding tiffany')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
-                    wedding</span>
-                <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
-                    <li>With Tiffany chairs and organza ribbon</li>
-                    <li>With tables and floor length cloth and toppings</li>
-                    <li>With motif color</li>
-                    <li>With complete catering equipment</li>
-                    <li>With buffet table and decor</li>
-                    <li>With presidential table, gift table, cake table</li>
-                    <li>With cage and dove</li>
-                    <li>With wine for toasting</li>
-                    <li>With uniformed waiters</li>
-                    <li>With colored napkins</li>
-                    <li>With carpet</li>
-                    <li>With gazebo for the couples</li>
-                    <li>With very elegant flower arrangement</li>
-                    <li>With free food tasting for two persons</li>
-                    <li>With purified water and ice</li>
-                    <li>With guestbook & signature frame</li>
-                    <li>With torch or sword parade</li>
-                    <li>With free 3 layer cake (base edible)</li>
-                    <li>With couch for couples</li>
-                </ol>
+                    @case('wedding tiffany')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
+                            wedding</span>
+                        <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
+                            <li>With Tiffany chairs and organza ribbon</li>
+                            <li>With tables and floor length cloth and toppings</li>
+                            <li>With motif color</li>
+                            <li>With complete catering equipment</li>
+                            <li>With buffet table and decor</li>
+                            <li>With presidential table, gift table, cake table</li>
+                            <li>With cage and dove</li>
+                            <li>With wine for toasting</li>
+                            <li>With uniformed waiters</li>
+                            <li>With colored napkins</li>
+                            <li>With carpet</li>
+                            <li>With gazebo for the couples</li>
+                            <li>With very elegant flower arrangement</li>
+                            <li>With free food tasting for two persons</li>
+                            <li>With purified water and ice</li>
+                            <li>With guestbook & signature frame</li>
+                            <li>With torch or sword parade</li>
+                            <li>With free 3 layer cake (base edible)</li>
+                            <li>With couch for couples</li>
+                        </ol>
+                    @break
 
-                @break
-                @case('wedding ruby')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
-                    wedding</span>
-                <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
-                    <li>With Tiffany chairs and organza ribbon</li>
-                    <li>With tables and floor length cloth and toppings</li>
-                    <li>With motif color</li>
-                    <li>With complete catering equipment</li>
-                    <li>With buffet table and décor</li>
-                    <li>With presidential table, gift table, cake table</li>
-                    <li>With 6 pcs. Pedestal at entrance</li>
-                    <li>With cage and dove</li>
-                    <li>With wine for toasting</li>
-                    <li>With uniformed waiters</li>
-                    <li>With colored napkins</li>
-                    <li>With carpet</li>
-                    <li>With gazebo for the couples</li>
-                    <li>With torch or sword parade</li>
-                    <li>With very elegant flower arrangement</li>
-                    <li>With free food tasting for two persons</li>
-                    <li>With purified water and ice</li>
-                    <li>With guestbook & signature frame</li>
-                    <li>With emcee (for 100pax and above guests)</li>
-                    <li>With sound system (public address)</li>
-                    <li>With bubble machine</li>
-                    <li>With 3 layer cake (base edible)</li>
-                    <li>With couch for couples</li>
-                </ol>
+                    @case('wedding ruby')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
+                            wedding</span>
+                        <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
+                            <li>With Tiffany chairs and organza ribbon</li>
+                            <li>With tables and floor length cloth and toppings</li>
+                            <li>With motif color</li>
+                            <li>With complete catering equipment</li>
+                            <li>With buffet table and décor</li>
+                            <li>With presidential table, gift table, cake table</li>
+                            <li>With 6 pcs. Pedestal at entrance</li>
+                            <li>With cage and dove</li>
+                            <li>With wine for toasting</li>
+                            <li>With uniformed waiters</li>
+                            <li>With colored napkins</li>
+                            <li>With carpet</li>
+                            <li>With gazebo for the couples</li>
+                            <li>With torch or sword parade</li>
+                            <li>With very elegant flower arrangement</li>
+                            <li>With free food tasting for two persons</li>
+                            <li>With purified water and ice</li>
+                            <li>With guestbook & signature frame</li>
+                            <li>With emcee (for 100pax and above guests)</li>
+                            <li>With sound system (public address)</li>
+                            <li>With bubble machine</li>
+                            <li>With 3 layer cake (base edible)</li>
+                            <li>With couch for couples</li>
+                        </ol>
+                    @break
 
-                @break
-                @case('wedding gold')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
-                    wedding</span>
-                <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
-                    <li>With Tiffany chairs and organza ribbon</li>
-                    <li>With tables and floor length clothe and toppings</li>
-                    <li>With motif color</li>
-                    <li>With complete catering equipment</li>
-                    <li>With buffet table and décor</li>
-                    <li>With presidential table, gift table, cake table</li>
-                    <li>With cage and dove</li>
-                    <li>With wine for toasting</li>
-                    <li>With uniformed waiters</li>
-                    <li>With colored napkins</li>
-                    <li>With carpet</li>
-                    <li>With torch or sword parade</li>
-                    <li>With very elegant flower arrangement (glass center piece)</li>
-                    <li>With free food tasting for two persons</li>
-                    <li>With purified water and ice</li>
-                    <li>With guestbook & signature frame</li>
-                    <li>With emcee</li>
-                    <li>With sound system (public address)</li>
-                    <li>With bubble machine</li>
-                    <li>With 6 pcs. Pedestals at entrance</li>
-                    <li>With fondant cake (3 layer)</li>
-                    <li>With free reception coordination (150px above)</li>
-                    <li>With mobile and lights</li>
-                </ol>
+                    @case('wedding gold')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
+                            wedding</span>
+                        <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
+                            <li>With Tiffany chairs and organza ribbon</li>
+                            <li>With tables and floor length clothe and toppings</li>
+                            <li>With motif color</li>
+                            <li>With complete catering equipment</li>
+                            <li>With buffet table and décor</li>
+                            <li>With presidential table, gift table, cake table</li>
+                            <li>With cage and dove</li>
+                            <li>With wine for toasting</li>
+                            <li>With uniformed waiters</li>
+                            <li>With colored napkins</li>
+                            <li>With carpet</li>
+                            <li>With torch or sword parade</li>
+                            <li>With very elegant flower arrangement (glass center piece)</li>
+                            <li>With free food tasting for two persons</li>
+                            <li>With purified water and ice</li>
+                            <li>With guestbook & signature frame</li>
+                            <li>With emcee</li>
+                            <li>With sound system (public address)</li>
+                            <li>With bubble machine</li>
+                            <li>With 6 pcs. Pedestals at entrance</li>
+                            <li>With fondant cake (3 layer)</li>
+                            <li>With free reception coordination (150px above)</li>
+                            <li>With mobile and lights</li>
+                        </ol>
+                    @break
 
-                @break
-                @case('debut sapphire')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
-                    debut</span>
-                <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
-                    <li>With chairs and full-length chair cover and ribbon</li>
-                    <li>With tables and floor-length clothe with toppings</li>
-                    <li>With motif color</li>
-                    <li>With complete catering equipment</li>
-                    <li>With buffet table and decor</li>
-                    <li>With presidential table, gift table, cake table</li>
-                    <li>With one tiffany chair for debutante</li>
-                    <li>With 18 roses and candles</li>
-                    <li>With 18 wine glasses</li>
-                    <li>With uniformed waiters</li>
-                    <li>With colored napkins</li>
-                    <li>With gazebo for the debutante</li>
-                    <li>With very elegant flower arrangement</li>
-                    <li>With free food tasting for two persons</li>
-                    <li>With purified water and ice</li>
-                </ol>
+                    @case('debut sapphire')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
+                            debut</span>
+                        <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
+                            <li>With chairs and full-length chair cover and ribbon</li>
+                            <li>With tables and floor-length clothe with toppings</li>
+                            <li>With motif color</li>
+                            <li>With complete catering equipment</li>
+                            <li>With buffet table and decor</li>
+                            <li>With presidential table, gift table, cake table</li>
+                            <li>With one tiffany chair for debutante</li>
+                            <li>With 18 roses and candles</li>
+                            <li>With 18 wine glasses</li>
+                            <li>With uniformed waiters</li>
+                            <li>With colored napkins</li>
+                            <li>With gazebo for the debutante</li>
+                            <li>With very elegant flower arrangement</li>
+                            <li>With free food tasting for two persons</li>
+                            <li>With purified water and ice</li>
+                        </ol>
+                    @break
 
-                @break
-                @case('debut silver')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
-                    debut</span>
-                <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
-                    <li>With chairs and full-length chair cover and ribbon</li>
-                    <li>With tables and floor-length cloth with toppings</li>
-                    <li>With motif color</li>
-                    <li>With complete catering equipment</li>
-                    <li>With buffet table and decor</li>
-                    <li>With presidential table, gift table, cake table</li>
-                    <li>With couch for the debutante</li>
-                    <li>With 18 roses and candles</li>
-                    <li>With 18 wine glasses</li>
-                    <li>With uniformed waiters</li>
-                    <li>With colored napkins</li>
-                    <li>With carpet</li>
-                    <li>With gazebo for the debutante</li>
-                    <li>With torch or sword parade</li>
-                    <li>With very elegant flower arrangement</li>
-                    <li>With free food tasting for two persons</li>
-                    <li>With purified water and ice</li>
-                    <li>All tiffany chairs</li>
-                </ol>
+                    @case('debut silver')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
+                            debut</span>
+                        <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
+                            <li>With chairs and full-length chair cover and ribbon</li>
+                            <li>With tables and floor-length cloth with toppings</li>
+                            <li>With motif color</li>
+                            <li>With complete catering equipment</li>
+                            <li>With buffet table and decor</li>
+                            <li>With presidential table, gift table, cake table</li>
+                            <li>With couch for the debutante</li>
+                            <li>With 18 roses and candles</li>
+                            <li>With 18 wine glasses</li>
+                            <li>With uniformed waiters</li>
+                            <li>With colored napkins</li>
+                            <li>With carpet</li>
+                            <li>With gazebo for the debutante</li>
+                            <li>With torch or sword parade</li>
+                            <li>With very elegant flower arrangement</li>
+                            <li>With free food tasting for two persons</li>
+                            <li>With purified water and ice</li>
+                            <li>All tiffany chairs</li>
+                        </ol>
+                    @break
 
-                @break
-                @case('debut tiffany')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
-                    debut</span>
-                <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
-                    <li>With Tiffany chairs and organza ribbon</li>
-                    <li>With tables and floor length cloth with toppings</li>
-                    <li>With motif color</li>
-                    <li>With complete catering equipment</li>
-                    <li>With buffet table and decor</li>
-                    <li>With presidential table, gift table, cake table</li>
-                    <li>With 18 roses and candles</li>
-                    <li>With 18 wine glasses</li>
-                    <li>With uniformed waiters</li>
-                    <li>With colored napkins</li>
-                    <li>With carpet</li>
-                    <li>With gazebo for the debutante</li>
-                    <li>With very elegant flower arrangement</li>
-                    <li>With free food tasting for two persons</li>
-                    <li>With purified water and ice</li>
-                    <li>With guestbook & signature frame</li>
-                    <li>With torch or sword parade</li>
-                    <li>With free 3 layer cake (base edible)</li>
-                    <li>With couch for debutant</li>
-                </ol>
+                    @case('debut tiffany')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
+                            debut</span>
+                        <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
+                            <li>With Tiffany chairs and organza ribbon</li>
+                            <li>With tables and floor length cloth with toppings</li>
+                            <li>With motif color</li>
+                            <li>With complete catering equipment</li>
+                            <li>With buffet table and decor</li>
+                            <li>With presidential table, gift table, cake table</li>
+                            <li>With 18 roses and candles</li>
+                            <li>With 18 wine glasses</li>
+                            <li>With uniformed waiters</li>
+                            <li>With colored napkins</li>
+                            <li>With carpet</li>
+                            <li>With gazebo for the debutante</li>
+                            <li>With very elegant flower arrangement</li>
+                            <li>With free food tasting for two persons</li>
+                            <li>With purified water and ice</li>
+                            <li>With guestbook & signature frame</li>
+                            <li>With torch or sword parade</li>
+                            <li>With free 3 layer cake (base edible)</li>
+                            <li>With couch for debutant</li>
+                        </ol>
+                    @break
 
-                @break
-                @case('debut ruby')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
-                    debut</span>
-                <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
-                    <li>With Tiffany chairs and organza ribbon</li>
-                    <li>With tables and floor length cloth with toppings</li>
-                    <li>With motif color</li>
-                    <li>With complete catering equipment</li>
-                    <li>With buffet table and decor</li>
-                    <li>With presidential table, gift table, cake table</li>
-                    <li>With 6 pcs. Pedestal</li>
-                    <li>With 18 roses and candles</li>
-                    <li>With 18 wine glass</li>
-                    <li>With uniformed waiters</li>
-                    <li>With colored napkins</li>
-                    <li>With carpet</li>
-                    <li>With gazebo for the debutante</li>
-                    <li>With torch or sword parade</li>
-                    <li>With very elegant flower arrangement</li>
-                    <li>With free food tasting for two persons</li>
-                    <li>With purified water and ice</li>
-                    <li>With guestbook & signature frame</li>
-                    <li>With emcee (for 100 pax and above guest)</li>
-                    <li>With sound system (public address)</li>
-                    <li>With fog machine</li>
-                    <li>With 3 layer cake (base edible)</li>
-                    <li>With couch for debutant</li>
-                </ol>
+                    @case('debut ruby')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
+                            debut</span>
+                        <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
+                            <li>With Tiffany chairs and organza ribbon</li>
+                            <li>With tables and floor length cloth with toppings</li>
+                            <li>With motif color</li>
+                            <li>With complete catering equipment</li>
+                            <li>With buffet table and decor</li>
+                            <li>With presidential table, gift table, cake table</li>
+                            <li>With 6 pcs. Pedestal</li>
+                            <li>With 18 roses and candles</li>
+                            <li>With 18 wine glass</li>
+                            <li>With uniformed waiters</li>
+                            <li>With colored napkins</li>
+                            <li>With carpet</li>
+                            <li>With gazebo for the debutante</li>
+                            <li>With torch or sword parade</li>
+                            <li>With very elegant flower arrangement</li>
+                            <li>With free food tasting for two persons</li>
+                            <li>With purified water and ice</li>
+                            <li>With guestbook & signature frame</li>
+                            <li>With emcee (for 100 pax and above guest)</li>
+                            <li>With sound system (public address)</li>
+                            <li>With fog machine</li>
+                            <li>With 3 layer cake (base edible)</li>
+                            <li>With couch for debutant</li>
+                        </ol>
+                    @break
 
-                @break
-                @case('debut gold')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
-                    debut</span>
-                <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
-                    <li>With tiffany chairs and organza ribbon</li>
-                    <li>With tables and floor length clothe w/ toppings</li>
-                    <li>With motif color</li>
-                    <li>With complete catering equipment</li>
-                    <li>With buffet table and decor</li>
-                    <li>With presidential table, gift table, cake table</li>
-                    <li>With 18 roses and candles</li>
-                    <li>With 18 wine glass</li>
-                    <li>With uniformed waiters</li>
-                    <li>With colored napkins</li>
-                    <li>With carpet</li>
-                    <li>With torch or sword parade</li>
-                    <li>With very elegant flower arrangement</li>
-                    <li>With free food tasting for two persons</li>
-                    <li>With purified water and ice</li>
-                    <li>With guestbook & signature frame</li>
-                    <li>With emcee</li>
-                    <li>With sound system (public address)</li>
-                    <li>With fog machine</li>
-                    <li>With 6 pcs. Pedestals</li>
-                    <li>With fondant cake (3 layers)</li>
-                    <li>With mobile and lights</li>
-                    <li>With free reception coordination (150px above)</li>
-                </ol>
+                    @case('debut gold')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Standard amenities for
+                            debut</span>
+                        <ol class="text-sm text-gray-700 list-decimal list-inside md:text-base">
+                            <li>With tiffany chairs and organza ribbon</li>
+                            <li>With tables and floor length clothe w/ toppings</li>
+                            <li>With motif color</li>
+                            <li>With complete catering equipment</li>
+                            <li>With buffet table and decor</li>
+                            <li>With presidential table, gift table, cake table</li>
+                            <li>With 18 roses and candles</li>
+                            <li>With 18 wine glass</li>
+                            <li>With uniformed waiters</li>
+                            <li>With colored napkins</li>
+                            <li>With carpet</li>
+                            <li>With torch or sword parade</li>
+                            <li>With very elegant flower arrangement</li>
+                            <li>With free food tasting for two persons</li>
+                            <li>With purified water and ice</li>
+                            <li>With guestbook & signature frame</li>
+                            <li>With emcee</li>
+                            <li>With sound system (public address)</li>
+                            <li>With fog machine</li>
+                            <li>With 6 pcs. Pedestals</li>
+                            <li>With fondant cake (3 layers)</li>
+                            <li>With mobile and lights</li>
+                            <li>With free reception coordination (150px above)</li>
+                        </ol>
+                    @break
 
-                @break
-                @case('ordinary')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Inclusion :</span>
-                <p>
-                    {{ __('With chairs and tables and colored ribbon With motif,
-                    With buffet table and decor, With complete catering equipment,
-                    With uniformed waiters, With purified water and ice, no individual flowers,
-                    With floor length clothe and colored toppings, no table set up.') }}
-                </p>
-                @break
-                @case('special')
-                <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Inclusion :</span>
-                <p>
-                    {{ __('With chairs and tables and colored ribbon With motif,
-                    With buffet table and decor, With complete catering equipment, With uniformed
-                    waiters, With purified water and ice, With individual flowers, With floor
-                    length cloth and colored toppings.') }}
-                </p>
-                @break
-                @default
+                    @case('ordinary')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Inclusion :</span>
+                        <p>
+                            {{ __('With chairs and tables and colored ribbon With motif,
+                                                                                                                                                                                            With buffet table and decor, With complete catering equipment,
+                                                                                                                                                                                            With uniformed waiters, With purified water and ice, no individual flowers,
+                                                                                                                                                                                            With floor length clothe and colored toppings, no table set up.') }}
+                        </p>
+                    @break
 
+                    @case('special')
+                        <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Inclusion :</span>
+                        <p>
+                            {{ __('With chairs and tables and colored ribbon With motif,
+                                                                                                                                                                                            With buffet table and decor, With complete catering equipment, With uniformed
+                                                                                                                                                                                            waiters, With purified water and ice, With individual flowers, With floor
+                                                                                                                                                                                            length cloth and colored toppings.') }}
+                        </p>
+                    @break
+
+                    @default
                 @endswitch
             </div>
         </div>
@@ -474,27 +476,27 @@
 
         <div class="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($inventoryItems->where('category', 'CHAIRS & TABLES') as $item)
-            <div class="flex flex-col justify-end h-full" x-data="{ quantity{{ $item->id }}: 0 }">
-                <x-label for="{{ $item->item_name }}">
-                    {{ $item->item_name }}
-                    <span class="ml-2">₱{{ number_format($item->price, 2, '.', ',') }}</span>
-                </x-label>
-                <div class="inline-flex w-full">
-                    <x-secondary-button type="button"
-                        x-on:click="quantity{{ $item->id }} = Math.max(quantity{{ $item->id }} - 1, 0); $wire.updateQuantity({{ $item->id }}, quantity{{ $item->id }})"
-                        tabindex="-1"
-                        class="rounded-r-none focus:!ring-transparent focus:ring-offset-0 text-black font-bold text-lg md:!text-[1.5rem]">
-                        -</x-secondary-button>
-                    <x-input id="{{ $item->item_name }}" x-model="quantity{{ $item->id }}"
-                        class="block w-full rounded-none focus:!border-gray-300 focus:!ring-0" tabindex="-1"
-                        type="number" name="quantity" value="0" min="0" readonly />
-                    <x-secondary-button type="button"
-                        x-on:click="quantity{{ $item->id }} = quantity{{ $item->id }} + 1; $wire.addItem({{ $item->id }}, quantity{{ $item->id }})"
-                        tabindex="-1"
-                        class="rounded-l-none focus:!ring-transparent focus:ring-offset-0 text-black font-bold text-lg md:!text-[1.5rem]">
-                        +</x-secondary-button>
+                <div class="flex flex-col justify-end h-full" x-data="{ quantity{{ $item->id }}: 0 }">
+                    <x-label for="{{ $item->item_name }}">
+                        {{ $item->item_name }}
+                        <span class="ml-2">₱{{ number_format($item->price, 2, '.', ',') }}</span>
+                    </x-label>
+                    <div class="inline-flex w-full">
+                        <x-secondary-button type="button"
+                            x-on:click="quantity{{ $item->id }} = Math.max(quantity{{ $item->id }} - 1, 0); $wire.updateQuantity({{ $item->id }}, quantity{{ $item->id }})"
+                            tabindex="-1"
+                            class="rounded-r-none focus:!ring-transparent focus:ring-offset-0 text-black font-bold text-lg md:!text-[1.5rem]">
+                            -</x-secondary-button>
+                        <x-input id="{{ $item->item_name }}" x-model="quantity{{ $item->id }}"
+                            class="block w-full rounded-none focus:!border-gray-300 focus:!ring-0" tabindex="-1"
+                            type="number" name="quantity" value="0" min="0" readonly />
+                        <x-secondary-button type="button"
+                            x-on:click="quantity{{ $item->id }} = quantity{{ $item->id }} + 1; $wire.addItem({{ $item->id }}, quantity{{ $item->id }})"
+                            tabindex="-1"
+                            class="rounded-l-none focus:!ring-transparent focus:ring-offset-0 text-black font-bold text-lg md:!text-[1.5rem]">
+                            +</x-secondary-button>
+                    </div>
                 </div>
-            </div>
             @endforeach
         </div>
 
@@ -504,27 +506,27 @@
 
         <div class="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($inventoryItems->where('category', 'CATERING EQUIPMENT') as $item)
-            <div class="flex flex-col justify-end h-full" x-data="{ quantity{{ $item->id }}: 0 }">
-                <x-label for="{{ $item->item_name }}">
-                    {{ $item->item_name }}
-                    <span class="ml-2">₱{{ number_format($item->price, 2, '.', ',') }}</span>
-                </x-label>
-                <div class="inline-flex w-full">
-                    <x-secondary-button type="button"
-                        x-on:click="quantity{{ $item->id }} = Math.max(quantity{{ $item->id }} - 1, 0); $wire.updateQuantity({{ $item->id }}, quantity{{ $item->id }})"
-                        tabindex="-1"
-                        class="rounded-r-none focus:!ring-transparent focus:ring-offset-0 text-black font-bold text-lg md:!text-[1.5rem]">
-                        -</x-secondary-button>
-                    <x-input id="{{ $item->item_name }}" x-model="quantity{{ $item->id }}"
-                        class="block w-full rounded-none focus:!border-gray-300 focus:!ring-0" tabindex="-1"
-                        type="number" name="quantity" value="0" min="0" readonly />
-                    <x-secondary-button type="button"
-                        x-on:click="quantity{{ $item->id }} = quantity{{ $item->id }} + 1; $wire.addItem({{ $item->id }}, quantity{{ $item->id }})"
-                        tabindex="-1"
-                        class="rounded-l-none focus:!ring-transparent focus:ring-offset-0 text-black font-bold text-lg md:!text-[1.5rem]">
-                        +</x-secondary-button>
+                <div class="flex flex-col justify-end h-full" x-data="{ quantity{{ $item->id }}: 0 }">
+                    <x-label for="{{ $item->item_name }}">
+                        {{ $item->item_name }}
+                        <span class="ml-2">₱{{ number_format($item->price, 2, '.', ',') }}</span>
+                    </x-label>
+                    <div class="inline-flex w-full">
+                        <x-secondary-button type="button"
+                            x-on:click="quantity{{ $item->id }} = Math.max(quantity{{ $item->id }} - 1, 0); $wire.updateQuantity({{ $item->id }}, quantity{{ $item->id }})"
+                            tabindex="-1"
+                            class="rounded-r-none focus:!ring-transparent focus:ring-offset-0 text-black font-bold text-lg md:!text-[1.5rem]">
+                            -</x-secondary-button>
+                        <x-input id="{{ $item->item_name }}" x-model="quantity{{ $item->id }}"
+                            class="block w-full rounded-none focus:!border-gray-300 focus:!ring-0" tabindex="-1"
+                            type="number" name="quantity" value="0" min="0" readonly />
+                        <x-secondary-button type="button"
+                            x-on:click="quantity{{ $item->id }} = quantity{{ $item->id }} + 1; $wire.addItem({{ $item->id }}, quantity{{ $item->id }})"
+                            tabindex="-1"
+                            class="rounded-l-none focus:!ring-transparent focus:ring-offset-0 text-black font-bold text-lg md:!text-[1.5rem]">
+                            +</x-secondary-button>
+                    </div>
                 </div>
-            </div>
             @endforeach
         </div>
 
@@ -532,21 +534,19 @@
 
         <ul>
             <li>
-                <x-checkbox name="add-ons" x-model="emcee" wire:click="addOption('Emcee')" value="Emcee" id="emcee" />
+                <x-checkbox name="add-ons" x-model="emcee" wire:click="addOption('Emcee')" value="Emcee"
+                    id="emcee" />
                 <label for="emcee" class="ms-2">Emcee - ₱4,000.00</label>
             </li>
             <li>
-                <x-checkbox name="add-ons" x-model="christianWedding" wire:click="addOption('Christian Wedding Set-up')"
-                    value="Christian Wedding Set-up" id="christian-wedding" /><label for="christian-wedding"
-                    class="ms-2">Christian Wedding Set-up - ₱15,000.00</label>
+                <x-checkbox name="add-ons" x-model="christianWedding"
+                    wire:click="addOption('Christian Wedding Set-up')" value="Christian Wedding Set-up"
+                    id="christian-wedding" /><label for="christian-wedding" class="ms-2">Christian Wedding Set-up -
+                    ₱15,000.00</label>
             </li>
         </ul>
 
-        @if ($addOns)
-        @foreach ($addOns as $option)
-        tangina{{ $option['option']}}
-        @endforeach
-        @endif
+
 
         <div class="relative flex justify-center w-full mt-8 md:justify-end">
             <x-secondary-button x-on:click="prevStep()" type="button" class="mr-3">back</x-secondary-button>
@@ -577,8 +577,7 @@
 
         <x-form-divider value="Time and Date" />
 
-        <ul class="m-0 text-base lg:mx-10 font-noticia"
-            x-data="{ date: @entangle('selectedDate'), time: @entangle('selectedTime') }">
+        <ul class="m-0 text-base lg:mx-10 font-noticia" x-data="{ date: @entangle('selectedDate'), time: @entangle('selectedTime') }">
             <li>
                 <p>Date: <span>{{ $date }}</span></p>
             </li>
@@ -602,53 +601,56 @@
         </ul>
 
         @if ($additionalItems)
-        <x-form-divider value="Rentals" />
+            <x-form-divider value="Rentals" />
 
-        <div class="flex justify-center">
-            <table class="w-full md:w-[90%] text-sm text-left rtl:text-right lg:mx-10 font-noticia">
-                <thead class="text-base">
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total Cost</th>
-                </thead>
-                <tbody>
-                    @foreach ($additionalItems as $item)
-                    <tr>
-                        <td>{{ $item['item']->item_name }}</td>
-                        <td>{{ $item['quantity'] }}</td>
-                        <td>{{ $item['item']->price }}</td>
-                        <td>₱{{ number_format($item['item']->price * $item['quantity'], 2, '.', ',') }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+            <div class="flex justify-center">
+                <table class="w-full md:w-[90%] text-sm text-left rtl:text-right lg:mx-10 font-noticia">
+                    <thead class="text-base">
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total Cost</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($additionalItems as $item)
+                            <tr>
+                                <td>{{ $item['item']->item_name }}</td>
+                                <td>{{ $item['quantity'] }}</td>
+                                <td>{{ $item['item']->price }}</td>
+                                <td>₱{{ number_format($item['item']->price * $item['quantity'], 2, '.', ',') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
-        @foreach ($additionalItems as $index => $item)
-        <input type="hidden" name="rentals[{{ $index }}][id]" value="{{ $item['item']->id }}">
-        <input type="hidden" name="rentals[{{ $index }}][item]" value="{{ $item['item'] }}">
-        <input type="hidden" name="rentals[{{ $index }}][quantity]" value="{{ $item['quantity'] }}">
-        <input type="hidden" name="rentals[{{ $index }}][itemTotalCost]"
-            value="{{ $item['quantity'] * $item['item']->price }}">
-        @endforeach
+            @foreach ($additionalItems as $index => $item)
+                <input type="hidden" name="rentals[{{ $index }}][id]" value="{{ $item['item']->id }}">
+                <input type="hidden" name="rentals[{{ $index }}][item]" value="{{ $item['item'] }}">
+                <input type="hidden" name="rentals[{{ $index }}][quantity]"
+                    value="{{ $item['quantity'] }}">
+                <input type="hidden" name="rentals[{{ $index }}][itemTotalCost]"
+                    value="{{ $item['quantity'] * $item['item']->price }}">
+            @endforeach
         @endif
 
-        @if($addOns)
-        <x-form-divider value="Options / Additional Charge" />
+        @if ($addOns)
+            <x-form-divider value="Options / Additional Charge" />
 
-        <ul class="m-0 text-base lg:mx-10 font-noticia">
-            @foreach ($addOns as $index => $option)
-            <li>
-                <p>- {{ $option['option'] }} <span>(₱{{ number_format(intval($option['price']), 2, '.', ',') }})</span>
-                </p>
-            </li>
+            <ul class="m-0 text-base lg:mx-10 font-noticia">
+                @foreach ($addOns as $index => $option)
+                    <li>
+                        <p>- {{ $option['option'] }}
+                            <span>(₱{{ number_format(intval($option['price']), 2, '.', ',') }})</span>
+                        </p>
+                    </li>
 
-            {{-- the value is from livewire ReservationForm --}}
-            <input type="hidden" name="addOns[{{ $index }}][option]" value="{{ $option['option'] }}">
-            <input type="hidden" name="addOns[{{ $index }}][price]" value="{{ $option['price'] }}">
-            @endforeach
-        </ul>
+                    {{-- the value is from livewire ReservationForm --}}
+                    <input type="hidden" name="addOns[{{ $index }}][option]"
+                        value="{{ $option['option'] }}">
+                    <input type="hidden" name="addOns[{{ $index }}][price]" value="{{ $option['price'] }}">
+                @endforeach
+            </ul>
 
         @endif
 
@@ -685,6 +687,8 @@
             </select>
             <x-input-error for="payment_percent" />
 
+            <x-payment-note />
+
             <h2 x-show="$wire.amountToPay" class="mt-5 text-md md:text-lg font-noticia">
                 Amount to pay: ₱{{ number_format($amountToPay, 2, '.', ',') }}
                 <input type="text" name="amount_paid" value="{{ $amountToPay }}" class="hidden" />
@@ -692,104 +696,8 @@
             </h2>
 
             <h2 class="my-3 text-center text-md md:text-xl font-noticia">Select Payment Method </h2>
-            <div class="flex justify-center mb-5">
-                <button type="button" wire:click.layz="showGcash" wire:loading.class="opacity-75"
-                    class="px-3 py-1 rounded-lg shadow w-32 bg-[#087cfc] hover:shadow-lg hover:scale-[1.03] ease-in-out duration-100">
-                    <div class="w-full" wire:loading wire:target="showGcash">
-                        <svg class="mx-auto animate-spin" width="25px" height="25px" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path
-                                    d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612"
-                                    stroke="#e2e8f0" stroke-width="3.55556" stroke-linecap="round"></path>
-                            </g>
-                        </svg>
-                    </div>
-                    <img src="{{ asset('assets/images/gcash-fill-logo.jpg') }}" alt="gcash logo" wire:loading.remove
-                        wire:target="showGcash">
-                </button>
-                <div class="mx-4 border-l-2 border-gray-400"></div>
-                <button type="button" wire:click.layz="showMaya" wire:loading.class="opacity-75"
-                    class="px-6 py-3 bg-[#50b16b] rounded-lg shadow w-32 hover:shadow-lg hover:scale-[1.03] ease-in-out duration-100">
-                    <div class="w-full" wire:loading wire:target="showMaya">
-                        <svg class="mx-auto animate-spin" width="25px" height="25px" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path
-                                    d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612"
-                                    stroke="#e2e8f0" stroke-width="3.55556" stroke-linecap="round"></path>
-                            </g>
-                        </svg>
-                    </div>
-                    <img src="{{ asset('assets/images/maya-fill-logo.png') }}" alt="maya logo" wire:loading.remove
-                        wire:target="showMaya">
-                </button>
 
-                <!-- gcash modal -->
-                <x-dialog-modal footerPosition="center" maxWidth="md" wire:model="showingGcash">
-                    <x-slot name="title">
-                        <div class="mx-auto">
-                            <div class="flex items-end my-2 ">
-                                <x-application-mark class="block" />
-                                <x-brand-name class="ml-2" />
-                            </div>
-                        </div>
-                    </x-slot>
-                    <x-slot name="content">
-                        <div class="flex flex-col items-center">
-                            <div class="max-w-36">
-                                <img src="{{ asset('assets/images/gcash-logo.png') }}" alt="gcash logo">
-                            </div>
-
-                            <p class="mt-5 font-semibold uppercase text-md">send your payment here</p>
-
-                            <div class="size-64">
-                                <img src="{{ asset('assets/images/qr.png') }}" alt="gcash qr code">
-                            </div>
-
-                            <h3 class="title-primary !text-xl !font-bold">RO***T C.</h3>
-                        </div>
-                    </x-slot>
-                    <x-slot name="footer">
-                        <x-button wire:click="showGcash" type="button">back</x-button>
-                    </x-slot>
-                </x-dialog-modal>
-
-                <!-- maya modal -->
-                <x-dialog-modal footerPosition="center" maxWidth="md" wire:model="showingMaya">
-                    <x-slot name="title">
-                        <div class="mx-auto">
-                            <div class="flex items-end my-2 ">
-                                <x-application-mark class="block" />
-                                <x-brand-name class="ml-2" />
-                            </div>
-                        </div>
-                    </x-slot>
-                    <x-slot name="content">
-                        <div class="flex flex-col items-center">
-                            <div class="max-w-36">
-                                <img src="{{ asset('assets/images/maya-logo.jpg') }}" alt="maya logo">
-                            </div>
-
-                            <p class="mt-5 font-semibold uppercase text-md">send your payment here</p>
-
-                            <div class="size-64">
-                                <img src="{{ asset('assets/images/qr.png') }}" alt="maya qr code">
-                            </div>
-
-                            <h3 class="title-primary !text-xl !font-bold">RO***T C.</h3>
-                        </div>
-                    </x-slot>
-                    <x-slot name="footer">
-                        <x-button wire:click="showMaya" type="button">back</x-button>
-                    </x-slot>
-                </x-dialog-modal>
-            </div>
-
+            @livewire('reservation.payment-display-modal')
 
             <x-label for="receipt-img" required>Receipt Photo:</x-label>
             <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img" />
@@ -800,8 +708,8 @@
             <x-secondary-button x-on:click="prevStep()" type="button" class="mr-3">back</x-secondary-button>
             <button class="min-w-24 btn-success" x-bind:disabled="buttonDisabled">
                 <div role="status" x-show="buttonDisabled" class="w-full">
-                    <svg class="mx-auto animate-spin" width="20px" height="20px" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
+                    <svg class="mx-auto animate-spin" width="20px" height="20px" viewBox="0 0 24 24"
+                        fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                         <g id="SVGRepo_iconCarrier">
@@ -818,10 +726,10 @@
 </form>
 
 @push('scripts')
-<script>
-    document.addEventListener('alpine:init', () => {
+    <script>
+        document.addEventListener('alpine:init', () => {
             Alpine.data('reservationForm', () => ({
-                name: '{{ auth()->user()->name  }}',
+                name: '{{ auth()->user()->name }}',
                 address: '{{ auth()->user()->address }}',
                 pax: '',
                 occasion: '',
@@ -836,29 +744,27 @@
                 step: 1,
 
                 formHeading() {
-                    if(this.step == 4)
+                    if (this.step == 4)
                         return 'Reservation Summary';
-                    else if(this.step == 3)
+                    else if (this.step == 3)
                         return "Rentals";
-                    else 
+                    else
                         return 'Reservation Details';
                 },
 
-                fieldsValidated(){
-                    if(this.step === 1){
-                        return this.address 
-                        && this.occasion != "Select Occasion" 
-                        && this.package != "Select Package" 
-                        && this.pax;
+                fieldsValidated() {
+                    if (this.step === 1) {
+                        return this.address &&
+                            this.occasion != "Select Occasion" &&
+                            this.package != "Select Package" &&
+                            this.pax;
 
-                       // return true;   
-                    }
-                    else if(this.step === 2){
+                        // return true;   
+                    } else if (this.step === 2) {
                         return this.menu
                         // return true;   
-                    }
-                    else{
-                     return true;   
+                    } else {
+                        return true;
                     }
                 },
 
@@ -866,19 +772,22 @@
                     if (this.fieldsValidated()) {
                         this.step++;
                         this.incompleteFields = false;
-                        window.scrollTo({ top: 180, behavior: 'smooth' });
-                    }
-                    else
-                    {
+                        window.scrollTo({
+                            top: 180,
+                            behavior: 'smooth'
+                        });
+                    } else {
                         this.incompleteFields = true;
                     }
                 },
                 prevStep() {
                     this.step--;
-                    window.scrollTo({ top: 180, behavior: 'smooth' });
+                    window.scrollTo({
+                        top: 180,
+                        behavior: 'smooth'
+                    });
                 }
             }));
         });
-    
-</script>
+    </script>
 @endpush

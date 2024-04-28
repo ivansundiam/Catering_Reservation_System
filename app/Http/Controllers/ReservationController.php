@@ -67,8 +67,9 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::with('package', 'menu')->findOrFail($id);
         $payment_percentages = [20, 60, 90, 100];
+        $balance = $reservation->total_cost - $reservation->amount_paid;
         
-        return view('clients.reserve-details', compact('reservation', 'payment_percentages'));
+        return view('clients.reserve-details', compact('reservation', 'payment_percentages','balance'));
     }
 
     /**
@@ -92,9 +93,18 @@ class ReservationController extends Controller
             in the parameter validates the form already and does not even let you in the update()
             function.
         */
-        $reservationService->updateReservation($request, $storeImage, $id);
-
-        return redirect()->route('reservation.index')->with('success', "Reservation added successfully");
+        try{
+            $reservationService->updateReservation($request, $storeImage, $id);
+    
+            return redirect()->route('reservation.index')->with('success', "Updated payment on reservation successfully");
+        }
+        catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while updating the reservation: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while updating the reservation.');
+        }
     }
 
     /**
