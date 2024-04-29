@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\AccountVerified;
+use App\Events\NewUserCreated;
 use App\Events\ReservationComplete;
 use App\Listeners\AccountVerifiedEmailListener;
+use App\Listeners\NewUserCreatedListener;
 use App\Listeners\ReservationCompleteListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ReservationComplete::class => [
             ReservationCompleteListener::class,
+        ],
+        NewUserCreated::class => [
+            NewUserCreatedListener::class,
         ],
     ];
 

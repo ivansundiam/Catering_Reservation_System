@@ -67,7 +67,13 @@ class User extends Authenticatable
         'profile_photo_url',
     ]; 
 
-    public function reservations():HasMany {
+    public function reservations():HasMany 
+    {
         return $this->hasMany(Reservation::class);
+    }
+
+    public static function admin() 
+    {
+        return static::where('user_type', 'admin')->firstOrFail();
     }
 }

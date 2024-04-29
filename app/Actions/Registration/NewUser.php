@@ -5,6 +5,7 @@ namespace App\Actions\Registration;
 use Illuminate\Http\Request;
 use App\Actions\Fortify\PasswordValidationRules;
 use App\Actions\Uploads\StoreImage;
+use App\Events\NewUserCreated;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Jetstream;
@@ -33,7 +34,7 @@ class NewUser
 
         $idVerifyPhotoPath = $storeImage->execute($request, 'id_verify_img', 'ids');
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'address' => $input['address'],
@@ -42,5 +43,9 @@ class NewUser
             'phone_number' => $input['phone_number'],
             'password' => Hash::make($input['password']),
         ]);
+
+        event(new NewUserCreated($user));
+
+        return $user;
     }
 }
