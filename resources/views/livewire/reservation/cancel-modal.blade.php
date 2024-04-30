@@ -43,7 +43,7 @@
         <x-slot name="footer">
             <form action="{{ route(($isClient ? 'reservation.destroy': 'admin.reservation-delete'), $reservation->id) }}" method="POST" 
                 class="flex items-center" id="deleteForm"
-                x-data="{ buttonDisabled = false}" x-on:submit="buttonDisabled = true">
+                x-data="{ buttonDisabled: false}" x-on:submit="buttonDisabled = true">
                 @csrf
                 @method('DELETE')
                 

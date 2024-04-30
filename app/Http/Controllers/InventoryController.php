@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\InventoryRequest;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
 class InventoryController extends Controller
 {
     /**
@@ -97,8 +97,19 @@ class InventoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Inventory $inventory)
+    public function destroy(InventoryService $inventoryService, $id)
     {
-        //
+        try{
+            $inventoryService->deleteItem($id);
+    
+            return redirect()->route('inventory.index')->with('success', "Items deleted successfully");
+        }
+        catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while deleting the items: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while deleting the items.');
+        }
     }
 }

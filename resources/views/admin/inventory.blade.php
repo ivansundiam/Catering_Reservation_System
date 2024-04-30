@@ -112,9 +112,7 @@
                                                     {{ __('View') }}
                                                 </x-dropdown-link>
                     
-                                                <x-dropdown-link href="{{ route('inventory.show', $item->id) }}">
-                                                    {{ __('Delete') }}
-                                                </x-dropdown-link>
+                                                @livewire('inventory.cancel-modal', ['item' => $item])
                                             </x-slot>
                     
                                         </x-dropdown>

@@ -64,4 +64,10 @@ class InventoryService {
             ];
         }
     }
+
+    public function deleteItem($id)
+    {
+        $item = Inventory::findOrFail($id);
+        $item->delete();
+    }
 }
