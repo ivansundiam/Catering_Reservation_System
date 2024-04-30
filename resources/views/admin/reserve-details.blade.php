@@ -132,17 +132,54 @@
 
                     @php
                         $percent = $reservation->payment_percent;
-                        $completed = $percent == 100;
+                        $completed = $percent >= 90;
                     @endphp
 
                     <div class="inline-block w-full mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
                         <div class="{{ $completed ? 'bg-green-500' : 'bg-primary' }} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                            style="width: {{ $percent }}%">
+                            style="width: {{ $completed ? '100' : $percent }}%">
                             {{ $completed ? 'Completed' : $percent . '%' }}
                         </div>
                     </div>
 
                     @livewire('reservation.attachment-modal', ['reservation' => $reservation])
+
+                    <div id="accordion-flush-2" data-accordion="collapse"
+                        data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                        data-inactive-classes="text-gray-500 dark:text-gray-400">
+                        <h2 id="accordion-flush-heading-2">
+                            <button type="button" tabindex="-1"
+                                class="flex items-center justify-between w-full gap-3 py-5 font-medium text-gray-500 border-b border-gray-200 rtl:text-right dark:border-gray-700 dark:text-gray-400"
+                                data-accordion-target="#accordion-flush-body-2" aria-expanded="true"
+                                aria-controls="accordion-flush-body-2">
+                                <h3 class="text-lg font-semibold font-noticia">Balance</h3>
+                                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M9 5 5 1 1 5" />
+                                </svg>
+                            </button>
+                        </h2>
+                        <div id="accordion-flush-body-2" wire:ignore.self class="hidden"
+                            aria-labelledby="accordion-flush-heading-2">
+                            <ul class="text-base font-noticia">
+                                <li class="flex justify-between">
+                                    <p>Amount Paid:</p>
+                                    <span>₱{{ number_format($reservation->amount_paid, 2, '.', ',') }}
+                                        ({{ $reservation->payment_percent }}%)</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <p>Total Cost: </p>
+                                    <span>₱{{ number_format($reservation->total_cost, 2, '.', ',') }}</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <p>Remaining Balance: </p>
+                                    <span>₱{{ number_format($balance, 2, '.', ',') }}</span>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
 
                     @if (!$completed)
                         <div class="mx-auto mt-5">

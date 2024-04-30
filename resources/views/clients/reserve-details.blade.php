@@ -120,7 +120,7 @@
             </div>
         </div>
 
-        <div class="lg:col-span-1">
+        <div class="lg:col-span-1"  x-data="reservationDetails()" >
             <div class="p-5 overflow-hidden bg-white shadow-lg md:p-10 sm:rounded-lg">
 
                 <div class="flex flex-col items-center">
@@ -128,7 +128,8 @@
                 </div>
 
                 <form action="{{ route('reservation.update', $reservation->id) }}" method="post"
-                    enctype="multipart/form-data" class="flex flex-col w-full mx-auto my-5">
+                    enctype="multipart/form-data" class="flex flex-col w-full mx-auto my-5" 
+                    id="reservationUpdateForm" x-on:submit="buttonDisabled = true">
                     @csrf
                     @method('PUT')
 
@@ -204,7 +205,8 @@
                             </h2>
                             <div id="accordion-flush-body-3" wire:ignore.self class="hidden"
                                 aria-labelledby="accordion-flush-heading-3">
-                                <div class="mt-5" x-data="reservationDetails()">
+                                <x-validation-errors />
+                                <div class="mt-5">
                                     <x-label for="payment_percent">Payment Percent:</x-label>
                                     <select x-model.fill="payPercent" name="payment_percent" class="w-full input-field"
                                         id="payment_percent">
@@ -227,6 +229,8 @@
                                     </p>
 
                                     <input type="hidden" name="amount_paid" x-model="amountToPay()">
+                                    <x-input-error for="amount_paid" />
+
                                 </div>
 
                                 <div>
@@ -237,18 +241,36 @@
 
                                 <div class="mt-5">
                                     <x-label for="receipt-img">Receipt Photo:</x-label>
-                                    <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img" />
+                                    <x-dropbox x-model="receiptImg" id="receipt-img" label="Click to upload" name="receipt-img" />
                                     <x-input-error for="receipt-img" />
-                                </div>
-
-                                <div class="mx-auto mt-5">
-                                    <button type="submit" class="self-center mx-auto btn-primary">Pay</button>
                                 </div>
                             </div>
                         </div>
                     @endif
 
                 </form>
+                <div class="mt-5 flex !justify-center">
+
+                    @livewire('reservation.cancel-modal', ['reservation' => $reservation])
+                        
+                    <div class="relative flex justify-center">
+                        <div x-show="incompleteFields"
+                            x-on:close.stop="incompleteFields = false"
+                            x-on:keydown.escape.window="incompleteFields = false"
+                            x-on:click.outside="incompleteFields = false"
+                            class="absolute z-50 p-2 mb-1 text-sm text-gray-400 w-64 bg-gray-100 rounded-md shadow-lg top-[-45px]"
+                            x-transition:enter="transition ease-out duration-300 transform"
+                            x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
+                            {{ __('Fill required fields before proceeding') }}
+                        </div>
+                        <button type="button" x-bind:disabled="buttonDisabled" x-on:click="submitForm()" class="ms-3 btn-primary">
+                            <div role="status" x-show="buttonDisabled" class="w-full">
+                                <svg class="mx-auto animate-spin" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612" stroke="#e2e8f0" stroke-width="3.55556" stroke-linecap="round"></path> </g></svg>
+                            </div>
+                            <span x-show="!buttonDisabled">Pay</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -257,40 +279,13 @@
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.data('reservationDetails', () => ({
+                    buttonDisabled: false,
                     payPercent: '',
+                    receiptImg: '',
                     totalCost: {{ $reservation->total_cost }},
                     amountPaid: {{ $reservation->amount_paid }},
-
-                    // amountToPay() {
-                    //     if (this.payPercent === '20') {
-                    //         let amount = this.totalCost * 0.2 - this.amountPaid;
-                    //         return amount.toLocaleString('en-US', {
-                    //             minimumFractionDigits: 2,
-                    //             maximumFractionDigits: 2
-                    //         });
-                    //     } else if (this.payPercent === '60') {
-                    //         let amount = this.totalCost * 0.6 - this.amountPaid;
-                    //         return amount.toLocaleString('en-US', {
-                    //             minimumFractionDigits: 2,
-                    //             maximumFractionDigits: 2
-                    //         });
-                    //     } else if (this.payPercent === '90') {
-                    //         let amount = this.totalCost * 0.9 - this.amountPaid;
-                    //         return amount.toLocaleString('en-US', {
-                    //             minimumFractionDigits: 2,
-                    //             maximumFractionDigits: 2
-                    //         });
-                    //     } else if (this.payPercent === '100') {
-                    //         let amount = this.totalCost * 1 - this.amountPaid;
-                    //         return amount.toLocaleString('en-US', {
-                    //             minimumFractionDigits: 2,
-                    //             maximumFractionDigits: 2
-                    //         });
-                    //     } else {
-                    //         return 0;
-                    //     }
-                    // }
-
+                    incompleteFields: false,
+                
                     amountToPay() {
                         if (this.payPercent === '20') {
                             return this.totalCost * 0.2 - this.amountPaid;
@@ -303,7 +298,17 @@
                         } else {
                             return 0;
                         }
-                    }
+                    },
+
+                    submitForm() {
+                        if(this.payPercent != "Select Payment Percent" && this.receiptImg){
+                            this.incompleteFields = false;
+                            this.buttonDisabled = true;
+                            document.getElementById('reservationUpdateForm').submit();
+                        } else {
+                            this.incompleteFields = true;
+                        }
+                    },
 
 
                 }));

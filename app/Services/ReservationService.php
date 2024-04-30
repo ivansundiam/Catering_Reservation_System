@@ -60,17 +60,14 @@ class ReservationService {
         $reservation = Reservation::create($resData);
 
         // Event that sends user email of reservation receipt
-        event(new ReservationComplete($user, $reservation));
+        // event(new ReservationComplete($user, $reservation));
     }
 
     public function updateReservation(Request $request, StoreImage $storeImage, $id) 
     {
         $reservation = Reservation::findOrFail($id);
         $amountPaid = (float) str_replace(',', '', $request->input('amount_paid'));
-
-        Log::info("AMOUNT PAID: " . $amountPaid);
-        Log::info("Is Numeric: " . is_numeric($amountPaid));
-        
+     
         $request->validate([
             'payment_percent' => 'required',
             'amount_paid' => 'required|numeric',
@@ -98,6 +95,12 @@ class ReservationService {
             'receipt_img' => implode(',', $receiptImagePaths),
             'payment_dates' => $paymentDates,
         ]);
+    }
+
+    public function deleteReservation($id) 
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->delete();
     }
 
     private function generateTransactionNumber($userId) {

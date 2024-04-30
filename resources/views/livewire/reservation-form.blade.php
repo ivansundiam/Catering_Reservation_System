@@ -92,6 +92,7 @@
 
         <div class="relative flex justify-center w-full mt-8 md:justify-end">
             <div x-show="incompleteFields"
+                x-on:click.outside="incompleteFields = false"
                 class="absolute p-2 mb-1 text-sm text-gray-400 bg-gray-100 rounded-md shadow-lg top-[-45px]"
                 x-transition:enter="transition ease-out duration-300 transform"
                 x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
@@ -435,9 +436,9 @@
                         <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Inclusion :</span>
                         <p>
                             {{ __('With chairs and tables and colored ribbon With motif,
-                                                                                                                                                                                            With buffet table and decor, With complete catering equipment,
-                                                                                                                                                                                            With uniformed waiters, With purified water and ice, no individual flowers,
-                                                                                                                                                                                            With floor length clothe and colored toppings, no table set up.') }}
+                                                                                                                                                                                                                                                    With buffet table and decor, With complete catering equipment,
+                                                                                                                                                                                                                                                    With uniformed waiters, With purified water and ice, no individual flowers,
+                                                                                                                                                                                                                                                    With floor length clothe and colored toppings, no table set up.') }}
                         </p>
                     @break
 
@@ -445,9 +446,9 @@
                         <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Inclusion :</span>
                         <p>
                             {{ __('With chairs and tables and colored ribbon With motif,
-                                                                                                                                                                                            With buffet table and decor, With complete catering equipment, With uniformed
-                                                                                                                                                                                            waiters, With purified water and ice, With individual flowers, With floor
-                                                                                                                                                                                            length cloth and colored toppings.') }}
+                                                                                                                                                                                                                                                    With buffet table and decor, With complete catering equipment, With uniformed
+                                                                                                                                                                                                                                                    waiters, With purified water and ice, With individual flowers, With floor
+                                                                                                                                                                                                                                                    length cloth and colored toppings.') }}
                         </p>
                     @break
 
@@ -458,6 +459,7 @@
 
         <div class="relative flex justify-center w-full mt-8 md:justify-end">
             <div x-show="incompleteFields"
+                x-on:click.outside="incompleteFields = false"
                 class="absolute p-2 mb-1 text-sm text-gray-400 bg-gray-100 rounded-md shadow-lg top-[-45px]"
                 x-transition:enter="transition ease-out duration-300 transform"
                 x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
@@ -676,7 +678,12 @@
                 <input type="text" name="total_cost" value="{{ $totalCost }}" class="hidden" />
             </h2>
 
-            <x-label for="payment_percent" required>Payment Percent:</x-label>
+            <div class="flex items-center">
+                <x-label for="payment_percent" required>Payment Percent: </x-label>
+                <x-tooltip id="payment-tooltip" size="25" placement="right">
+                    <p>{{ __('Enter the percentage of the total cost you want to pay now') }}</p>
+                </x-tooltip>
+            </div>
             <select name="payment_percent" x-on:change="$wire.calculateAmountToPay($event.target.value)"
                 class="w-full input-field" id="payment_percent">
                 <option selected disabled>{{ __('Select Payment Percent') }}</option>
@@ -695,8 +702,12 @@
 
             </h2>
 
-            <h2 class="my-3 text-center text-md md:text-xl font-noticia">Select Payment Method </h2>
-
+            <div class="flex items-center justify-center">
+                <h2 class="my-3 text-center text-md md:text-xl font-noticia">Select Payment Method </h2>
+                <x-tooltip id="payment-method-tooltip" size="25" placement="top">
+                    <p>{{ __('Choose a payment method. Please ensure to pay the exact amount.') }}</p>
+                </x-tooltip>
+            </div>
             @livewire('reservation.payment-display-modal')
 
             <x-label for="receipt-img" required>Receipt Photo:</x-label>
@@ -706,8 +717,8 @@
 
         <div class="flex justify-center w-full mt-8 md:justify-end">
             <x-secondary-button x-on:click="prevStep()" type="button" class="mr-3">back</x-secondary-button>
-            <button class="min-w-24 btn-success" x-bind:disabled="buttonDisabled">
-                <div role="status" x-show="buttonDisabled" class="w-full">
+            <button type="button" wire:click="showConfimationModal" wire:loading.attr="disabled" class="btn-success">
+                <div role="status" wire:loading wire:loading.class="min-w-[3.8rem]" class="w-full">
                     <svg class="mx-auto animate-spin" width="20px" height="20px" viewBox="0 0 24 24"
                         fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -719,8 +730,37 @@
                         </g>
                     </svg>
                 </div>
-                <span x-show="!buttonDisabled">{{ __('Reserve') }}</span>
+                <span wire:loading.remove>{{ __('Reserve') }}</span>
             </button>
+
+            <x-dialog-modal wire:model="showingConfirmationModal" id="confirmationModal" maxWidth="sm">
+                <x-slot name="title">
+                    Confirm reservation
+                </x-slot>
+                <x-slot name="content">
+                    <div class="mt-4 text-xl text-gray-600 dark:text-gray-400">
+                        <h4 x-show="!buttonDisabled">Are you sure you want to confirm this reservation?</h4>
+                        <div class="flex flex-col items-center justify-center" x-show="buttonDisabled">
+                            <div role="status">
+                                <svg aria-hidden="true" class="inline text-gray-200 size-16 animate-spin dark:text-gray-600 fill-gray-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                                </svg>
+                                <span class="sr-only">Loading...</span>
+                            </div>
+
+                            <p class="text-gray-400">Please wait</p>
+                        </div>
+                    </div>
+                </x-slot>
+                <x-slot name="footer">
+                    <x-secondary-button wire:click="showConfimationModal" class="mr-3">Back</x-secondary-button>
+                    
+                    <button class="min-w-24 btn-success" x-bind:disabled="buttonDisabled">
+                        <span>{{ __('Reserve') }}</span>
+                    </button>
+                </x-slot>
+            </x-dialog-modal>
         </div>
     </div>
 </form>

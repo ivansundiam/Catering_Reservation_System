@@ -34,13 +34,13 @@ Route::post('/register', [RegisterController::class, 'create'])->name('register'
 
 Route::group(['middleware' => 'auth'], function (){
     Route::resource('reservation', ReservationController::class)
-    ->only('index', 'create', 'store', 'show', 'update')
     ->middleware(['AllowUser:client'
     // , 'verified.id'
     ]);
 
     Route::group(['middleware' => 'AllowUser:admin', 'prefix' => 'admin'], function () {
         Route::get('/reservations', [AdminController::class , 'reservations'])->name('admin.reservations');
+        Route::delete('delete-reservation/{id}', [AdminController::class, 'destroy'])->name('admin.reservation-delete');
         Route::get('/reservation/{id}', [AdminController::class , 'showReservation'])->name('admin.reservation.show');
         Route::resource('inventory', InventoryController::class);
         Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');

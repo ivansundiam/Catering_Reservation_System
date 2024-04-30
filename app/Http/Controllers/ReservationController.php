@@ -94,6 +94,7 @@ class ReservationController extends Controller
             function.
         */
         try{
+            dd($id);
             $reservationService->updateReservation($request, $storeImage, $id);
     
             return redirect()->route('reservation.index')->with('success', "Updated payment on reservation successfully");
@@ -110,8 +111,19 @@ class ReservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy( ReservationService $reservationService, $id)
     {
-        //
+        try{
+            $reservationService->deleteReservation($id);
+    
+            return redirect()->route('reservation.index')->with('success', "Reservation deleted successfully");
+        }
+        catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while deleting the reservation: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while deleting the reservation.');
+        }
     }
 }

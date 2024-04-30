@@ -22,6 +22,7 @@ class ReservationForm extends Component
     public $inclusionType;
     public $additionalItems = [];
     public $addOns = [];
+    public $showingConfirmationModal;
 
     protected $listeners = [
         'dateSelected' => 'setDate',
@@ -197,6 +198,11 @@ class ReservationForm extends Component
         }
 
         $this->amountToPay = $this->totalCost * $percentage;
+    }
+
+    public function showConfimationModal()
+    {
+        $this->showingConfirmationModal = !$this->showingConfirmationModal;
     }
 
     public function mount($packages)

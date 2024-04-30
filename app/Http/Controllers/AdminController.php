@@ -8,6 +8,8 @@ use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Package;
 use App\Models\Menu;
+use App\Services\ReservationService;
+use Illuminate\Support\Facades\Log;
 class AdminController extends Controller
 {
     public function reservations(Request $request) : View
@@ -47,8 +49,10 @@ class AdminController extends Controller
         if ($statusFilter === '1') {
             $query->where('payment_percent', '<', 100);
         } elseif ($statusFilter === '2') {
+            $query->where('payment_percent', 90);
+        } elseif ($statusFilter === '3') {
             $query->where('payment_percent', 100);
-        }
+        } 
         
         if ($dateFilter) {
             $currentDate = now();
@@ -101,6 +105,24 @@ class AdminController extends Controller
     public function showReservation($id) : View
     {
         $reservation = Reservation::findOrFail($id);
-        return view('admin.reserve-details', compact('reservation'));
+        $balance = $reservation->total_cost - $reservation->amount_paid;
+
+        return view('admin.reserve-details', compact('reservation', 'balance'));
+    }
+
+    public function destroy( ReservationService $reservationService, $id)
+    {
+        try{
+            $reservationService->deleteReservation($id);
+    
+            return redirect()->route('admin.reservations')->with('success', "Reservation deleted successfully");
+        }
+        catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while deleting the reservation: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while deleting the reservation.');
+        }
     }
 }

@@ -3,7 +3,7 @@
 @php
   $colors = [
     'success' => 'green',
-    'danger' => 'red',
+    'error' => 'red',
     'warning' => 'yellow',
     'info' => 'blue',
 ];
