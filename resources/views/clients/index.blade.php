@@ -155,9 +155,9 @@
                     x-transition:leave="transition ease-in duration-300 transform"
                     x-transition:leave-start="opacity-100 translate-y-0"
                     x-transition:leave-end="opacity-0 translate-y-12">
-                    <button type="button" class="relative inline-block overflow-hidden size-full min-h-28 md:min-h-64">
+                    <a href="{{ url('gallery') }}" type="button" class="relative inline-block overflow-hidden size-full min-h-28 md:min-h-64">
                         <img src="{{ asset('assets/web-images/high/facility1.webp') }}" class="gallery-img"  fetchpriority="high" alt="facility 1">
-                    </button>
+                    </a>
                 </div>
                 <div x-show="isOnGallery"
                     x-transition:enter="transition ease-out duration-300 delay-[150ms] transform"
@@ -166,9 +166,9 @@
                     x-transition:leave="transition ease-in duration-300 transform"
                     x-transition:leave-start="opacity-100 translate-y-0"
                     x-transition:leave-end="opacity-0 translate-y-12">
-                    <button type="button" class="relative inline-block overflow-hidden size-full min-h-64">
+                    <a href="{{ url('gallery') }}" type="button" class="relative inline-block overflow-hidden size-full min-h-64">
                         <img src="{{ asset('assets/web-images/high/facility2.webp') }}" class="gallery-img"  fetchpriority="high" alt="facility 2">
-                    </button>
+                    </a>
                 </div>
                 <div x-show="isOnGallery"
                     x-transition:enter="transition ease-out duration-300 delay-200 transform"
@@ -177,9 +177,9 @@
                     x-transition:leave="transition ease-in duration-300 transform"
                     x-transition:leave-start="opacity-100 translate-y-0"
                     x-transition:leave-end="opacity-0 translate-y-12">
-                    <button type="button" class="relative inline-block overflow-hidden size-full min-h-64">
+                    <a href="{{ url('gallery') }}" type="button" class="relative inline-block overflow-hidden size-full min-h-64">
                         <img src="{{ asset('assets/web-images/high/facility3.webp') }}" class="gallery-img"  fetchpriority="high" alt="facility 3">
-                    </button>
+                    </a>
                 </div>
                 <div x-show="isOnGallery"
                     x-transition:enter="transition ease-out duration-300 delay-300 transform"
@@ -188,9 +188,9 @@
                     x-transition:leave="transition ease-in duration-300 transform"
                     x-transition:leave-start="opacity-100 translate-y-0"
                     x-transition:leave-end="opacity-0 translate-y-12">
-                    <button type="button" class="relative inline-block overflow-hidden size-full min-h-64">
-                        <img src="{{ asset('assets/web-images/high/facility1.webp') }}" class="gallery-img"  fetchpriority="high" alt="facility 1">
-                    </button>
+                    <a href="{{ url('gallery') }}" type="button" class="relative inline-block overflow-hidden size-full min-h-64">
+                        <img src="{{ asset('assets/web-images/high/facility4.webp') }}" class="gallery-img"  fetchpriority="high" alt="facility 4">
+                    </a>
                 </div>
                 <div x-show="isOnGallery"
                     x-transition:enter="transition ease-out duration-300 delay-[350ms] transform"
@@ -199,9 +199,9 @@
                     x-transition:leave="transition ease-in duration-300 transform"
                     x-transition:leave-start="opacity-100 translate-y-0"
                     x-transition:leave-end="opacity-0 translate-y-12">
-                    <button type="button" class="relative inline-block overflow-hidden size-full min-h-64">
-                        <img src="{{ asset('assets/web-images/high/facility2.webp') }}" class="gallery-img"  fetchpriority="high" alt="facility 2">
-                    </button>
+                    <a href="{{ url('gallery') }}" type="button" class="relative inline-block overflow-hidden size-full min-h-64">
+                        <img src="{{ asset('assets/web-images/high/facility5.webp') }}" class="gallery-img"  fetchpriority="high" alt="facility 5">
+                    </a>
                 </div>
                 <div x-show="isOnGallery"
                     x-transition:enter="transition ease-out duration-300 delay-[400ms] transform"
@@ -210,9 +210,9 @@
                     x-transition:leave="transition ease-in duration-300 transform"
                     x-transition:leave-start="opacity-100 translate-y-0"
                     x-transition:leave-end="opacity-0 translate-y-12">
-                    <button type="button" class="relative inline-block overflow-hidden size-full min-h-64">
-                        <img src="{{ asset('assets/web-images/high/facility3.webp') }}" class="gallery-img"  fetchpriority="high" alt="facility 3">
-                    </button>
+                    <a href="{{ url('gallery') }}" type="button" class="relative inline-block overflow-hidden size-full min-h-64">
+                        <img src="{{ asset('assets/web-images/high/facility6.webp') }}" class="gallery-img"  fetchpriority="high" alt="facility 6">
+                    </a>
                 </div>
             </div>
         </div>

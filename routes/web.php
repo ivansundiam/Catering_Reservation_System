@@ -29,6 +29,7 @@ Route::view('/botman-frame', 'botman-frame');
 Route::get('/', [GuestController::class, 'index'])->name('index');
 Route::get('/dashboard',  [GuestController::class, 'index'])->name('dashboard')->middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified']);
 Route::view('/about', 'about');
+Route::view('/gallery', 'gallery');
 
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 

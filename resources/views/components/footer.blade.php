@@ -63,9 +63,9 @@
         <div>
             <h1 class="heading-text !text-[1.5rem] text-primary-hover mb-2 md:mb-5">Our services</h1>
             <div class="flex flex-col leading-10 text-gray-400">
-                <a href="#about" class="nav-link !p-0 !text-gray-400 hover:!text-primary">About</a>
-                <a href="#services" class="nav-link !p-0 !text-gray-400 hover:!text-primary">Packages</a>
-                <a href="#gallery" class="nav-link !p-0 !text-gray-400 hover:!text-primary">Gallery</a>
+                <a href="/#about" class="nav-link !p-0 !text-gray-400 hover:!text-primary">About</a>
+                <a href="/#services" class="nav-link !p-0 !text-gray-400 hover:!text-primary">Packages</a>
+                <a href="/gallery" class="nav-link !p-0 !text-gray-400 hover:!text-primary">Gallery</a>
             </div>
         </div>
     </div>
