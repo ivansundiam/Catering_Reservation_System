@@ -30,9 +30,11 @@ class AccountVerifiedMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        $admin = User::admin();
+
         return new Envelope(
             subject: 'Account Verified',
-            from: new Address('RobertCamba@example.com', 'Robert Camba'),
+            from: new Address($admin->mail_email, $admin->name),
         );
     }
 

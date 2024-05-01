@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('mail_email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('address');
@@ -34,6 +35,7 @@ return new class extends Migration
         User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
+            'mail_email' => 'admin@gmail.com',
             'phone_number' => '09876543211',
             'address' => '.',
             'id_type' => '.',

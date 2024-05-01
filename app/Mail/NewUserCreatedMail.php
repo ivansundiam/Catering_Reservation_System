@@ -31,9 +31,10 @@ class NewUserCreatedMail extends Mailable
     public function envelope(): Envelope
     {
         $admin = User::admin();
+        
         return new Envelope(
             subject: 'New User Created',
-            from: new Address($admin->email, $admin->name),
+            from: new Address($admin->mail_email, $admin->name),
         );
     }
 

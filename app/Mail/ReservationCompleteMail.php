@@ -33,9 +33,11 @@ class ReservationCompleteMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        $admin = User::admin();
+
         return new Envelope(
             subject: 'New Reservation Added',
-            from: new Address(User::admin()->email, 'Robert Camba'),
+            from: new Address($admin->mail_email, $admin->name),
 
         );
     }

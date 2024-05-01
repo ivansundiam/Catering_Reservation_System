@@ -34,9 +34,11 @@ class ReservationReceiptMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        $admin = User::admin();
+
         return new Envelope(
             subject: 'Reservation Receipt',
-            from: new Address('RobertCamba@example.com', 'Robert Camba'),
+            from: new Address($admin->mail_email, $admin->name),
         );
     }
 
