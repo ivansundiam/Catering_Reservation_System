@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Dompdf\FontMetrics;
 class PDFController extends Controller
 {
     public function reportPdf(Request $request)
@@ -14,16 +13,36 @@ class PDFController extends Controller
         $reservationIds = collect($reportDetails['reservations'])->pluck('id');
 
         $reservations = Reservation::whereIn('id', $reservationIds)->get();
-        
+
+        $date = date('M d, Y');
+        $reportType = '';
+        $dateType = $reportDetails['date'];
+    
+        switch ($dateType) {
+            case 'weekly':
+                $reportType = strtoupper($date) . '_WEEKLY_REPORT';
+                break;
+            case 'monthly':
+                $monthName = strtoupper(date('F', mktime(0, 0, 0, $reportDetails['month'], 1)));
+                $reportType = $reportDetails['year'] . '-' . $monthName . '_MONTHLY_REPORT';
+                break;
+            case 'annually':
+                $reportType = $reportDetails['year'] . '_ANNUAL_REPORT';
+                break;
+            default:
+                $reportType = 'REPORT';
+        }
+
         $data = [
-            'title' => 'Report',
+            'title' => $reportType,
             'date' => date('M d, Y'),
             'reportDetails' => $reportDetails,
             'reservations' => $reservations,
         ];
     
+
         $pdf = Pdf::loadView('admin.pdf.report', $data);
-        return $pdf->stream('report.pdf');
+        return $pdf->stream($reportType . '.pdf');
     }
     public function receiptPdf()
     {
