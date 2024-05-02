@@ -17,7 +17,6 @@ class AllowUser
     {
         if (auth()->user()->user_type != $role) {
             abort(401);
-            // return redirect()->back();
         }
 
         return $next($request);

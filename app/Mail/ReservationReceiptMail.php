@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -12,7 +11,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Queue\SerializesModels;
 use App\Models\User;
 use Illuminate\Mail\Mailables\Address;
-use Illuminate\Mail\Mailables\Attachment;
 
 class ReservationReceiptMail extends Mailable
 {

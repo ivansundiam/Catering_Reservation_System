@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\AccountVerified;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use App\Mail\AccountVerifiedMail;
 use Illuminate\Support\Facades\Mail;
 

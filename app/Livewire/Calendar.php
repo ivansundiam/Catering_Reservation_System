@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Carbon;
-use Illuminate\Console\Scheduling\Event;
 use App\Models\Reservation;
 
 class Calendar extends Component

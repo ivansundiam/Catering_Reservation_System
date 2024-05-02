@@ -23,8 +23,6 @@ class TimePicker extends Component
 
         // Initialize selected values to current time
         $currentTime = now();
-        // $this->selectedHour = str_pad($currentTime->format('h'), 2, '0', STR_PAD_LEFT);
-        // $this->selectedMinute = str_pad($currentTime->format('i'), 2, '0', STR_PAD_LEFT);
         $this->selectedHour = $currentTime->format('g');
         $this->selectedMinute = ltrim($currentTime->format('i'), '0');
         $this->selectedPeriod = $currentTime->format('A');

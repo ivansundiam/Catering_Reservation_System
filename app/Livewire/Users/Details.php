@@ -3,7 +3,6 @@
 namespace App\Livewire\Users;
 
 use Livewire\Component;
-use App\Models\User;
 
 class Details extends Component
 {

@@ -6,13 +6,11 @@ use App\Http\Requests\ReservationRequest;
 use App\Services\ReservationService;
 use Illuminate\Contracts\View\View;
 use App\Actions\Uploads\StoreImage;
-use App\Models\Menu;
 use App\Models\Inventory;
 use App\Models\Package;
 use App\Models\Reservation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
-use Exception;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -70,14 +68,6 @@ class ReservationController extends Controller
         $balance = $reservation->total_cost - $reservation->amount_paid;
         
         return view('clients.reserve-details', compact('reservation', 'payment_percentages','balance'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

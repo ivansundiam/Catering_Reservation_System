@@ -3,7 +3,6 @@
 namespace App\Livewire\Inventory;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\Redirect;
 
 class AddItemForm extends Component
 {

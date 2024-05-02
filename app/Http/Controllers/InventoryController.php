@@ -6,7 +6,6 @@ use App\Actions\Uploads\StoreImage;
 use App\Models\Inventory;
 use App\Services\InventoryService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\InventoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -57,15 +56,22 @@ class InventoryController extends Controller
      */
     public function store(InventoryRequest $request, InventoryService $inventoryService, StoreImage $storeImage)
     {
-        // creates an item and expects boolean value
-        $itemExists = $inventoryService->createItem($request, $storeImage);
+        try {
+            // creates an item and expects boolean value
+            $itemExists = $inventoryService->createItem($request, $storeImage);
 
-        // returns with different message if $itemExist
-        return redirect()->route('inventory.index')
-            ->with('success', $itemExists 
-                ? "Item quantity updated successfully" 
-                : "Item added successfully");
-
+            // returns with different message if $itemExist
+            return redirect()->route('inventory.index')
+                ->with('success', $itemExists 
+                    ? "Item quantity updated successfully" 
+                    : "Item added successfully");
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while creating items: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while creating items.');
+        }
     }
 
     /**
@@ -82,16 +88,25 @@ class InventoryController extends Controller
      */
     public function update(InventoryRequest $request, StoreImage $storeImage, InventoryService $inventoryService ,$id)
     {
-        $result = $inventoryService->updateItem($request, $storeImage, $id);
+        try {
+            $result = $inventoryService->updateItem($request, $storeImage, $id);
 
-        if ($result['success']) {
-            return redirect()->route('inventory.show', ['inventory' => $result['item']->id])->with([
-                'success' => 'Item updated successfully',
-                'item' => $result['item']
-            ]);
-        } else {
-            return back()->withErrors(['error' => $result['error']]);
+            if ($result['success']) {
+                return redirect()->route('inventory.show', ['inventory' => $result['item']->id])->with([
+                    'success' => 'Item updated successfully',
+                    'item' => $result['item']
+                ]);
+            } else {
+                return back()->withErrors(['error' => $result['error']]);
+            }
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while updating items: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while updating items.');
         }
+       
     }
 
     /**

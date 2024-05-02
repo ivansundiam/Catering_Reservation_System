@@ -54,7 +54,6 @@ class ReservationService {
         if($addOns){
             // convert the add ons data as JSON
             $resData['add_ons'] = json_encode($addOns);
-            Log::info("ADDONS: " . $resData['add_ons']);
         }
         
         $reservation = Reservation::create($resData);

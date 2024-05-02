@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
-use App\Models\User;
 use App\Models\Package;
-use App\Models\Menu;
 use App\Services\ReservationService;
 use Illuminate\Support\Facades\Log;
 class AdminController extends Controller
@@ -99,9 +97,6 @@ class AdminController extends Controller
         ]);
     }
     
-    
-
-
     public function showReservation($id) : View
     {
         $reservation = Reservation::findOrFail($id);

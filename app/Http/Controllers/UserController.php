@@ -57,14 +57,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
@@ -94,11 +86,19 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::findOrFail($id);
+        try {
+            $user = User::findOrFail($id);
 
-        $user->delete();
+            $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'User archived successfully.');
+            return redirect()->route('users.index')->with('success', 'User archived successfully.');
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while archiving an account: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while archiving an account.');
+        }
     }
 
     public function archives(Request $request)
@@ -117,9 +117,17 @@ class UserController extends Controller
 
     public function restore($id)
     {
-        $user = User::withTrashed()->findOrFail($id); 
-
-        $user->restore();
-        return redirect()->route('users.archive')->with('success', 'User restored successfully');
+        try {
+            $user = User::withTrashed()->findOrFail($id); 
+    
+            $user->restore();
+            return redirect()->route('users.archive')->with('success', 'User restored successfully');
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while creating an account: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while creating an account.');
+        }
     }
 }
