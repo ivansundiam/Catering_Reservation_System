@@ -34,14 +34,19 @@ Route::view('/gallery', 'gallery');
 Route::post('/register', [RegisterController::class, 'create'])->name('register');
 
 Route::group(['middleware' => 'auth'], function (){
-    Route::resource('reservation', ReservationController::class)
-    ->middleware(['AllowUser:client'
-    // , 'verified.id'
-    ]);
+    Route::group(['middleware' => 'AllowUser:client'], function () {
+        Route::resource('reservation', ReservationController::class)
+        ->middleware(['AllowUser:client'
+        // , 'verified.id'
+        ]);
+    Route::put('update-reservation/{id}', [AdminController::class, 'update'])->name('reservation-update');
+
+    });
 
     Route::group(['middleware' => 'AllowUser:admin', 'prefix' => 'admin'], function () {
         Route::get('/reservations', [AdminController::class , 'reservations'])->name('admin.reservations');
         Route::delete('delete-reservation/{id}', [AdminController::class, 'destroy'])->name('admin.reservation-delete');
+        Route::put('update-reservation/{id}', [AdminController::class, 'update'])->name('admin.reservation-update');
         Route::get('/reservation/{id}', [AdminController::class , 'showReservation'])->name('admin.reservation.show');
         Route::resource('inventory', InventoryController::class);
         Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');

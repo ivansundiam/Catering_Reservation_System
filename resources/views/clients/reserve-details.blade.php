@@ -127,11 +127,7 @@
                     <h2 class="forms-heading-text">Payment Details</h2>
                 </div>
 
-                <form action="{{ route('reservation.update', $reservation->id) }}" method="post"
-                    enctype="multipart/form-data" class="flex flex-col w-full mx-auto my-5" 
-                    id="reservationUpdateForm" x-on:submit="buttonDisabled = true">
-                    @csrf
-                    @method('PUT')
+                <div class="flex flex-col w-full mx-auto my-5">
 
                     @php
                         $percent = $reservation->payment_percent;
@@ -205,50 +201,58 @@
                             </h2>
                             <div id="accordion-flush-body-3" wire:ignore.self class="hidden"
                                 aria-labelledby="accordion-flush-heading-3">
-                                <x-validation-errors />
-                                <div class="mt-5">
-                                    <x-label for="payment_percent">Payment Percent:</x-label>
-                                    <select x-model.fill="payPercent" name="payment_percent" class="w-full input-field"
-                                        id="payment_percent">
-                                        <option selected disabled>{{ __('Select Payment Percent') }}</option>
-                                        @foreach ($payment_percentages as $percent)
-                                            @if ($percent > $reservation->payment_percent)
-                                                <option value="{{ $percent }}"
-                                                    {{ old('payment_percent') == $percent ? 'selected' : '' }}>
-                                                    {{ $percent == 100 ? 'Full' : $percent }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                    <x-input-error for="payment_percent" />
 
-                                    <p class="mt-3" x-show="amountToPay()">
-                                        Amount to pay: ₱
-                                        <span
-                                            x-text="amountToPay().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })"></span>
-                                    </p>
+                                <form action="{{ route('reservation.update', $reservation->id) }}" method="post"
+                                    enctype="multipart/form-data" id="reservationUpdateForm" x-on:submit="buttonDisabled = true">
+                                    @csrf
+                                    @method('PUT')
+                                
+                                    <x-validation-errors />
+                                    <div class="mt-5">
+                                        <x-label for="payment_percent">Payment Percent:</x-label>
+                                        <select x-model.fill="payPercent" name="payment_percent" class="w-full input-field"
+                                            id="payment_percent">
+                                            <option selected disabled>{{ __('Select Payment Percent') }}</option>
+                                            @foreach ($payment_percentages as $percent)
+                                                @if ($percent > $reservation->payment_percent)
+                                                    <option value="{{ $percent }}"
+                                                        {{ old('payment_percent') == $percent ? 'selected' : '' }}>
+                                                        {{ $percent == 100 ? 'Full' : $percent }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        <x-input-error for="payment_percent" />
 
-                                    <input type="hidden" name="amount_paid" x-model="amountToPay()">
-                                    <x-input-error for="amount_paid" />
+                                        <p class="mt-3" x-show="amountToPay()">
+                                            Amount to pay: ₱
+                                            <span
+                                                x-text="amountToPay().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })"></span>
+                                        </p>
 
-                                </div>
+                                        <input type="hidden" name="amount_paid" x-model="amountToPay()">
+                                        <x-input-error for="amount_paid" />
 
-                                <div>
-                                    <h2 class="my-3 text-center text-md md:text-lg font-noticia">Select Payment Method
-                                    </h2>
-                                    @livewire('reservation.payment-display-modal')
-                                </div>
+                                    </div>
 
-                                <div class="mt-5">
-                                    <x-label for="receipt-img">Receipt Photo:</x-label>
-                                    <x-dropbox x-model="receiptImg" id="receipt-img" label="Click to upload" name="receipt-img" />
-                                    <x-input-error for="receipt-img" />
-                                </div>
+                                    <div>
+                                        <h2 class="my-3 text-center text-md md:text-lg font-noticia">Select Payment Method
+                                        </h2>
+                                        @livewire('reservation.payment-display-modal')
+                                    </div>
+
+                                    <div class="mt-5">
+                                        <x-label for="receipt-img">Receipt Photo:</x-label>
+                                        <x-dropbox x-model="receiptImg" id="receipt-img" label="Click to upload" name="receipt-img" />
+                                        <x-input-error for="receipt-img" />
+                                    </div>
+
+                                </form>
                             </div>
                         </div>
                     @endif
 
-                </form>
+                </div>
                 <div class="mt-5 flex !justify-center">
 
                     @livewire('reservation.cancel-modal', ['reservation' => $reservation])

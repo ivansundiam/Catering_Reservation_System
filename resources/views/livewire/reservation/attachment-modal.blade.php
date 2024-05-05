@@ -1,4 +1,8 @@
-<div>
+<div >
+    @php
+        $isAdmin = auth()->user()->user_type == 'admin';
+    @endphp
+
     <div id="accordion-flush" data-accordion="collapse"
         data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
         data-inactive-classes="text-gray-500 dark:text-gray-400">
@@ -68,9 +72,64 @@
                     </div>
                 </div>
             @endforeach
+
+            <div class="flex justify-center">
+                @if ($isAdmin)
+                    @if (!$reservation->hasNotice)
+                        <button wire:click="showNoticeModal" type="button" class="px-3 py-1 my-5 btn-warning">Payment Notice</button>
+                    @else
+                        <button wire:click="showNoticeModal" class="px-3 py-1 my-5 btn-warning" readonly>Notice Sent</button>
+                    @endif
+                @else
+                    @if ($reservation->hasNotice)
+                        <button wire:click="showNoticeModal" type="button" class="relative px-3 py-1 my-5 btn-warning">
+                            <!-- notification -->
+                            @if ($reservation->hasNotice)
+                                <div class="absolute px-[0.45rem] text-center py-0 text-sm font-extrabold text-white bg-red-500 rounded-full top-[-10px] right-[-10px]">!</div>
+                            @endif
+                            See Payment Notice
+                        </button>
+                    @endif
+                @endif
+            </div>
+            
+            <!-- payment notice modal -->
+            <x-dialog-modal wire:model="showingNoticeModal">
+                <x-slot name="title">
+                    {{ __('Payment Notice') }}
+                </x-slot>
+                <x-slot name="content">
+                    @if($isAdmin)
+                        {{ __('Are you sure you want to ' . (!$reservation->hasNotice ? 'send a' : 'remove the') . ' payment notice to the client for the pending payment of this reservation?') }}
+                    @else
+                        <p>{{ __("We've noticed that your previous payment doesn't match the required amount.") }}</p>
+                        <h4 class="text-lg font-semibold">Amount to pay: ₱<span>{{ number_format($reservation->amount_paid, 2, '.', ',') }}</span></h4>
+                        <h4 class="text-lg font-semibold">Uploaded Receipt Photo:</h4>
+                        <img src="{{ asset('storage/' . $lastReceipt) }}" class="object-contain h-full mx-auto mb-5" alt="receipt photo">
+
+                        <div class="p-3 bg-red-200 border-2 border-red-300 rounded-lg">
+                            <p class="font-bold">{{ __('PLEASE READ:') }}</p>
+                            <p>{!! __('Failure to pay the exact amount will result in your reservation being <span class="font-bold underline">cancelled,</span>') !!}</p>
+                            <p>{{ __('Please ensure to submit the correct payment to avoid any inconvenience.') }}</p>
+                        </div>
+                    @endif
+                </x-slot>
+                <x-slot name="footer">
+                    <form action="{{ route('admin.reservation-update', $reservation->id) }}" method="POST" id="noticeForm">
+                        @csrf
+                        @method('PUT')
+                        
+                        <x-secondary-button wire:click="showNoticeModal">back</x-secondary-button>
+                        @if ($isAdmin)
+                            <button type="button" onclick="document.getElementById('noticeForm').submit()" class="ms-3 btn-warning">yes</button>
+                        @endif
+                    </form>
+                </x-slot>
+            </x-dialog-modal>
         </div>
     </div>
 
+    <!-- all attachment modal -->
     <x-dialog-modal wire:model="showingModal">
         <x-slot name="title">
             Submitted Receipt Images

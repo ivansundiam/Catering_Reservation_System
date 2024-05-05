@@ -125,10 +125,7 @@
                     <h2 class="forms-heading-text">Payment Details</h2>
                 </div>
 
-                <form action="{{ route('reservation.update', $reservation->id) }}" method="post"
-                    enctype="multipart/form-data" class="flex flex-col w-full mx-auto my-5">
-                    @csrf
-                    @method('PUT')
+                <div class="flex flex-col w-full mx-auto my-5">
 
                     @php
                         $percent = $reservation->payment_percent;
@@ -142,6 +139,7 @@
                         </div>
                     </div>
 
+                    
                     @livewire('reservation.attachment-modal', ['reservation' => $reservation])
 
                     <div id="accordion-flush-2" data-accordion="collapse"
@@ -180,13 +178,7 @@
 
                         </div>
                     </div>
-
-                    @if (!$completed)
-                        <div class="mx-auto mt-5">
-                            {{-- <button type="submit" class="self-center mx-auto btn-primary">Pay</button> --}}
-                        </div>
-                    @endif
-                </form>
+                </div>
             </div>
         </div>
     </div>

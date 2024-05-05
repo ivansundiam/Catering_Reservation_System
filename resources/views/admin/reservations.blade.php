@@ -44,6 +44,8 @@
                                     </option>
                                     <option value="3" {{ request('status') == '3' ? 'selected' : '' }}>Fully Paid
                                     </option>
+                                    <option value="4" {{ request('status') == '4' ? 'selected' : '' }}>Insufficient Payment
+                                    </option>
                                 </select>
                             </div>
 
@@ -110,19 +112,21 @@
                                         $rowColor = 'bg-white';
                                     }
 
-                                    $statusClasses =
-                                        $reservation->payment_percent >= 90
-                                            ? 'text-green-500 bg-green-100 py-1 px-2 rounded-full'
-                                            : 'text-primary bg-amber-100 py-1 px-2 rounded-full';
-
+                                    $statusClasses;
                                     $paymentStatus;
 
-                                    if ($reservation->payment_percent == 100) {
-                                        $paymentStatus = 'Fully Paid';
+                                    if($reservation->hasNotice){
+                                        $paymentStatus = "Insufficient Payment";
+                                        $statusClasses = 'text-primary bg-red-100 py-1 px-2 rounded-full';
                                     } elseif ($reservation->payment_percent == 90) {
                                         $paymentStatus = 'Paid (90%)';
-                                    } else {
+                                        $statusClasses = 'text-green-500 bg-green-100 py-1 px-2 rounded-full';
+                                    } elseif ($reservation->payment_percent == 100) { 
+                                        $paymentStatus = 'Fully Paid';   
+                                        $statusClasses = 'text-green-500 bg-green-100 py-1 px-2 rounded-full';                             
+                                    }else {
                                         $paymentStatus = 'Pending Payment';
+                                        $statusClasses = 'text-primary bg-amber-100 py-1 px-2 rounded-full';
                                     }
                                 @endphp
                                 <tr class="rounded-lg {{ $rowColor }}">

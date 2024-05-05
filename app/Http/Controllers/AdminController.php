@@ -50,7 +50,9 @@ class AdminController extends Controller
             $query->where('payment_percent', 90);
         } elseif ($statusFilter === '3') {
             $query->where('payment_percent', 100);
-        } 
+        } elseif ($statusFilter === '4') {
+            $query->where('hasNotice', true);
+        }
         
         if ($dateFilter) {
             $currentDate = now();
@@ -112,6 +114,24 @@ class AdminController extends Controller
     
             return redirect()->route('admin.reservations')->with('success', "Reservation deleted successfully");
         }
+        catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while deleting the reservation: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while deleting the reservation.');
+        }
+    }
+
+    public function update( ReservationService $reservationService, $id)
+    {
+        try {
+            $reservationService->updatePaymentNotice($id);
+            $reservation = Reservation::findOrFail($id);
+
+            $noticeStatus = !$reservation->hasNotice ? 'Removed' : 'Added'; 
+            return redirect()->back()->with('success', "{$noticeStatus} payment notice");
+        } 
         catch (\Exception $e) {
             // Handle any other exceptions
             Log::error('An error occurred while deleting the reservation: ' . $e->getMessage());

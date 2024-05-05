@@ -96,6 +96,14 @@ class ReservationService {
         ]);
     }
 
+    public function updatePaymentNotice($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->hasNotice = !$reservation->hasNotice ;
+        $reservation->save();
+        
+    }
+
     public function deleteReservation($id) 
     {
         $reservation = Reservation::findOrFail($id);

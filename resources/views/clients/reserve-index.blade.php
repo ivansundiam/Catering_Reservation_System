@@ -22,9 +22,15 @@
                         @endphp
 
                         <a href="{{ route('reservation.show', $reservation->id) }}"
-                            class="rounded-lg shadow hover:shadow-lg flex overflow-hidden hover:scale-[1.02] transform ease-in-out duration-200">
-                            <div class="bg-white w-[75%] border-r border-gray-200 flex flex-col justify-between">
-                                <div class="flex flex-col justify-center text-left p-3">
+                            class="relative rounded-lg shadow hover:shadow-lg flex hover:scale-[1.02] transform ease-in-out duration-200">
+
+                            <!-- notification -->
+                            @if ($reservation->hasNotice)
+                                <div class="absolute px-3 py-0 text-lg font-extrabold text-white bg-red-500 rounded-full top-[-10px] right-3">!</div>
+                            @endif
+
+                            <div class="bg-white w-[75%] border-r border-gray-200 flex flex-col justify-between rounded-l-lg">
+                                <div class="flex flex-col justify-center p-3 text-left">
                                     <span
                                         class="text-sm {{ $completed ? 'text-green-500' : 'text-primary' }}">{{ $completed ? 'Payment Completed' : 'Pending Payment' }}</span>
                                     <p class="text-base">{{ $reservation->package->name }}</p>
@@ -40,7 +46,7 @@
                                     </div>
                                 </div>
 
-                                <div class="items-center px-4 pb-3 bg-white">
+                                <div class="items-center px-4 pb-3 bg-white rounded-bl-lg">
                                     <p class="text-sm text-gray-500">Progress</p>
                                     <div class="inline-block w-full bg-gray-200 rounded-full dark:bg-gray-700">
                                         <div class="{{ $completed ? 'bg-green-500' : 'bg-primary' }} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
@@ -51,7 +57,7 @@
                                 </div>
                             </div>
                             <div
-                                class="w-[25%] text-center uppercase flex flex-col justify-center font-semibold tracking-tight py-4 bg-white">
+                                class="w-[25%] rounded-r-lg text-center uppercase flex flex-col justify-center font-semibold tracking-tight py-4 bg-white">
                                 <span class="text-xl">{{ $reservation->date->format('M') }}</span>
                                 <span
                                     class="text-4xl leading-8 text-primary">{{ $reservation->date->format('d') }}</span>

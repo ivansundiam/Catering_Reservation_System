@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('payment_percent');
             $table->string('receipt_img');
             $table->json('payment_dates')->nullable();
+            $table->boolean('hasNotice')->default(false);
             $table->timestamps();
         });        
     }
