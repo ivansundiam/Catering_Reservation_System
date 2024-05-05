@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="relative selection:bg-primary selection:text-white h-[420px] lg:h-[620px]" >
-        <img src="{{ asset('assets/web-web-images/lowages/high/hero-bg.webp') }}"  fetchpriority="high" class="z-0 w-full bg-cover absolute h-[420px] lg:h-[620px]" alt="Hero image">
-        <img src="{{ asset('assets/web-images/low/hero-bg.webp') }}" width="620px" height="420px" fetchpriority="high" class="z-0 w-full bg-cover absolute h-[420px] lg:h-[620px]" alt="Hero image">
+    <div class="relative selection:bg-primary selection:text-white h-[420px] lg:h-[calc(100vh-82px)]" >
+        {{-- <img src="{{ asset('assets/web-web-images/lowages/high/hero-bg.webp') }}"  fetchpriority="high" class="z-0 w-full bg-cover absolute h-[420px] lg:h-[620px]" alt="Hero image"> --}}
+        <img src="{{ asset('assets/web-images/low/hero-bg.webp') }}" width="620px" height="420px" fetchpriority="high" class="z-0 w-full bg-cover absolute h-[420px] lg:h-full" alt="Hero image">
 
         <div class="relative z-10 flex items-center w-full h-full bg-gradient-to-r from-black to-transparent" >
             <div class="w-full px-5 text-center text-white sm:px-10 md:px-20 sm:text-left ">
