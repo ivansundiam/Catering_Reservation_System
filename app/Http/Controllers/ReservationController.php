@@ -84,7 +84,6 @@ class ReservationController extends Controller
             function.
         */
         try{
-            dd($id);
             $reservationService->updateReservation($request, $storeImage, $id);
     
             return redirect()->route('reservation.index')->with('success', "Updated payment on reservation successfully");
