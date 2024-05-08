@@ -1,6 +1,6 @@
 <footer class="pt-4 bg-gray-900 pb-14 md:py-12 px-9 md:px-0 bg-dots-lighter">
-    <div class="container grid w-full md:grid-cols-3 gap-y-5 gap-x-9">
-        <div>
+    <div class="container grid w-full lg:grid-cols-4 md:grid-cols-2 gap-y-6 gap-x-9">
+        <div class="lg:mx-auto">
             <x-brand-name class="text-white" />
             
             <p class="mt-3 text-sm text-gray-400 normal-case md:mt-0 md:text-base">Our quest to improve our services, commissary equipment and personnel continues. To beat the latest trend in catering industry is our underlying goal. To promote our objective, we always showcase on bridal fairs, food tasting and GMA and ABS-CBN Television shows,” Mr. Robert Camba.</p>
@@ -18,7 +18,7 @@
             </div>
         </div>
         
-        <div>
+        <div class="lg:mx-auto">
             <h1 class="heading-text !text-[1.5rem] text-primary-hover mb-2 md:mb-5">contact us</h1>
 
             <div class="text-gray-400 ">
@@ -60,12 +60,20 @@
             </div>
         </div>
 
-        <div>
+        <div class="lg:mx-auto">
             <h1 class="heading-text !text-[1.5rem] text-primary-hover mb-2 md:mb-5">Our services</h1>
             <div class="flex flex-col leading-10 text-gray-400">
                 <a href="/#about" class="nav-link !p-0 !text-gray-400 hover:!text-primary">About</a>
                 <a href="/#services" class="nav-link !p-0 !text-gray-400 hover:!text-primary">Packages</a>
                 <a href="/gallery" class="nav-link !p-0 !text-gray-400 hover:!text-primary">Gallery</a>
+            </div>
+        </div>
+
+        <div class="lg:mx-auto">
+            <h1 class="heading-text !text-[1.5rem] text-primary-hover mb-2 md:mb-5">Terms and Policies</h1>
+            <div class="flex flex-col leading-10 text-gray-400">
+                <a href="{{ route('terms.show') }}t" class="nav-link !p-0 !text-gray-400 hover:!text-primary">Terms of Service</a>
+                <a href="{{ route('policy.show') }}" class="nav-link !p-0 !text-gray-400 hover:!text-primary">Privacy Policy</a>
             </div>
         </div>
     </div>

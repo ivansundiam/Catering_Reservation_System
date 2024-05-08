@@ -16,7 +16,7 @@ class IdVerified
     public function handle(Request $request, Closure $next): Response
     {
         if(!auth()->user()->verified){
-            return back()->with('warning', 'Your Account has not been verified yet.');
+            return back()->with('warning', 'Your Account has not been verified yet. We will send an email after your account has been verified.');
         }
 
         return $next($request);

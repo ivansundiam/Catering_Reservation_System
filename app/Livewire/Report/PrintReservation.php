@@ -41,7 +41,6 @@ class PrintReservation extends Component
         // Apply date filter if selected
         if ($this->selectedDate) {
             $currentDate = now();
-            Log::info($this->selectedDate);
             switch ($this->selectedDate) {
                 case 'weekly':
                     // Filter reservations for the current week
