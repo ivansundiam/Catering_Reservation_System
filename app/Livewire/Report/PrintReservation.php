@@ -16,6 +16,7 @@ class PrintReservation extends Component
     public $selectedDate = 'monthly';
     public $selectedMonth;
     public $selectedYear;
+    public $noReservations = false;
 
     public function show()
     {
@@ -31,7 +32,7 @@ class PrintReservation extends Component
 
     public function render()
     {
-        $query = Reservation::with(['package', 'menu']);
+        $query = Reservation::with(['package', 'menu']);        
 
         // Apply package filter if selected
         if ($this->selectedPackage !== 'all') {
@@ -112,6 +113,13 @@ class PrintReservation extends Component
 
         // Create an array of years from the minimum to maximum year
         $years = range($minYear, $maxYear);
+
+        // disables submit button if there is no reservations
+        $reservationsCount < 1 
+            ? $this->noReservations = true
+            : $this->noReservations = false;
+
+        
 
         // to be passed in the pdf
         $reportDetails = [

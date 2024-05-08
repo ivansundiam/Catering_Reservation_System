@@ -20,59 +20,61 @@
                 </svg>
             </button>
         </h2>
-        <div id="accordion-flush-body-1" wire:ignore.self class="hidden" aria-labelledby="accordion-flush-heading-1">
+        <div id="accordion-flush-body-1" wire:ignore.self class="hidden" aria-labelledby="accordion-flush-heading-1" >
             <div class="flex justify-end">
                 <button type="button" wire:click="showModal" aria-label="view all receipt button"
                     wire:loading.attr="disabled" class="flex text-blue-500 hover:text-blue-600">View All
                     Receipts</button>
             </div>
-            @foreach (explode(',', $reservation->receipt_img) as $index => $imagePath)
-                <div>
-                    <div class="mt-5 mb-2 text-base">
-                        <span class="font-semibold">Payment Date:</span>
-                        {{ \Carbon\Carbon::parse($reservation->payment_dates[$index])->format('M d, Y - g:i A') }}
-                    </div>
-                    <div class="flex justify-center mx-auto max-w-96" x-data="{ viewImage: false }">
-                        <button type="button"
-                            class="flex justify-center px-4 py-1 bg-gray-100 shadow hover:bg-gray-200"
-                            x-on:click="viewImage = !viewImage">
-                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <path
-                                        d="M8 11C9.10457 11 10 10.1046 10 9C10 7.89543 9.10457 7 8 7C6.89543 7 6 7.89543 6 9C6 10.1046 6.89543 11 8 11Z"
-                                        stroke="#4f4f4f" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                    <path d="M6.56055 21C12.1305 8.89998 16.7605 6.77998 22.0005 14.63" stroke="#4f4f4f"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path
-                                        d="M18 3H6C3.79086 3 2 4.79086 2 7V17C2 19.2091 3.79086 21 6 21H18C20.2091 21 22 19.2091 22 17V7C22 4.79086 20.2091 3 18 3Z"
-                                        stroke="#4f4f4f" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </g>
-                            </svg>
-                            <span class="ml-2">{{ substr(trim($imagePath), -20) }}</span>
-                        </button>
-                        <!-- full image view -->
-                        <div x-show="viewImage" x-on:click="viewImage = !viewImage"
-                            class="z-40 flex items-center justify-center">
-                            <div x-show="viewImage" class="fixed inset-0 transition-all transform"
-                                x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
-                                x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
-                                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-                                <div class="absolute inset-0 bg-gray-500 opacity-75 dark:bg-gray-900"></div>
-                                <button type="button"
-                                    class="absolute flex top-2 right-2 z-10 text-white rounded-full size-8 items-end justify-center text-[1.5rem] hover:bg-gray-100 hover:bg-opacity-30 active:bg-opacity-30 active:bg-gray-300">×</button>
+            <div class="overflow-scroll max-h-96 no-scrollbar">
+                @foreach (explode(',', $reservation->receipt_img) as $index => $imagePath)
+                    <div>
+                        <div class="mt-5 mb-2 text-base">
+                            <span class="font-semibold">Payment Date:</span>
+                            {{ \Carbon\Carbon::parse($reservation->payment_dates[$index])->format('M d, Y - g:i A') }}
+                        </div>
+                        <div class="flex justify-center mx-auto max-w-96" x-data="{ viewImage: false }">
+                            <button type="button"
+                                class="flex justify-center px-4 py-1 bg-gray-100 shadow hover:bg-gray-200"
+                                x-on:click="viewImage = !viewImage">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M8 11C9.10457 11 10 10.1046 10 9C10 7.89543 9.10457 7 8 7C6.89543 7 6 7.89543 6 9C6 10.1046 6.89543 11 8 11Z"
+                                            stroke="#4f4f4f" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path d="M6.56055 21C12.1305 8.89998 16.7605 6.77998 22.0005 14.63" stroke="#4f4f4f"
+                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path
+                                            d="M18 3H6C3.79086 3 2 4.79086 2 7V17C2 19.2091 3.79086 21 6 21H18C20.2091 21 22 19.2091 22 17V7C22 4.79086 20.2091 3 18 3Z"
+                                            stroke="#4f4f4f" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </g>
+                                </svg>
+                                <span class="ml-2">{{ substr(trim($imagePath), -20) }}</span>
+                            </button>
+                            <!-- full image view -->
+                            <div x-show="viewImage" x-on:click="viewImage = !viewImage"
+                                class="z-40 flex items-center justify-center">
+                                <div x-show="viewImage" class="fixed inset-0 transition-all transform"
+                                    x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+                                    x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
+                                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+                                    <div class="absolute inset-0 bg-gray-500 opacity-75 dark:bg-gray-900"></div>
+                                    <button type="button"
+                                        class="absolute flex top-2 right-2 z-10 text-white rounded-full size-8 items-end justify-center text-[1.5rem] hover:bg-gray-100 hover:bg-opacity-30 active:bg-opacity-30 active:bg-gray-300">×</button>
+                                </div>
+                                <img src="{{ asset('storage/' . trim($imagePath)) }}" id="receipt_img"
+                                    class="fixed top-[15%] z-50 object-contain left-[15%] w-[70%] h-[70%]"
+                                    alt="Receipt photo view">
                             </div>
-                            <img src="{{ asset('storage/' . trim($imagePath)) }}" id="receipt_img"
-                                class="fixed top-[15%] z-50 object-contain left-[15%] w-[70%] h-[70%]"
-                                alt="Receipt photo view">
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
 
             <div class="flex justify-center">
                 @if ($isAdmin)
@@ -98,9 +100,7 @@
                     {{ __('Payment Notice') }}
                 </x-slot>
                 <x-slot name="content">
-                    @if($isAdmin)
-                        {{ __('Are you sure you want to send a payment notice to the client for the pending payment of this reservation?') }}
-                    @else
+                    @if(!$isAdmin && $hasNotice)
                         <p>{{ __("We've noticed that your previous payment doesn't match the required amount.") }}</p>
                         <h4 class="text-lg font-semibold">Amount to pay: ₱<span>{{ number_format($reservation->amount_paid, 2, '.', ',') }}</span></h4>
                         <h4 class="text-lg font-semibold">Uploaded Receipt Photo:</h4>
@@ -172,6 +172,8 @@
                                 </div>
                             </form>
                         </div>
+                    @else
+                        {{ __('Are you sure you want to send a payment notice to the client for the pending payment of this reservation?') }}
                     @endif
                 </x-slot>
                 <x-slot name="footer">

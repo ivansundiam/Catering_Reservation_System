@@ -229,7 +229,7 @@
             <form action="{{ route('report-pdf') }}" method="POST" target="_blank">
                 @csrf
                 <input type="hidden" name="reportDetails" value="{{ json_encode($reportDetails) }}">
-                <button type="submit" class="ml-2 btn-info">Print</button>
+                <button type="submit" class="ml-2 btn-info" {{ $noReservations ? 'disabled' : '' }}>Print</button>
             </form>
         </div>
     </x-modal>

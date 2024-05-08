@@ -24,17 +24,27 @@
      
                 <div class="mt-4">
                     <x-label for="description" value="{{ __('Description') }}" />
-                    <x-input id="description" class="block w-full mt-1" type="text" name="description" :value="old('description')" required />
+                    <x-input id="description" class="block w-full mt-1" type="text" name="description" :value="old('description')" />
                 </div>
      
                 <div class="mt-4">
                     <x-label for="category" value="{{ __('Category') }}" />
-                    <x-input id="category" class="block w-full mt-1" type="text" name="category" :value="old('category')" required />
+                    <select id="category" class="w-full input-field"  name="category" :value="old('category')" required>
+                        <option value="">Select Category</option>
+                        <option value="CATERING EQUIPMENT">CATERING EQUIPMENT</option>
+                        <option value="CHAIRS & TABLES">CHAIRS & TABLES</option>
+                    </select>
+                    {{-- <x-input id="category" class="block w-full mt-1" type="text" name="category" :value="old('category')" required /> --}}
                 </div>
      
                 <div class="mt-4">
                     <x-label for="quantity" value="{{ __('Quantity') }}" />
                     <x-input id="quantity" class="block w-full mt-1" type="number" name="quantity" :value="old('quantity')" required />
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="price" value="{{ __('Price') }}" />
+                    <x-input id="price" class="block w-full mt-1" type="number" name="price" :value="old('price')" required />
                 </div>
      
                 <div class="mt-4">
