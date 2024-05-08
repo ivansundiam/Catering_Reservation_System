@@ -25,6 +25,7 @@ class Reservation extends Model
         'total_cost',
         'amount_paid',
         'payment_percent',
+        'has_notice',
         'receipt_img',
         'payment_dates'
     ];

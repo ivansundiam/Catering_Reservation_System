@@ -3,8 +3,8 @@
         {{ __('Reservation Detail | ' . config('app.name')) }}
     </x-slot>
 
-    <div class="grid gap-5 py-12 mx-auto max-w-7xl lg:grid-cols-3 lg:px-8 md:px-4">
-        <div class="lg:col-span-2">
+    <div class="grid gap-5 py-12 mx-auto max-w-7xl lg:grid-cols-5 lg:px-8 md:px-4">
+        <div class="lg:col-span-3">
             <div class="p-5 overflow-hidden bg-white shadow-xl md:p-10 dark:bg-gray-800 sm:rounded-lg">
                 <div class="flex flex-col items-center">
                     <h2 class="forms-heading-text">Reservation Details</h2>
@@ -118,7 +118,7 @@
             </div>
         </div>
 
-        <div class="lg:col-span-1">
+        <div class="lg:col-span-2">
             <div class="p-5 overflow-hidden bg-white shadow-lg md:p-10 sm:rounded-lg">
 
                 <div class="flex flex-col items-center">

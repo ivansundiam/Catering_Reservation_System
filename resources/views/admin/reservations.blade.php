@@ -115,7 +115,7 @@
                                     $statusClasses;
                                     $paymentStatus;
 
-                                    if($reservation->hasNotice){
+                                    if($reservation->has_notice){
                                         $paymentStatus = "Insufficient Payment";
                                         $statusClasses = 'text-primary bg-red-100 py-1 px-2 rounded-full';
                                     } elseif ($reservation->payment_percent == 90) {

@@ -96,10 +96,39 @@ class ReservationService {
         ]);
     }
 
-    public function updatePaymentNotice($id)
+    public function updatePaymentNotice(Request $request, StoreImage $storeImage, $id) 
     {
         $reservation = Reservation::findOrFail($id);
-        $reservation->hasNotice = !$reservation->hasNotice ;
+     
+        $request->validate([
+            'receipt-img' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'receipt-img.required' => 'Upload the receipt image.',
+        ]);
+
+        $newReceiptPhotoPath = $storeImage->execute($request, 'receipt-img', 'receipts');
+
+        // concatenates receipt image paths
+        $receiptImagePaths = $reservation->receipt_img ? explode(',', $reservation->receipt_img) : [];
+        $receiptImagePaths[] = $newReceiptPhotoPath;
+
+        // Records the date and time of each payment made for the reservation.
+        $paymentDates = $reservation->payment_dates ?? [];
+        $paymentDates[] = now()->toDateTimeString();
+
+        // Update reservation with validated data and updated receipt image paths
+        $reservation->update([
+            'receipt_img' => implode(',', $receiptImagePaths),
+            'payment_dates' => $paymentDates,
+            'has_notice' => false,
+        ]);
+    }
+
+
+    public function addPaymentNotice($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->has_notice = !$reservation->has_notice ;
         $reservation->save();
         
     }

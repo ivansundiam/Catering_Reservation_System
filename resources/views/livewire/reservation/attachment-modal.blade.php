@@ -1,6 +1,7 @@
 <div >
     @php
         $isAdmin = auth()->user()->user_type == 'admin';
+        $hasNotice = $reservation->has_notice
     @endphp
 
     <div id="accordion-flush" data-accordion="collapse"
@@ -75,18 +76,16 @@
 
             <div class="flex justify-center">
                 @if ($isAdmin)
-                    @if (!$reservation->hasNotice)
+                    @if (!$hasNotice)
                         <button wire:click="showNoticeModal" type="button" class="px-3 py-1 my-5 btn-warning">Payment Notice</button>
                     @else
-                        <button wire:click="showNoticeModal" class="px-3 py-1 my-5 btn-warning" readonly>Notice Sent</button>
+                        <x-secondary-button wire:click="showNoticeModal" class="px-3 py-1 my-5 pointer-events-none" readonly>Notice Sent</x-secondary-button>
                     @endif
                 @else
-                    @if ($reservation->hasNotice)
+                    @if ($hasNotice)
                         <button wire:click="showNoticeModal" type="button" class="relative px-3 py-1 my-5 btn-warning">
                             <!-- notification -->
-                            @if ($reservation->hasNotice)
-                                <div class="absolute px-[0.45rem] text-center py-0 text-sm font-extrabold text-white bg-red-500 rounded-full top-[-10px] right-[-10px]">!</div>
-                            @endif
+                            <div class="absolute px-[0.45rem] text-center py-0 text-sm font-extrabold text-white bg-red-500 rounded-full top-[-10px] right-[-10px]">!</div>
                             See Payment Notice
                         </button>
                     @endif
@@ -94,28 +93,89 @@
             </div>
             
             <!-- payment notice modal -->
-            <x-dialog-modal wire:model="showingNoticeModal">
+            <x-dialog-modal wire:model="showingNoticeModal" >
                 <x-slot name="title">
                     {{ __('Payment Notice') }}
                 </x-slot>
                 <x-slot name="content">
                     @if($isAdmin)
-                        {{ __('Are you sure you want to ' . (!$reservation->hasNotice ? 'send a' : 'remove the') . ' payment notice to the client for the pending payment of this reservation?') }}
+                        {{ __('Are you sure you want to send a payment notice to the client for the pending payment of this reservation?') }}
                     @else
                         <p>{{ __("We've noticed that your previous payment doesn't match the required amount.") }}</p>
                         <h4 class="text-lg font-semibold">Amount to pay: ₱<span>{{ number_format($reservation->amount_paid, 2, '.', ',') }}</span></h4>
                         <h4 class="text-lg font-semibold">Uploaded Receipt Photo:</h4>
                         <img src="{{ asset('storage/' . $lastReceipt) }}" class="object-contain h-full mx-auto mb-5" alt="receipt photo">
 
-                        <div class="p-3 bg-red-200 border-2 border-red-300 rounded-lg">
+                        <div class="p-3 mb-5 bg-red-200 border-2 border-red-300 rounded-lg">
                             <p class="font-bold">{{ __('PLEASE READ:') }}</p>
-                            <p>{!! __('Failure to pay the exact amount will result in your reservation being <span class="font-bold underline">cancelled,</span>') !!}</p>
-                            <p>{{ __('Please ensure to submit the correct payment to avoid any inconvenience.') }}</p>
+                            <p>{!! __('Failure to pay the exact amount within <span class="font-bold underline">3 days</span> will result in your reservation being <span class="font-bold underline">cancelled.</span>') !!}</p>
+                            <p class="mt-3">{{ __('Please ensure to submit the correct payment to avoid any inconvenience.') }}</p>
+                        </div>
+
+                        <div x-data="{
+                            buttonDisabled: false,
+                            receiptImg: '',
+                            incompleteFields: false,}">
+
+                            <form action="{{ route('reservation.updateNotice', $reservation->id) }}" method="post"
+                                enctype="multipart/form-data" id="noticePaymentForm" x-on:submit="buttonDisabled = true" >
+                                @csrf
+                                @method('PUT')
+                            
+                                <x-validation-errors />
+                                <div class="mt-5">
+                                    <p class="mt-3" x-show="amountToPay()">
+                                        Amount to pay: ₱
+                                        <span
+                                            x-text="amountToPay().toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })"></span>
+                                    </p>
+
+                                    <input type="hidden" name="amount_paid" x-model="amountToPay()">
+                                    <x-input-error for="amount_paid" />
+
+                                </div>
+
+                                <div>
+                                    <h2 class="my-3 text-center text-md md:text-lg font-noticia">Select Payment Method
+                                    </h2>
+                                    @livewire('reservation.payment-display-modal')
+                                </div>
+
+                                <div class="mt-5">
+                                    <x-label for="receipt-img">Receipt Photo:</x-label>
+                                    <x-dropbox x-model="receiptImg" id="receipt-img" label="Click to upload" name="receipt-img" />
+                                    <x-input-error for="receipt-img" />
+                                </div>
+
+                                <div class="relative flex justify-center mt-5">
+                                    <div x-show="incompleteFields"
+                                        x-on:close.stop="incompleteFields = false"
+                                        x-on:keydown.escape.window="incompleteFields = false"
+                                        x-on:click.outside="incompleteFields = false"
+                                        class="absolute z-50 p-2 mb-1 text-sm text-gray-400 w-64 bg-gray-100 rounded-md shadow-lg top-[-45px]"
+                                        x-transition:enter="transition ease-out duration-300 transform"
+                                        x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
+                                        {{ __('Fill required fields before proceeding') }}
+                                    </div>
+                                    <button type="button" x-bind:disabled="buttonDisabled" x-on:click="if(receiptImg){
+                                            incompleteFields = false;
+                                            buttonDisabled = true;
+                                            document.getElementById('noticePaymentForm').submit();
+                                        } else {
+                                            incompleteFields = true;
+                                        }" class="ms-3 btn-primary">
+                                        <div role="status" x-show="buttonDisabled" class="w-full">
+                                            <svg class="mx-auto animate-spin" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612" stroke="#e2e8f0" stroke-width="3.55556" stroke-linecap="round"></path> </g></svg>
+                                        </div>
+                                        <span x-show="!buttonDisabled">Pay</span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     @endif
                 </x-slot>
                 <x-slot name="footer">
-                    <form action="{{ route('admin.reservation-update', $reservation->id) }}" method="POST" id="noticeForm">
+                    <form action="{{ route('admin.reservation-update', $reservation->id) }}" method="POST" id="noticeForm" class="flex">
                         @csrf
                         @method('PUT')
                         

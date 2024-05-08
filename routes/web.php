@@ -37,9 +37,9 @@ Route::group(['middleware' => 'auth'], function (){
     Route::group(['middleware' => 'AllowUser:client'], function () {
         Route::resource('reservation', ReservationController::class)
         ->middleware(['AllowUser:client'
-        // , 'verified.id'
+        , 'verified.id'
         ]);
-    Route::put('update-reservation/{id}', [AdminController::class, 'update'])->name('reservation-update');
+    Route::put('update-reservation-notice/{id}', [ReservationController::class, 'updateNotice'])->name('reservation.updateNotice');
 
     });
 

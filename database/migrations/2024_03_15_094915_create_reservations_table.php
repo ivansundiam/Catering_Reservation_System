@@ -27,9 +27,9 @@ return new class extends Migration
             $table->decimal('total_cost', 8, 2);
             $table->decimal('amount_paid', 8, 2)->nullable();
             $table->integer('payment_percent');
-            $table->string('receipt_img');
+            $table->text('receipt_img');
             $table->json('payment_dates')->nullable();
-            $table->boolean('hasNotice')->default(false);
+            $table->boolean('has_notice')->default(false);
             $table->timestamps();
         });        
     }

@@ -51,7 +51,7 @@ class AdminController extends Controller
         } elseif ($statusFilter === '3') {
             $query->where('payment_percent', 100);
         } elseif ($statusFilter === '4') {
-            $query->where('hasNotice', true);
+            $query->where('has_notice', true);
         }
         
         if ($dateFilter) {
@@ -126,10 +126,10 @@ class AdminController extends Controller
     public function update( ReservationService $reservationService, $id)
     {
         try {
-            $reservationService->updatePaymentNotice($id);
+            $reservationService->addPaymentNotice($id);
             $reservation = Reservation::findOrFail($id);
 
-            $noticeStatus = !$reservation->hasNotice ? 'Removed' : 'Added'; 
+            $noticeStatus = !$reservation->has_notice ? 'Removed' : 'Added'; 
             return redirect()->back()->with('success', "{$noticeStatus} payment notice");
         } 
         catch (\Exception $e) {

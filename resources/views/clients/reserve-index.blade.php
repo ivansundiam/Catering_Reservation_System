@@ -25,7 +25,7 @@
                             class="relative rounded-lg shadow hover:shadow-lg flex hover:scale-[1.02] transform ease-in-out duration-200">
 
                             <!-- notification -->
-                            @if ($reservation->hasNotice)
+                            @if ($reservation->has_notice)
                                 <div class="absolute px-3 py-0 text-lg font-extrabold text-white bg-red-500 rounded-full top-[-10px] right-3">!</div>
                             @endif
 

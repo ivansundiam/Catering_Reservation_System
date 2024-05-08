@@ -115,4 +115,21 @@ class ReservationController extends Controller
             return redirect()->back()->with('error', 'An error occurred while deleting the reservation.');
         }
     }
+
+    public function updateNotice(Request $request, ReservationService $reservationService, StoreImage $storeImage, string $id)
+    {
+        try{
+            $reservationService->updatePaymentNotice($request, $storeImage, $id);
+    
+            return redirect()->route('reservation.index')->with('success', "Updated payment on reservation successfully");
+        }
+        catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while updating payment notice the reservation: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while updating payment notice the reservation.');
+        }
+    }
+
 }
