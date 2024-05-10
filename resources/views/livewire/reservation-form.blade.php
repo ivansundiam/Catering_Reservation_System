@@ -11,15 +11,67 @@
     <!-- Personal Information & Event Details -->
     <div x-show="step == 1">
 
-        <x-form-divider value="Personal Information & Event Details" />
+        <x-form-divider value="Personal Information" />
 
-        <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
+        <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 md:grid-rows-3 md:grid-flow-col gap-x-16">
             <div class="mt-5">
                 <x-label for="name" required>Name:</x-label>
                 <x-input type="text" name="name" class="w-full" id="name" x-model="name" readonly />
                 <x-input-error for="name" />
             </div>
 
+            <div class="mt-5">
+                <x-label for="city" required>Select City:</x-label>
+                <select name="city" id="city" x-model.fill="city" class="w-full input-field">
+                    <option selected>Select a city</option>
+                    <option value="Manila">Manila</option>
+                    <option value="Quezon City">Quezon City</option>
+                    <option value="Caloocan City">Caloocan City</option>
+                    <option value="Las Piñas City">Las Piñas City</option>
+                    <option value="Makati City">Makati City</option>
+                    <option value="Malabon City">Malabon City</option>
+                    <option value="Mandaluyong City">Mandaluyong City</option>
+                    <option value="Marikina City">Marikina City</option>
+                    <option value="Muntinlupa City">Muntinlupa City</option>
+                    <option value="Navotas City">Navotas City</option>
+                    <option value="Parañaque City">Parañaque City</option>
+                    <option value="Pasay City">Pasay City</option>
+                    <option value="Pasig City">Pasig City</option>
+                    <option value="Pateros">Pateros</option>
+                    <option value="San Juan City">San Juan City</option>
+                    <option value="Taguig City">Taguig City</option>
+                    <option value="Valenzuela City">Valenzuela City</option>
+                </select>
+            </div>
+            
+            <div class="mt-5">
+                <x-label for="event-address" required>Event Address:</x-label>
+                <div class="flex">
+                    <x-input x-model="eventAddress" name="event-address" class="w-full !rounded-r-none" x-bind:disabled="city == 'Select a city'" placeholder="House/Unit Number Street Name, Barangay/Subdivision" id="event-address" />
+                    <x-input x-model="city"  name="city" class="input-field !rounded-l-none pointer-events-none w-1/2" readonly />
+                </div>
+                <x-input-error for="address" />
+                <input type="text" name="address" x-model="fullAddress" hidden />
+            </div>
+            
+            <div class="mt-5">
+                <x-label for="phone_number" required>Phone Number:</x-label>
+                <x-input x-model="phoneNumber" name="phone_number" class="w-full" id="phone_number" x-on:keypress="limitCharacterCount" />
+                <x-input-error for="phone_number" />
+            </div>
+            
+            <div class="mt-5">
+                <x-label for="additional_number">Additional Number <span class="text-gray-500">(optional)</span>:</x-label>
+                <x-input x-model="additionalNumber" name="additional_number" class="w-full" id="additional_number" x-on:keypress="limitCharacterCount" />
+                <x-input-error for="additional_number" />
+            </div>
+
+
+        </div>
+
+        <x-form-divider value="Event Details" />
+
+        <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 md:grid-rows-2 md:grid-flow-col gap-x-16">
             <div class="mt-5">
                 <x-label for="occasion" required>Occasion:</x-label>
                 <select x-model.fill="occasion" name="occasion" class="w-full input-field" id="occasion">
@@ -32,13 +84,6 @@
                 </select>
                 <x-input-error for="occasion" />
             </div>
-
-            <div class="mt-5">
-                <x-label for="address" required>Address:</x-label>
-                <x-input x-model="address" name="address" class="w-full" id="address" />
-                <x-input-error for="address" />
-            </div>
-
 
             <div class="mt-5">
                 <div class="flex justify-between">
@@ -62,9 +107,26 @@
             <div class="mt-5">
                 <x-label for="pax" required>Pax:</x-label>
                 <x-input x-model="pax" wire:model.change="pax" x-on:change="$wire.setPax()" name="pax"
-                    type="number" min="1" max="300" :value="old('pax')" class="w-full" id="pax"
+                    type="number" min="1" max="300" :value="old('pax')" x-bind:readonly="occasion === 'Birthday'" class="w-full" id="pax"
                     placeholder="Enter Number of Attendees" />
                 <x-input-error for="pax" />
+            </div>
+
+            <div class="flex mt-5 gap-x-5" x-show="occasion === 'Birthday'">
+                <div class="w-full">
+                    <x-label for="adults" required>Adults:</x-label>
+                    <x-input x-model="adults" wire:model.change="adults" name="adults"
+                        type="number" min="1" max="300" :value="old('adults')" x-on:input="updatePax()" class="w-full" id="adults"
+                        placeholder="Enter adult Attendees" />
+                </div>
+
+                <div class="w-full">
+                    <x-label for="kids" required>Kids:</x-label>
+                    <x-input x-model="kids" wire:model.change="kids" name="kids"
+                        type="number" min="1" max="300" :value="old('kids')" x-on:input="updatePax()" class="w-full" id="kids"
+                        placeholder="Enter kid Attendees" />
+                </div>
+
             </div>
         </div>
 
@@ -147,6 +209,36 @@
                         @endforeach
                     @endif
                 </ul>
+
+                @if ($packageName !== 'special' && $packageName !== 'ordinary')
+                <h2 class="mx-5 mt-5 mb-3 text-md md:text-lg font-noticia">
+                    Select Beverage:
+                </h2>
+                <ul class="grid w-full grid-cols-2 gap-4 px-5 font-noticia">
+                    <li>
+                        <input type="radio" x-model="beverage"
+                            wire:model.change="beverage"
+                            id="beverage-1" name="beverage" value="Iced Tea"
+                            class="hidden peer" />
+                        <label for="beverage-1" class="menu-card">
+                            <div class="flex justify-between w-full">
+                                <div class="text-lg font-semibold ">Iced Tea</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" x-model="beverage"
+                            wire:model.change="beverage"
+                            id="beverage-2" name="beverage" value="Soft Drinks"
+                            class="hidden peer" />
+                        <label for="beverage-2" class="menu-card">
+                            <div class="flex justify-between w-full">
+                                <div class="text-lg font-semibold ">Soft Drinks</div>
+                            </div>
+                        </label>
+                    </li>
+                </ul>
+                @endif
             </div>
 
             <div class="flex flex-col items-center w-full lg:w-72">
@@ -567,7 +659,15 @@
                 <p>Name: <span x-text="name"></span></p>
             </li>
             <li>
-                <p>Address: <span x-text="address"></span></p>
+                <p>Phone Number: <span x-text="phoneNumber"></span></p>
+            </li>
+            <div x-show="additionalNumber !== ''">
+                <li>
+                    <p>Additional Number: <span x-text="additionalNumber"></span></p>
+                </li>
+            </div>
+            <li>
+                <p>Event Address: <span x-text="fullAddress"></span></p>
             </li>
             <li>
                 <p>Occasion: <span x-text="occasion"></span></p>
@@ -575,6 +675,14 @@
             <li>
                 <p>Pax: <span x-text="pax"></span></p>
             </li>
+            <div x-show="occasion === 'Birthday'">
+                <li>
+                    <p> - Adults: <span x-text="adults"></span></p>
+                </li>
+                <li>
+                    <p> - Kids: <span x-text="kids"></span></p>
+                </li>
+            </div>
         </ul>
 
         <x-form-divider value="Time and Date" />
@@ -597,6 +705,11 @@
             <li>
                 <p>Menu: <span x-text="menuName"></span></p>
             </li>
+            @if ($packageName !== 'special' && $packageName !== 'ordinary')
+                <li>
+                    <p>Beverage: <span x-text="beverage"></span></p>
+                </li>
+            @endif
             <li>
                 <p>Price: ₱<span>{{ number_format($menuPrice, 2, '.', ',') }}</span></p>
             </li>
@@ -770,18 +883,48 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('reservationForm', () => ({
                 name: '{{ auth()->user()->name }}',
-                address: '{{ auth()->user()->address }}',
+                eventAddress: '',
+                city: '',
+                phoneNumber: '{{ auth()->user()->phone_number }}',
+                additionalNumber: '',
+                adults: '',
+                kids: '',
                 pax: '',
                 occasion: '',
                 packageText: '',
                 package: '',
                 menu: '',
                 menuName: '',
+                beverage: '',
                 buttonDisabled: false,
                 incompleteFields: false,
                 emcee: '',
                 christianWedding: '',
                 step: 1,
+
+                get fullAddress() {
+                    return `${this.eventAddress}, ${this.city}`;
+                },
+
+                limitCharacterCount(event) {
+                    // Get the key code of the pressed key
+                    const keyCode = event.keyCode;
+
+                    // Allow numeric keys (0-9) and backspace (8)
+                    if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
+                        event.preventDefault();
+                    }
+
+                    // Limit to 11 characters
+                    if (event.target.value.length === 11) {
+                        event.preventDefault();
+                    }
+                },
+
+                updatePax() {
+                    this.pax = parseInt(this.adults || 0) + parseInt(this.kids || 0);
+                    this.$wire.set('pax', this.pax);
+                },
 
                 formHeading() {
                     if (this.step == 4)
@@ -794,14 +937,19 @@
 
                 fieldsValidated() {
                     if (this.step === 1) {
-                        return this.address &&
+                        return this.fullAddress &&
+                            this.eventAddress &&
                             this.occasion != "Select Occasion" &&
                             this.package != "Select Package" &&
                             this.pax;
 
                         // return true;   
                     } else if (this.step === 2) {
-                        return this.menu
+                        if(this.packageText !== 'Dinner / Lunch Buffet (Special)' && this.packageText !== 'Dinner / Lunch Buffet (Ordinary)') {
+                            return this.menu && this.beverage;
+                        } else {
+                            return this.menu;
+                        }
                         // return true;   
                     } else {
                         return true;
@@ -813,7 +961,7 @@
                         this.step++;
                         this.incompleteFields = false;
                         window.scrollTo({
-                            top: 180,
+                            top: 100,
                             behavior: 'smooth'
                         });
                     } else {

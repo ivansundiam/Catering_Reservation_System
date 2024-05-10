@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="mx-4 text-black border-b border-gray-100 md:6 lg:mx-10 dark:text-white">
+<nav x-data="{ open: false }" class="sticky top-0 z-40 px-4 text-black bg-white border-b border-gray-100 shadow-md md:px-6 lg:px-10 dark:text-white">
     <div class="flex justify-between">
         <a href="/" class="flex items-end my-2 ">
             <x-application-mark class="block" />

@@ -59,7 +59,7 @@ class ReservationService {
         $reservation = Reservation::create($resData);
 
         // Event that sends user email of reservation receipt
-        event(new ReservationComplete($user, $reservation));
+        // event(new ReservationComplete($user, $reservation));
     }
 
     public function updateReservation(Request $request, StoreImage $storeImage, $id) 

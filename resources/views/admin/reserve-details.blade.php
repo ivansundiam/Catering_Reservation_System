@@ -24,7 +24,15 @@
                             <p>Name: <span>{{ $reservation->user->name }}</span></p>
                         </li>
                         <li>
-                            <p>Address: <span>{{ $reservation->address }}</span></p>
+                            <p>Phone Number: <span>{{ $reservation->phone_number}}</span></p>
+                        </li>
+                        @if ($reservation->additional_number)
+                            <li>
+                                <p>Additional Number: <span>{{ $reservation->additional_number}}</span></p>
+                            </li>
+                        @endif
+                        <li>
+                            <p>Event Address: <span>{{ $reservation->address }}</span></p>
                         </li>
                         <li>
                             <p>Occasion: <span>{{ $reservation->occasion }}</span></p>
@@ -32,6 +40,14 @@
                         <li>
                             <p>Pax: <span>{{ $reservation->pax }}</span></p>
                         </li>
+                        @if ($reservation->adults && $reservation->kids)
+                            <li>
+                                <p> - Adults: <span>{{ $reservation->adults }}</span></p>
+                            </li>
+                            <li>
+                                <p> - Kids: <span>{{ $reservation->kids }}</span></p>
+                            </li>
+                        @endif
                     </ul>
 
                     <x-form-divider value="Time and Date" />
@@ -55,6 +71,11 @@
                             <li>
                                 <p>Menu: <span>{{ $reservation->menu->name }}</span></p>
                             </li>
+                            @if ($reservation->beverage)
+                                <li>
+                                    <p>Beverage: <span>{{ $reservation->beverage }}</span></p>
+                                </li>
+                            @endif
                             <li>
                                 <p>Price: ₱<span>{{ number_format($reservation->menu->price, 2, '.', ',') }}</span></p>
                             </li>
