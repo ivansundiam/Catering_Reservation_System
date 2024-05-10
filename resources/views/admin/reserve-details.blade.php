@@ -54,7 +54,10 @@
 
                     <ul class="m-0 text-base lg:mx-10 font-noticia">
                         <li>
-                            <p>Date: <span>{{ $reservation->date->format('M d, Y') }}</span></p>
+                            <p>Date Reserved: <span>{{ $reservation->created_at->format('M d, Y') }}</span></p>
+                        </li>
+                        <li>
+                            <p>Event Date: <span>{{ $reservation->date->format('M d, Y') }}</span></p>
                         </li>
                         <li>
                             <p>Time: <span>{{ $reservation->time->format('g : i A') }}</span></p>

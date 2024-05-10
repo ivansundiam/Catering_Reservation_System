@@ -807,8 +807,10 @@
             </select>
             <x-input-error for="payment_percent" />
 
-            <x-payment-note />
-
+            <x-payment-note>
+                <span class="font-bold">PLEASE NOTE:</span> Paying 90% of the total cost will mark the payment as complete. However, remember that the remaining 10% must still be paid at the actual event. Thank you for your understanding.
+            </x-payment-note>
+            
             <h2 x-show="$wire.amountToPay" class="mt-5 text-md md:text-lg font-noticia">
                 Amount to pay: ₱{{ number_format($amountToPay, 2, '.', ',') }}
                 <input type="text" name="amount_paid" value="{{ $amountToPay }}" class="hidden" />

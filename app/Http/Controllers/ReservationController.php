@@ -12,6 +12,8 @@ use App\Models\Reservation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 
 class ReservationController extends Controller
 {
@@ -66,8 +68,26 @@ class ReservationController extends Controller
         $reservation = Reservation::with('package', 'menu')->findOrFail($id);
         $payment_percentages = [20, 60, 90, 100];
         $balance = $reservation->total_cost - $reservation->amount_paid;
+        $reservationDate = Carbon::parse($reservation->date);
+        $dateReserved = Carbon::parse($reservation->created_at);
+        $today = Carbon::now();
+
+        // Calculate the difference in days between the date resreved and the reservation date
+        $daysDifference = $dateReserved->diffInDays($reservationDate);
+        if($daysDifference > 30){
+            $nextPaymentDate = $reservationDate->copy()->subMonth();
+            $secondPaymentDate = $reservationDate->copy()->subWeek();
+            // dd("gt 30:" . $nextPaymentDate);
+        }
+        else {
+            $nextPaymentDate = $dateReserved->copy()->addDays($daysDifference / 2);
+            $secondPaymentDate = $dateReserved->copy()->addDays($daysDifference / 1.4);
+
+            // dd("lt:" . $nextPaymentDate);
+            // dd("lt:" . $daysDifference);
+        }
         
-        return view('clients.reserve-details', compact('reservation', 'payment_percentages','balance'));
+        return view('clients.reserve-details', compact('reservation', 'payment_percentages','balance', 'nextPaymentDate', 'secondPaymentDate'));
     }
 
     /**
