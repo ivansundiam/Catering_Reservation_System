@@ -35,7 +35,7 @@ return new class extends Migration
         User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
-            'mail_email' => 'info@robertcambacatering.com',
+            'mail_email' => 'info@robertcambacatering.online',
             'phone_number' => '09876543211',
             'address' => '.',
             'id_type' => '.',
