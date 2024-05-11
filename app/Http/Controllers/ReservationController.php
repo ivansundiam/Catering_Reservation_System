@@ -80,8 +80,8 @@ class ReservationController extends Controller
             // dd("gt 30:" . $nextPaymentDate);
         }
         else {
-            $nextPaymentDate = $dateReserved->copy()->addDays($daysDifference / 2);
-            $secondPaymentDate = $dateReserved->copy()->addDays($daysDifference / 1.4);
+            $nextPaymentDate = $dateReserved->copy()->addDays($daysDifference / 2.6);
+            $secondPaymentDate = $dateReserved->copy()->addDays($daysDifference / 1.2);
 
             // dd("lt:" . $nextPaymentDate);
             // dd("lt:" . $daysDifference);

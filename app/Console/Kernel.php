@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('reservations:remove-has-notice')->everyFourHours();
+        $schedule->command('reservations:remove-unpaid')->everyFourHours();
     }
 
     /**
