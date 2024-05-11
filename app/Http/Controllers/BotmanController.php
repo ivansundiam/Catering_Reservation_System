@@ -37,13 +37,48 @@ class BotmanController extends Controller
                     $bot->reply('Hello! How may I assist you today?');
                     break;
 
-                case 'reserve':
-                    $bot->reply('Sure! Here are some commands you can try:');
-                    break;
+                case 'how to sign in?':
+                case 'login':
+                $bot->reply(' Click the Login link: <a href="' . route('login') . '" target="_parent">Login</a> then input your email and password.');
+                break;
+                
+                case 'how to sign up?':
+                case 'register':
+                $bot->reply(' Click the Sign up link: <a href="' . route('register') . '" target="_parent">Sign up</a><br />- Fill out the forms until all fields are filled.<br />- Click Sign Up after you have filled out the forms<br />- Wait to receive an email to verify your account.<br />- After receiving the verification email, you can now make a reservation!');
+                break;
 
                 case 'can i see the menu?':
                 case 'services':
                 $bot->reply('Our menu is located in the "Services" section. <a href="/#services" target="_parent">Click this link</a> to see services.');
+                break;
+
+                case 'what is the payment method?':
+                case 'payment':
+                $bot->reply("Here's our Payment Method, which you can pay through GCASH or PAYMAYA: <br />
+                <br />       
+                20% DOWN (NON-REFUNDABLE)<br />
+                30% ONE WEEK BEFORE THE OCCASION<br />
+                40% ONE MONTH BEFORE THE OCCASION<br />
+                10% ON THE EVENT DAY<br />
+                <br />
+                <br />
+                <br />");
+                break;
+
+                case 'what are the requirements for reservation?':
+                case 'reservation':
+                $bot->reply("Requirements for Reservation:<br />
+                    <br />Here are the requirements for making a reservation:
+                    <br />1st: You need to sign up to create an account, and it must be verified.
+                    <br />2nd: Fill out the information needed for the reservation.
+                    <br />3rd: Select preferred date and time of the event.
+                    <br />4th: Select menu preferences.
+                    <br />5th: Add any optional items if needed.
+                    <br />6th: Proceed to make the payment for your reservation then take a screenshot of the Gcash or Maya payment receipt.
+                    <br />7th: Attach the image receipt in the dropbox to verify your reservation.
+                    <br />
+                    <br />After completing all the steps, you have now successfully set a reservation!
+                    ");
                 break;
 
                 case 'where are you located?':
@@ -61,10 +96,12 @@ class BotmanController extends Controller
                     $question->addButtons([
                         Button::create('"Hi" or "Hello"')->value('hi'),
                         Button::create('Can I see the menu?')->value('services'),
+                        Button::create('How to sign in?')->value('login'),
+                        Button::create('How to sign up?')->value('register'),
                         Button::create('Where are you located?')->value('location'),
+                        Button::create('What is the payment method?')->value('payment'),
+                        Button::create('What are the requirements for reservation?')->value('reservation'),
                         Button::create('What time are the operating hours?')->value('time'),
-                        Button::create('How to make a reservation')->value('reserve'),
-                        Button::create('How to sign in')->value('register'),
                         Button::create('What are the services')->value('services'),
                     ]);
                     $bot->reply($question);
