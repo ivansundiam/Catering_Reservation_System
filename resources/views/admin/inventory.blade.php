@@ -10,10 +10,9 @@
                     <div class="flex items-start">
                         <p class="text-xl font-semibold grow">Inventory</p>
 
-                        <div class="relative flex items-center justify-between mt-5 divide-x-2 md:m-0">
-                            <div class="relative">
+                        <div class="relative flex items-center justify-between mt-5 gap-x-3 md:m-0">
                                 @livewire('inventory.add-item-form')
-                            </div>                           
+                                @livewire('report.print-inventory')
                         </div>
                     </div>
 

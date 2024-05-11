@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('/archive', [UserController::class, 'archives'])->name('users.archive');
         Route::post('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
         Route::post('/report-pdf', [PDFController::class, 'reportPdf'])->name('report-pdf');
+        Route::post('/inventory-report-pdf', [PDFController::class, 'inventoryReportPdf'])->name('inventory-report-pdf');
         Route::get('/receipt-pdf', [PDFController::class, 'receiptPdf'])->name('receipt-pdf');
         Route::get('/mail', [AdminController::class, 'sendMail'])->name('send-mail');
     });

@@ -10,6 +10,7 @@ use App\Events\ReservationComplete;
 use App\Models\User;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
+use App\Models\ItemReport;
 use Illuminate\Support\Facades\Log;
 
 class ReservationService {
@@ -37,6 +38,12 @@ class ReservationService {
             
                 // Add the inventory item details to the rental item
                 $addedItem['item'] = $inventoryItem;
+
+                // Add an entry to the ItemReport table
+                ItemReport::create([
+                    'inventory_id' => $inventoryItem->id,
+                    'quantity_rented' => $addedItem['quantity'],
+                ]);
             }
         }
 
@@ -59,7 +66,7 @@ class ReservationService {
         $reservation = Reservation::create($resData);
 
         // Event that sends user email of reservation receipt
-        // event(new ReservationComplete($user, $reservation));
+        event(new ReservationComplete($user, $reservation));
     }
 
     public function updateReservation(Request $request, StoreImage $storeImage, $id) 

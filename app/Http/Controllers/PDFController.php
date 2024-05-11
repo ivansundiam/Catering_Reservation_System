@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\Inventory;
+use App\Models\ItemReport;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 class PDFController extends Controller
@@ -42,6 +44,47 @@ class PDFController extends Controller
     
 
         $pdf = Pdf::loadView('admin.pdf.report', $data);
+        return $pdf->stream($reportType . '.pdf');
+    }
+    public function inventoryReportPdf(Request $request)
+    {
+        $reportDetails = json_decode($request->input('reportDetails'), true);
+        $inventoryIds = collect($reportDetails['inventory'])->pluck('inventory_id')->toArray();
+
+        // Ensure you have the correct IDs
+        // dd($reportDetails);
+
+        // Use the IDs to retrieve the corresponding records from the database
+        $inventory = ItemReport::whereIn('inventory_id', $inventoryIds)
+            ->with('inventory')
+            ->get();
+
+        // Debug the retrieved records
+        // dd($inventory);
+        $reportType = '';
+        $dateType = $reportDetails['date'];
+    
+        switch ($dateType) {
+            case 'monthly':
+                $monthName = strtoupper(date('F', mktime(0, 0, 0, $reportDetails['month'], 1)));
+                $reportType = $reportDetails['year'] . '-' . $monthName . '_MONTHLY_RENTAL_REPORT';
+                break;
+            case 'annually':
+                $reportType = $reportDetails['year'] . '_ANNUAL_RENTAL_REPORT';
+                break;
+            default:
+                $reportType = 'REPORT';
+        }
+
+        $data = [
+            'title' => $reportType,
+            'date' => date('M d, Y'),
+            'reportDetails' => $reportDetails,
+            'inventory' => $inventory,
+        ];
+    
+
+        $pdf = Pdf::loadView('admin.pdf.inventory-report', $data);
         return $pdf->stream($reportType . '.pdf');
     }
     public function receiptPdf()

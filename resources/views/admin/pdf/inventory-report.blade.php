@@ -41,7 +41,7 @@
             right: 0cm;
             width: 3in; 
             font-size: 1rem; 
-            margin: 0.7in 1in;
+            margin: 0.7in 1.6in;
         }
         .sub-footer{
             position: fixed;
@@ -143,20 +143,20 @@
                 </tr>
                 <tr>
                     <td style="text-align: left;">
-                        <span style="font-weight: bold;">RESERVATIONS: </span>
-                        <span style="font-weight: normal;"> {{ $reportDetails['reservationsCount'] }}</span>
+                        <span style="font-weight: bold;">ITEMS RENTED: </span>
+                        <span style="font-weight: normal;"> {{ $reportDetails['inventoryCount'] }}</span>
                     </td>
-                </tr>
+                </tr>   
                 <tr>
                     <td style="text-align: left;">
-                        <span style="font-weight: bold;">BEST SELLER PACKAGE: </span>
-                        <span style="font-weight: normal;"> {{  $reportDetails['mostChosenPackageYear']['package']['name'] }}<span> ({{ $reportDetails['mostChosenPackageYear']['package_count'] }})</span></span>
+                        <span style="font-weight: bold;">MOST ITEM RENTED: </span>
+                        <span style="font-weight: normal;"> {{  $reportDetails['mostRentedItemYear']['inventory']['item_name'] }}<span> ({{ $reportDetails['mostRentedItemYear']['item_count'] }})</span></span>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: left;">
                         <span style="font-weight: bold;">BEST MONTH: </span>
-                        <span style="font-weight: normal;">{{ date('F', mktime(0, 0, 0,$reportDetails['mostReservedMonth']['month'] , 1)) }} <span> ({{ $reportDetails['mostReservedMonth']['reservation_count'] }})</span></span>
+                        <span style="font-weight: normal;">{{ date('F', mktime(0, 0, 0,$reportDetails['mostMonthWithRent']['month'] , 1)) }} <span> ({{ $reportDetails['mostMonthWithRent']['item_count'] }})</span></span>
                     </td>
                 </tr>
                 <tr>
@@ -173,14 +173,14 @@
                 </tr>
                 <tr>
                     <td style="text-align: left;">
-                        <span style="font-weight: bold;">RESERVATIONS: </span>
-                        <span style="font-weight: normal;"> {{ $reportDetails['reservationsCount'] }}</span>
+                        <span style="font-weight: bold;">ITEMS RENTED: </span>
+                        <span style="font-weight: normal;"> {{ $reportDetails['inventoryCount'] }}</span>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: left;">
-                        <span style="font-weight: bold;">BEST SELLER PACKAGE: </span>
-                        <span style="font-weight: normal;"> {{  $reportDetails['mostChosenPackageMonth']['package']['name'] }}<span> ({{ $reportDetails['mostChosenPackageMonth']['package_count'] }})</span></span>
+                        <span style="font-weight: bold;">MOST ITEM RENTED: </span>
+                        <span style="font-weight: normal;"> {{  $reportDetails['mostRentedItemMonth']['inventory']['item_name'] }}<span> ({{ $reportDetails['mostRentedItemMonth']['item_count'] }})</span></span>
                     </td>
                 </tr>
                 <tr>
@@ -197,9 +197,7 @@
         <div style="font-family: 'Times New Roman', Times, serif; color: black;">
             <div style="width: 100%;">
                 <h2 style="margin-top: -5.25rem; margin-bottom: 1.25rem; font-size: 1.5rem; font-weight: bold; text-align: center; text-transform: capitalize;">
-                    @if ($reportDetails['date'] == 'weekly')
-                        Weekly Report - {{ now()->startOfWeek()->format('F Y') }}
-                    @elseif ($reportDetails['date'] == 'monthly')
+                    @if ($reportDetails['date'] == 'monthly')
                         Monthly Report - {{ date('F', mktime(0, 0, 0, $reportDetails['month'], 1)) }} {{ $reportDetails['year'] }}
                     @elseif ($reportDetails['date'] == 'annually')
                         Annual Report - {{ $reportDetails['year'] }}
@@ -211,22 +209,18 @@
                     <thead>
                         <tr style="text-transform: uppercase;">
                             <th style="padding-right: 0.75rem;">date</th>
-                            <th style="padding-right: 0.75rem; padding-left: 0.75rem;">customer</th>
-                            <th style="padding-right: 0.75rem; padding-left: 0.75rem;">menu</th>
-                            <th style="padding-right: 0.75rem; padding-left: 0.75rem;">package</th>
-                            <th style="padding-right: 0.75rem; padding-left: 0.75rem;">pax</th>
+                            <th style="padding-right: 0.75rem; padding-left: 0.75rem;">item name</th>
+                            <th style="padding-right: 0.75rem; padding-left: 0.75rem;">total rented</th>
                             <th style="padding-left: 0.75rem;">total cost</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($reservations as $reservation)
+                        @foreach ($reportDetails['inventory'] as $item)
                             <tr>
-                                <td style="padding-right: 0.75rem;">{{ $reservation->date->format('m-d-Y') }}</td>
-                                <td style="padding-right: 0.75rem; padding-left: 0.75rem;">{{ $reservation->user->name }}</td>
-                                <td style="padding-right: 0.75rem; padding-left: 0.75rem;">{{ $reservation->menu->name }}</td>
-                                <td style="padding-right: 0.75rem; padding-left: 0.75rem;">{{ str_replace(['Elegant', 'Package' ,'Dinner / Lunch'], '', $reservation->package->name)  }}</td>
-                                <td style="padding-right: 0.75rem; padding-left: 0.75rem;">{{ $reservation->pax }}</td>
-                                <td style="padding-left: 0.75rem;">{{ number_format($reservation->total_cost, 2, '.', ',') }}</td>
+                                <td style="padding-right: 0.75rem;">{{ \Carbon\Carbon::parse($item['inventory']['created_at'])->format('m-d-Y') }}</td>
+                                <td style="padding-right: 0.75rem; padding-left: 0.75rem;">{{ $item['inventory']['item_name'] }}</td>
+                                <td style="padding-right: 0.75rem; padding-left: 0.75rem;">{{ $item['quantity_rented'] }}</td>
+                                <td style="padding-left: 0.75rem;">{{ number_format(($item['inventory']['price'] * $item['quantity_rented']), 2, '.', ',') }}</td>
                             </tr>
                         @endforeach
                     </tbody>

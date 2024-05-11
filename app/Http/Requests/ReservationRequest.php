@@ -30,7 +30,7 @@ class ReservationRequest extends FormRequest
             'kids' => '',
             'beverage' => '',
             'date' => 'required|date',
-            'time' => 'required|date_format:H:i|after:09:59|before:20:01',
+            'time' => 'required|date_format:H:i|after:07:59|before:20:01',
             'occasion' => 'required',
             'amount_paid' => 'numeric',
             'total_cost' => 'required',
