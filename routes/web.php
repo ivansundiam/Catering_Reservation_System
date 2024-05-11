@@ -36,9 +36,7 @@ Route::post('/register', [RegisterController::class, 'create'])->name('register'
 Route::group(['middleware' => 'auth'], function (){
     Route::group(['middleware' => 'AllowUser:client'], function () {
         Route::resource('reservation', ReservationController::class)
-        ->middleware(['AllowUser:client'
-        // , 'verified.id'
-        ]);
+        ->middleware(['AllowUser:client', 'verified.id']);
     Route::put('update-reservation-notice/{id}', [ReservationController::class, 'updateNotice'])->name('reservation.updateNotice');
 
     });

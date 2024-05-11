@@ -1,7 +1,7 @@
 <form action="{{ route('users.update', $user->id) }}"
     method="POST"
     enctype="multipart/form-data"
-    class="flex items-center"
+    class="flex flex-col items-center md:flex-row md:items-center"
     x-data="{ viewImage: false }">
     @csrf
     @method('PUT')
@@ -28,7 +28,7 @@
         <img src="{{ asset('storage/' . $user->id_verify_img) }}" id="id_verify_img" class="fixed top-[15vh] z-50 object-contain left-[15vw] w-[70vw] h-[70vh]" alt="id photo view">
     </div>
 
-    <div class="ml-10 grow">
+    <div class="w-full md:w-auto md:ml-10 grow">
         <div class="mt-4">
             <x-label for="name" value="{{ __('Name') }}" />
             <x-input id="name" class="block w-full mt-1 disabled:bg-transparent" type="text" name="name" :value="$user->name" disabled/>

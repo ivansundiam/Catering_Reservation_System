@@ -1,6 +1,6 @@
 <form action="{{ route('inventory.update', $item->id) }}"
     method="POST"
-    class="flex items-start"
+    class="relative flex flex-col items-center md:items-start md:flex-row"
     enctype="multipart/form-data"
     x-cloak 
     x-data="{ fieldDisabled: @entangle('isDisabled'), 
@@ -49,8 +49,8 @@
             <svg class="animate-spin" width="35px" height="35px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612" stroke="#bfbfbf" stroke-width="3.55556" stroke-linecap="round"></path> </g></svg>
         </div>
     </div>
-    <div class="ml-10 grow">
-        <button type="button" wire:click="showEdit" class="mb-2 size-8 !p-0 float-end btn-info">
+    <div class="w-full md:w-auto md:ml-10 grow">
+        <button type="button" wire:click="showEdit" class="mb-2 size-8 !p-0 top-0 right-0 absolute btn-info">
             <svg width="15px" height="15px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g id="Complete"> <g id="edit"> <g> <path d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path> <polygon fill="none" points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon> </g> </g> </g> </g></svg>
         </button>
         <div class="mt-4">

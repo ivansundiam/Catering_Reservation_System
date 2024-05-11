@@ -1,6 +1,5 @@
 <x-app-layout>
     <div class="relative selection:bg-primary selection:text-white h-[420px] lg:h-[calc(100vh-82px)]" >
-        {{-- <img src="{{ asset('assets/web-web-images/lowages/high/hero-bg.webp') }}"  fetchpriority="high" class="z-0 w-full bg-cover absolute h-[420px] lg:h-[620px]" alt="Hero image"> --}}
         <img src="{{ asset('assets/web-images/low/hero-bg.webp') }}" width="620px" height="420px" fetchpriority="high" class="z-0 w-full bg-cover absolute h-[420px] lg:h-full" alt="Hero image">
 
         <div class="relative z-10 flex items-center w-full h-full bg-gradient-to-r from-black to-transparent" >
@@ -37,7 +36,6 @@
                 <p class="text-center">Discover our comprehensive range of catering packages tailored to make your special occasion truly unforgettable</p>
             </div>
 
-            {{-- <div class="grid mx-12 md:mx-0 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-12 gap-y-6"  --}}
             <div class="relative">
                 <div class="flex p-5 pb-12 mx-12 overflow-x-scroll md:mx-0 no-scrollbar" 
                     x-show="isOnServices"
@@ -95,7 +93,12 @@
     {{-- about us --}}
     <section class="bg-white selection:bg-primary selection:text-white" id="about"
         x-data="{ isOnAbout: false }"
-        x-on:scroll.window="if(window.scrollY > 1100) isOnAbout = true">
+        x-on:scroll.window="
+        if (window.innerWidth > 768) {
+            if(window.scrollY > 1100) isOnAbout = true
+        }else {
+            if(window.scrollY > 600) isOnAbout = true
+        }">
         <div class="container flex flex-col py-16 md:flex-row">
             <div class="relative w-full md:w-1/2 ">
                 <div x-show="isOnAbout"
@@ -130,7 +133,12 @@
     {{-- gallery --}}
     <section class="w-full bg-primary-light selection:bg-primary selection:text-white" id="gallery"
         x-data="{ isOnGallery: false }"
-        x-on:scroll.window="if(window.scrollY > 1500) isOnGallery = true">
+        x-on:scroll.window="
+        if (window.innerWidth > 768) {
+            if(window.scrollY > 1500) isOnGallery = true
+        }else {
+            if(window.scrollY > 1100) isOnGallery = true
+        }">
         <div class="container py-16">
             
             <div class="min-h-28">
