@@ -3,7 +3,7 @@
 <p>
 Your account has been verified. You can now make a reservation.
 </p>
-@component('mail::button', ['url' => 'http://127.0.0.1:8000/'])
+@component('mail::button', ['url' => config('app.url')])
     Go to Home Page
 @endcomponent
 @component('mail::subcopy')

@@ -1,7 +1,7 @@
 @props(['url'])
 <tr>
 <td class="header">
-<a href="{{ $url }}" style="display: flex; align-items:center; justify-content:center">
+<a href="{{ $url }}">
 @if (trim($slot) === 'Laravel')
 <img src="https://laravel.com/img/notification-logo.png" class="logo" alt="Laravel Logo">
 @else

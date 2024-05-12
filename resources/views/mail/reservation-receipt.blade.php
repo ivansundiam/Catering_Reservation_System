@@ -8,7 +8,7 @@ Thank you for choosing Robert Camba's Catering Services. Your reservation has be
 If you have any questions or need further assistance, please don't hesitate to contact us at <i>cambarobert@yahoo.com</i> or <i>(+63922) 827-6802</i>.
 </p>
 
-@component('mail::button', ['url' => 'http://127.0.0.1:8000/'])
+@component('mail::button', ['url' => config('app.url') . 'reservations'])
 View Reservations
 @endcomponent
 

@@ -10,7 +10,7 @@ A new user has been created. To ensure the authenticity of the user, please take
     |{{ $user->id }}|{{ $user->name }}|{{ $user->email }}|
 @endcomponent
 
-@component('mail::button', ['url' => 'http://127.0.0.1:8000/admin/users'])
+@component('mail::button', ['url' => config('app.url') . 'admin/users'])
     Verify User
 @endcomponent
 @component('mail::subcopy')

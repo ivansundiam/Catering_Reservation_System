@@ -10,7 +10,7 @@ A user has added a reservation. Log in as admin to see reservation details
     |{{ $user->name }}|{{ $reservation->package->name }}|{{ $reservation->menu->name }}|{{ $reservation->date->format('m-d-Y') }}|
 @endcomponent
 
-@component('mail::button', ['url' => 'http://127.0.0.1:8000/admin/reservations'])
+@component('mail::button', ['url' => config('app.url') . 'admin/reservations'])
     See reservation
 @endcomponent
 @component('mail::subcopy')
