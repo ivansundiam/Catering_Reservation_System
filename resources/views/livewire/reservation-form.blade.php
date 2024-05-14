@@ -8,10 +8,10 @@
         <h2 class="forms-heading-text" x-text="formHeading()"></h2>
     </div>
 
-    <!-- Personal Information & Event Details -->
+    <!-- Personal Information -->
     <div x-show="step == 1">
 
-        <x-form-divider value="Personal Information & Event Details" />
+        <x-form-divider value="Personal Information" />
 
         <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
             <div class="mt-5">
@@ -20,6 +20,29 @@
                 <x-input-error for="name" />
             </div>
 
+            <div class="mt-5">
+                <x-label for="phone_number" required>Contact Number:</x-label>
+                <x-input x-model="phoneNumber" name="phone_number" class="w-full" id="phone_number" />
+                <x-input-error for="phone_number" />
+            </div>
+
+            <div class="mt-5">
+                <x-label for="address" required>Event Address: (Must be around Metro Manila Only)</x-label>
+                <x-input x-model="address" name="address" class="w-full" id="address" />
+                <x-input-error for="address" />
+            </div>
+
+            <div class="mt-5">
+                <x-label for="phone_number">Optional Number:</x-label>
+                <x-input x-model="optionalNumber" name="phone_number" class="w-full" id="phone_number" />
+                <x-input-error for="phone_number" />
+            </div>
+        </div>
+
+        <!-- Event Details -->
+        <x-form-divider value="Event Details" />
+
+        <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
             <div class="mt-5">
                 <x-label for="occasion" required>Occasion:</x-label>
                 <select x-model.fill="occasion" name="occasion" class="w-full input-field" id="occasion">
@@ -32,13 +55,6 @@
                 </select>
                 <x-input-error for="occasion" />
             </div>
-
-            <div class="mt-5">
-                <x-label for="address" required>Address:</x-label>
-                <x-input x-model="address" name="address" class="w-full" id="address" />
-                <x-input-error for="address" />
-            </div>
-
 
             <div class="mt-5">
                 <div class="flex justify-between">
@@ -91,8 +107,7 @@
         </div>
 
         <div class="relative flex justify-center w-full mt-8 md:justify-end">
-            <div x-show="incompleteFields"
-                x-on:click.outside="incompleteFields = false"
+            <div x-show="incompleteFields" x-on:click.outside="incompleteFields = false"
                 class="absolute p-2 mb-1 text-sm text-gray-400 bg-gray-100 rounded-md shadow-lg top-[-45px]"
                 x-transition:enter="transition ease-out duration-300 transform"
                 x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
@@ -436,9 +451,9 @@
                         <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Inclusion :</span>
                         <p>
                             {{ __('With chairs and tables and colored ribbon With motif,
-                                                                                                                                                                                                                                                    With buffet table and decor, With complete catering equipment,
-                                                                                                                                                                                                                                                    With uniformed waiters, With purified water and ice, no individual flowers,
-                                                                                                                                                                                                                                                    With floor length clothe and colored toppings, no table set up.') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                            With buffet table and decor, With complete catering equipment,
+                                                                                                                                                                                                                                                                                                                                                                                                                            With uniformed waiters, With purified water and ice, no individual flowers,
+                                                                                                                                                                                                                                                                                                                                                                                                                            With floor length clothe and colored toppings, no table set up.') }}
                         </p>
                     @break
 
@@ -446,9 +461,9 @@
                         <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Inclusion :</span>
                         <p>
                             {{ __('With chairs and tables and colored ribbon With motif,
-                                                                                                                                                                                                                                                    With buffet table and decor, With complete catering equipment, With uniformed
-                                                                                                                                                                                                                                                    waiters, With purified water and ice, With individual flowers, With floor
-                                                                                                                                                                                                                                                    length cloth and colored toppings.') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                            With buffet table and decor, With complete catering equipment, With uniformed
+                                                                                                                                                                                                                                                                                                                                                                                                                            waiters, With purified water and ice, With individual flowers, With floor
+                                                                                                                                                                                                                                                                                                                                                                                                                            length cloth and colored toppings.') }}
                         </p>
                     @break
 
@@ -458,8 +473,7 @@
         </div>
 
         <div class="relative flex justify-center w-full mt-8 md:justify-end">
-            <div x-show="incompleteFields"
-                x-on:click.outside="incompleteFields = false"
+            <div x-show="incompleteFields" x-on:click.outside="incompleteFields = false"
                 class="absolute p-2 mb-1 text-sm text-gray-400 bg-gray-100 rounded-md shadow-lg top-[-45px]"
                 x-transition:enter="transition ease-out duration-300 transform"
                 x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
@@ -717,7 +731,8 @@
 
         <div class="flex justify-center w-full mt-8 md:justify-end">
             <x-secondary-button x-on:click="prevStep()" type="button" class="mr-3">back</x-secondary-button>
-            <button type="button" wire:click="showConfimationModal" wire:loading.attr="disabled" class="btn-success">
+            <button type="button" wire:click="showConfimationModal" wire:loading.attr="disabled"
+                class="btn-success">
                 <div role="status" wire:loading wire:loading.class="min-w-[3.8rem]" class="w-full">
                     <svg class="mx-auto animate-spin" width="20px" height="20px" viewBox="0 0 24 24"
                         fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
@@ -742,9 +757,15 @@
                         <h4 x-show="!buttonDisabled">Are you sure you want to confirm this reservation?</h4>
                         <div class="flex flex-col items-center justify-center" x-show="buttonDisabled">
                             <div role="status">
-                                <svg aria-hidden="true" class="inline text-gray-200 size-16 animate-spin dark:text-gray-600 fill-gray-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                                <svg aria-hidden="true"
+                                    class="inline text-gray-200 size-16 animate-spin dark:text-gray-600 fill-gray-400"
+                                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                        fill="currentColor" />
+                                    <path
+                                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                        fill="currentFill" />
                                 </svg>
                                 <span class="sr-only">Loading...</span>
                             </div>
@@ -755,7 +776,7 @@
                 </x-slot>
                 <x-slot name="footer">
                     <x-secondary-button wire:click="showConfimationModal" class="mr-3">Back</x-secondary-button>
-                    
+
                     <button class="min-w-24 btn-success" x-bind:disabled="buttonDisabled">
                         <span>{{ __('Reserve') }}</span>
                     </button>
@@ -771,6 +792,8 @@
             Alpine.data('reservationForm', () => ({
                 name: '{{ auth()->user()->name }}',
                 address: '{{ auth()->user()->address }}',
+                phoneNumber: '{{ auth()->user()->phone_number }}',
+                optionalNumber: '',
                 pax: '',
                 occasion: '',
                 packageText: '',
@@ -795,6 +818,7 @@
                 fieldsValidated() {
                     if (this.step === 1) {
                         return this.address &&
+                            this.phoneNumber &&
                             this.occasion != "Select Occasion" &&
                             this.package != "Select Package" &&
                             this.pax;

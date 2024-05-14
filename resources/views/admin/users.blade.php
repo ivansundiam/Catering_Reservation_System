@@ -10,19 +10,26 @@
                     <div class="flex flex-col items-start overflow-x-scroll md:flex-row md:justify-between no-scrollbar">
                         <p class="mb-5 text-xl font-semibold">Users</p>
 
-                        <form method="GET" id="filter-form" action="{{ route('users.index') }}" class="relative flex items-center justify-between mt-5 divide-x-2 md:m-0">
+                        <form method="GET" id="filter-form" action="{{ route('users.index') }}"
+                            class="relative flex items-center justify-between mt-5 divide-x-2 md:m-0">
 
                             <div class="px-1 md:py-1 md:px-4">
                                 <x-label for="user-status">User status</x-label>
-                                <select name="user-status" id="user-status" class="w-auto input-field" onchange="submitForm()">
-                                    <option value="all" {{ request('user-status') == 'all' ? 'selected' : '' }}>all</option>
-                                    <option value="verified" {{ request('user-status') == 'verified' ? 'selected' : '' }}>verified</option>
-                                    <option value="unverified" {{ request('user-status') == 'unverified' ? 'selected' : '' }}>unverified</option>
+                                <select name="user-status" id="user-status" class="w-auto input-field"
+                                    onchange="submitForm()">
+                                    <option value="all" {{ request('user-status') == 'all' ? 'selected' : '' }}>all
+                                    </option>
+                                    <option value="verified"
+                                        {{ request('user-status') == 'verified' ? 'selected' : '' }}>verified</option>
+                                    <option value="unverified"
+                                        {{ request('user-status') == 'unverified' ? 'selected' : '' }}>unverified
+                                    </option>
                                 </select>
-                            </div>    
+                            </div>
 
                             <div class="self-end md:py-1 md:pl-4">
-                                <x-input type="text" name="search" class="mx-1 input-field" placeholder="Search" id="search" />
+                                <x-input type="text" name="search" class="mx-1 input-field" placeholder="Search"
+                                    id="search" />
 
                             </div>
 
@@ -47,15 +54,20 @@
                                     Verified
                                 </th>
                                 <th class="text-center">
+                                    Last login
+                                </th>
+                                <th class="text-center">
                                 </th>
                             </tr>
                         </x-slot>
                         <x-slot name="tbody">
                             @forelse ($users as $index => $user)
                                 @php
-                                    $verifiedClasses = $user->verified ? 'px-2 py-1 rounded-full bg-green-100 text-green-500' : 'px-2 py-1 rounded-full bg-amber-100 text-primary';
+                                    $verifiedClasses = $user->verified
+                                        ? 'px-2 py-1 rounded-full bg-green-100 text-green-500'
+                                        : 'px-2 py-1 rounded-full bg-amber-100 text-primary';
                                 @endphp
-                                <tr class="border-b {{ $index % 2 == 0 ? 'bg-gray-100' : 'bg-white'; }}">
+                                <tr class="border-b {{ $index % 2 == 0 ? 'bg-gray-100' : 'bg-white' }}">
                                     <td scope="row" class="font-medium text-gray-900 whitespace-nowrap ">
                                         {{ $user->name }}
                                     </td>
@@ -66,14 +78,19 @@
                                         {{ $user->phone_number }}
                                     </td>
                                     <td class="text-center">
-                                        <span class="{{ $verifiedClasses }}">{{ $user->verified ? 'Yes' : 'No' }}</span>
+                                        <span
+                                            class="{{ $verifiedClasses }}">{{ $user->verified ? 'Yes' : 'No' }}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span>{{ $user->last_login ? Carbon\Carbon::parse($user->last_login)->format('M d, Y - g:i A') : 'N/A' }}</span>
                                     </td>
                                     <td class="text-2xl text-right">
                                         <x-dropdown width="48" align="right">
                                             <x-slot name="trigger">
-                                                <button type="button" class="font-bold text-gray-400 select-none">&#8942;</button>
+                                                <button type="button"
+                                                    class="font-bold text-gray-400 select-none">&#8942;</button>
                                             </x-slot>
-                    
+
                                             <x-slot name="content">
                                                 <x-dropdown-link href="{{ route('users.show', $user->id) }}">
                                                     {{ __('View') }}
@@ -82,7 +99,7 @@
                                                 @livewire('users.archive-modal', ['user' => $user])
 
                                             </x-slot>
-                    
+
                                         </x-dropdown>
                                     </td>
                                 </tr>
@@ -95,7 +112,7 @@
                     </x-table>
                     <x-pagination-links :model="$users" />
                 </div>
-                
+
             </div>
         </div>
     </div>

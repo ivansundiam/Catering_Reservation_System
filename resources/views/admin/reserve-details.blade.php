@@ -135,11 +135,11 @@
                     <div class="inline-block w-full mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
                         <div class="{{ $completed ? 'bg-green-500' : 'bg-primary' }} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
                             style="width: {{ $completed ? '100' : $percent }}%">
-                            {{ $completed ? 'Completed' : $percent . '%' }}
+                            {{ $completed ? ($percent === 90 ? 'Completed(90%)' : 'Completed') : $percent . '%' }}
                         </div>
                     </div>
 
-                    
+
                     @livewire('reservation.attachment-modal', ['reservation' => $reservation])
 
                     <div id="accordion-flush-2" data-accordion="collapse"

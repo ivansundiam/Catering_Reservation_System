@@ -36,6 +36,7 @@ class User extends Authenticatable
         'id_type',
         'id_verify_img',
         'user_type',
+        'last_login',
     ];
 
     /**

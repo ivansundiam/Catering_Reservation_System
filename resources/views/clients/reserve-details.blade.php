@@ -120,7 +120,7 @@
             </div>
         </div>
 
-        <div class="lg:col-span-2"  x-data="reservationDetails()" >
+        <div class="lg:col-span-2" x-data="reservationDetails()">
             <div class="p-5 overflow-hidden bg-white shadow-lg md:p-10 sm:rounded-lg">
 
                 <div class="flex flex-col items-center">
@@ -138,7 +138,7 @@
                     <div class="inline-block w-full mt-5 bg-gray-200 rounded-full dark:bg-gray-700">
                         <div class="{{ $completed ? 'bg-green-500' : 'bg-primary' }} text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
                             style="width: {{ $completed ? '100' : $percent }}%">
-                            {{ $completed ? 'Completed' : $percent . '%' }}
+                            {{ $completed ? ($percent === 90 ? 'Completed(90%)' : 'Completed') : $percent . '%' }}
                         </div>
                     </div>
 
@@ -204,15 +204,16 @@
                                 aria-labelledby="accordion-flush-heading-3">
 
                                 <form action="{{ route('reservation.update', $reservation->id) }}" method="post"
-                                    enctype="multipart/form-data" id="reservationUpdateForm" x-on:submit="buttonDisabled = true">
+                                    enctype="multipart/form-data" id="reservationUpdateForm"
+                                    x-on:submit="buttonDisabled = true">
                                     @csrf
                                     @method('PUT')
-                                
+
                                     <x-validation-errors />
                                     <div class="mt-5">
                                         <x-label for="payment_percent">Payment Percent:</x-label>
-                                        <select x-model.fill="payPercent" name="payment_percent" class="w-full input-field"
-                                            id="payment_percent">
+                                        <select x-model.fill="payPercent" name="payment_percent"
+                                            class="w-full input-field" id="payment_percent">
                                             <option selected disabled>{{ __('Select Payment Percent') }}</option>
                                             @foreach ($payment_percentages as $percent)
                                                 @if ($percent > $reservation->payment_percent)
@@ -237,14 +238,16 @@
                                     </div>
 
                                     <div>
-                                        <h2 class="my-3 text-center text-md md:text-lg font-noticia">Select Payment Method
+                                        <h2 class="my-3 text-center text-md md:text-lg font-noticia">Select Payment
+                                            Method
                                         </h2>
                                         @livewire('reservation.payment-display-modal')
                                     </div>
 
                                     <div class="mt-5">
                                         <x-label for="receipt-img">Receipt Photo:</x-label>
-                                        <x-dropbox x-model="receiptImg" id="receipt-img" label="Click to upload" name="receipt-img" />
+                                        <x-dropbox x-model="receiptImg" id="receipt-img" label="Click to upload"
+                                            name="receipt-img" />
                                         <x-input-error for="receipt-img" />
                                     </div>
 
@@ -255,27 +258,42 @@
 
                 </div>
                 <div class="mt-5 flex !justify-center">
+                    @if ($reservation->payment_percent < 90)
+                        @livewire('reservation.cancel-modal', ['reservation' => $reservation])
 
-                    @livewire('reservation.cancel-modal', ['reservation' => $reservation])
-                        
-                    @if (!$hasNotice)
-                        <div class="relative flex justify-center">
-                            <div x-show="incompleteFields"
-                                x-on:close.stop="incompleteFields = false"
-                                x-on:keydown.escape.window="incompleteFields = false"
-                                x-on:click.outside="incompleteFields = false"
-                                class="absolute z-50 p-2 mb-1 text-sm text-gray-400 w-64 bg-gray-100 rounded-md shadow-lg top-[-45px]"
-                                x-transition:enter="transition ease-out duration-300 transform"
-                                x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
-                                {{ __('Fill required fields before proceeding') }}
-                            </div>
-                            <button type="button" x-bind:disabled="buttonDisabled" x-on:click="submitForm()" class="ms-3 btn-primary">
-                                <div role="status" x-show="buttonDisabled" class="w-full">
-                                    <svg class="mx-auto animate-spin" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612" stroke="#e2e8f0" stroke-width="3.55556" stroke-linecap="round"></path> </g></svg>
+                        @if (!$hasNotice)
+                            <div class="relative flex justify-center">
+                                <div x-show="incompleteFields" x-on:close.stop="incompleteFields = false"
+                                    x-on:keydown.escape.window="incompleteFields = false"
+                                    x-on:click.outside="incompleteFields = false"
+                                    class="absolute z-50 p-2 mb-1 text-sm text-gray-400 w-64 bg-gray-100 rounded-md shadow-lg top-[-45px]"
+                                    x-transition:enter="transition ease-out duration-300 transform"
+                                    x-transition:enter-start="opacity-0 translate-y-5"
+                                    x-transition:enter-end="opacity-100 translate-y-0">
+                                    {{ __('Fill required fields before proceeding') }}
                                 </div>
-                                <span x-show="!buttonDisabled">Pay</span>
-                            </button>
-                        </div>
+                                <button type="button" x-bind:disabled="buttonDisabled" x-on:click="submitForm()"
+                                    class="ms-3 btn-primary">
+                                    <div role="status" x-show="buttonDisabled" class="w-full">
+                                        <svg class="mx-auto animate-spin" width="20px" height="20px"
+                                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                            transform="rotate(0)">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612"
+                                                    stroke="#e2e8f0" stroke-width="3.55556" stroke-linecap="round">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span x-show="!buttonDisabled">Pay</span>
+                                </button>
+                            </div>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -292,7 +310,7 @@
                     totalCost: {{ $reservation->total_cost }},
                     amountPaid: {{ $reservation->amount_paid }},
                     incompleteFields: false,
-                
+
                     amountToPay() {
                         if (this.payPercent === '20') {
                             return this.totalCost * 0.2 - this.amountPaid;
@@ -308,7 +326,7 @@
                     },
 
                     submitForm() {
-                        if(this.payPercent != "Select Payment Percent" && this.receiptImg){
+                        if (this.payPercent != "Select Payment Percent" && this.receiptImg) {
                             this.incompleteFields = false;
                             this.buttonDisabled = true;
                             document.getElementById('reservationUpdateForm').submit();
