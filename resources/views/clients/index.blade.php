@@ -19,7 +19,12 @@
     {{-- services --}}
     <section class="bg-primary-light selection:bg-primary selection:text-white min-h-[38rem]" id="services"
         x-data="{ isOnServices: false }"
-        x-on:scroll.window.$once="if(window.scrollY > 300) isOnServices = true">
+        x-on:scroll.window.$once="
+        if (window.innerWidth > 768) {
+            if(window.scrollY > 300) isOnServices = true
+        }else {
+            if(window.scrollY > 50) isOnServices = true
+        }">
         
         <div class="container flex flex-col justify-center py-8 md:py-16"
             x-show="isOnServices"

@@ -38,10 +38,20 @@
             <x-label for="email" value="{{ __('Email') }}" />
             <x-input id="email" class="block w-full mt-1 disabled:bg-transparent" type="text" name="email" :value="$user->email" disabled/>
         </div>
+        
+        <div class="mt-4">
+            <x-label for="address" value="{{ __('Address') }}" />
+            <x-input id="address" class="block w-full mt-1 disabled:bg-transparent" type="text" name="text" :value="$user->address" disabled/>
+        </div>
 
         <div class="mt-4">
             <x-label for="phone_number" value="{{ __('Phone Number') }}" />
             <x-input id="phone_number" class="block w-full mt-1 disabled:bg-transparent" type="text" name="phone_number" :value="$user->phone_number" disabled/>
+        </div>
+
+        <div class="mt-4">
+            <x-label for="id_type" value="{{ __('ID Type Submitted') }}" />
+            <x-input id="id_type" class="block w-full mt-1 disabled:bg-transparent" type="text" name="text" :value="$user->id_type" disabled/>
         </div>
 
         <div class="mt-4">

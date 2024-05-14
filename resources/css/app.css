@@ -116,9 +116,23 @@ dl {
     @apply text-sm md:text-base;
 }
 
+/* .calendar-container table th,
+.calendar-container table td {
+    @apply relative !p-0 text-center select-none md:!p-2;
+} */
 .calendar-container table th,
 .calendar-container table td {
-    @apply relative p-2 text-center select-none md:p-2;
+    text-align: center;
+    position: relative;
+    user-select: none;
+    padding: 0px !important;
+}
+
+@media (min-width: 768px) {
+    .calendar-container table th,
+    .calendar-container table td {
+        padding: 0.5rem/* 8px */ !important;
+    }
 }
 
 .calendar-container table td .day {

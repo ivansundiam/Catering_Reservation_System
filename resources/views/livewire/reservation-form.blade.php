@@ -10,7 +10,6 @@
 
     <!-- Personal Information & Event Details -->
     <div x-show="step == 1">
-
         <x-form-divider value="Personal Information" />
 
         <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 md:grid-rows-3 md:grid-flow-col gap-x-16">
@@ -107,9 +106,10 @@
             <div class="mt-5">
                 <x-label for="pax" required>Pax:</x-label>
                 <x-input x-model="pax" wire:model.change="pax" x-on:change="$wire.setPax()" name="pax"
-                    type="number" min="1" max="300" :value="old('pax')" x-bind:readonly="occasion === 'Birthday'" class="w-full" id="pax"
+                    type="number" min="1" max="300" x-on:keypress="limitMaxPax" :value="old('pax')" x-bind:readonly="occasion === 'Birthday'" class="w-full" id="pax"
                     placeholder="Enter Number of Attendees" />
                 <x-input-error for="pax" />
+                <p class="text-sm text-red-600 dark:text-red-400" x-show="invalidPax">Maximum number of pax is 300</p>
             </div>
 
             <div class="flex mt-5 gap-x-5" x-show="occasion === 'Birthday'">
@@ -173,7 +173,7 @@
             <span class="underline underline-offset-4" x-text="packageText"></span>:
         </h2>
 
-        <div class="flex w-[85%] mx-auto flex-col justify-between pb-12 md:flex-row">
+        <div class="flex md:w-[85%] mx-auto w-full flex-col justify-between pb-12 md:flex-row">
             <div class="relative w-full">
                 <!-- tooltip -->
                 <div class="absolute top-0 right-7">
@@ -190,7 +190,7 @@
                     </x-tooltip>
                 </div>
                 <ul
-                    class="grid w-full gap-4 px-5 py-3 mt-10 overflow-y-scroll font-noticia max-h-72 md:max-h-80 lg:max-h-96">
+                    class="grid w-full gap-4 px-2 py-3 mt-10 overflow-y-scroll md:w-auto md:px-5 font-noticia max-h-72 md:max-h-80 lg:max-h-96">
 
                     @if ($menus)
                         @foreach ($menus as $menu)
@@ -214,7 +214,7 @@
                 <h2 class="mx-5 mt-5 mb-3 text-md md:text-lg font-noticia">
                     Select Beverage:
                 </h2>
-                <ul class="grid w-full grid-cols-2 gap-4 px-5 font-noticia">
+                <ul class="grid w-full grid-cols-2 gap-4 px-2 md:px-5 font-noticia">
                     <li>
                         <input type="radio" x-model="beverage"
                             wire:model.change="beverage"
@@ -253,7 +253,7 @@
             </div>
         </div>
 
-        <div class="flex w-[85%] mx-auto md:flex-row">
+        <div class="flex w-full md:w-[85%] mx-auto md:flex-row">
             <div
                 class="flex flex-col items-center w-full p-5 mx-auto capitalize bg-gray-200 border-2 border-gray-300 rounded-lg">
 
@@ -797,8 +797,8 @@
                     <p>{{ __('Enter the percentage of the total cost you want to pay now') }}</p>
                 </x-tooltip>
             </div>
-            <select name="payment_percent" x-on:change="$wire.calculateAmountToPay($event.target.value)"
-                class="w-full input-field" id="payment_percent">
+            <select name="payment_percent" x-model.fill="paymentPercent" x-on:change="$wire.calculateAmountToPay($event.target.value)"
+                class="w-full input-field" id="payment_percent" required>
                 <option selected disabled>{{ __('Select Payment Percent') }}</option>
                 <option value="20">{{ __('20') }}</option>
                 <option value="60">{{ __('60') }}</option>
@@ -826,13 +826,20 @@
             @livewire('reservation.payment-display-modal')
 
             <x-label for="receipt-img" required>Receipt Photo:</x-label>
-            <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img" />
+            <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img" wire:ignore x-model="receiptImg" />
             <x-input-error for="receipt-img" />
         </div>
 
-        <div class="flex justify-center w-full mt-8 md:justify-end">
+        <div class="relative flex justify-center w-full mt-8 md:justify-end">
+            <div x-show="incompleteFields"
+                x-on:click.outside="incompleteFields = false"
+                class="absolute p-2 mb-1 text-sm text-gray-400 bg-gray-100 rounded-md shadow-lg top-[-45px]"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
+                {{ __('Fill required fields before proceeding') }}
+            </div>
             <x-secondary-button x-on:click="prevStep()" type="button" class="mr-3">back</x-secondary-button>
-            <button type="button" wire:click="showConfimationModal" wire:loading.attr="disabled" class="btn-success">
+            <button type="button"  x-on:click="nextStep()" x-bind:disabled="incompleteFields" wire:click="showConfimationModal" class="btn-success">
                 <div role="status" wire:loading wire:loading.class="min-w-[3.8rem]" class="w-full">
                     <svg class="mx-auto animate-spin" width="20px" height="20px" viewBox="0 0 24 24"
                         fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
@@ -848,36 +855,38 @@
                 <span wire:loading.remove>{{ __('Reserve') }}</span>
             </button>
 
-            <x-dialog-modal wire:model="showingConfirmationModal" id="confirmationModal" maxWidth="sm">
-                <x-slot name="title">
-                    Confirm reservation
-                </x-slot>
-                <x-slot name="content">
-                    <div class="mt-4 text-xl text-gray-600 dark:text-gray-400">
-                        <h4 x-show="!buttonDisabled">Are you sure you want to confirm this reservation?</h4>
-                        <div class="flex flex-col items-center justify-center" x-show="buttonDisabled">
-                            <div role="status">
-                                <svg aria-hidden="true" class="inline text-gray-200 size-16 animate-spin dark:text-gray-600 fill-gray-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-                                </svg>
-                                <span class="sr-only">Loading...</span>
-                            </div>
-
-                            <p class="text-gray-400">Please wait</p>
-                        </div>
-                    </div>
-                </x-slot>
-                <x-slot name="footer">
-                    <x-secondary-button wire:click="showConfimationModal" class="mr-3">Back</x-secondary-button>
-                    
-                    <button class="min-w-24 btn-success" x-bind:disabled="buttonDisabled">
-                        <span>{{ __('Reserve') }}</span>
-                    </button>
-                </x-slot>
-            </x-dialog-modal>
         </div>
     </div>
+
+    <!-- Confimation modal -->
+    <x-dialog-modal wire:model="showingConfirmationModal" id="confirmationModal" maxWidth="sm">
+        <x-slot name="title">
+            Confirm reservation
+        </x-slot>
+        <x-slot name="content">
+            <div class="mt-4 text-gray-600 md:text-xl dark:text-gray-400">
+                <h4 x-show="!buttonDisabled">Are you sure you want to confirm this reservation?</h4>
+                <div class="flex flex-col items-center justify-center" x-show="buttonDisabled">
+                    <div role="status">
+                        <svg aria-hidden="true" class="inline text-gray-200 size-16 animate-spin dark:text-gray-600 fill-gray-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                        </svg>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+
+                    <p class="text-gray-400">Please wait</p>
+                </div>
+            </div>
+        </x-slot>
+        <x-slot name="footer">
+            <x-secondary-button wire:click="showConfimationModal" class="mr-3">Back</x-secondary-button>
+            
+            <button type="submit" class="min-w-24 btn-success" x-bind:disabled="buttonDisabled">
+                <span>{{ __('Reserve') }}</span>
+            </button>
+        </x-slot>
+    </x-dialog-modal>
 </form>
 
 @push('scripts')
@@ -892,16 +901,21 @@
                 adults: '',
                 kids: '',
                 pax: '',
+                invalidPax: false,
                 occasion: '',
                 packageText: '',
                 package: '',
+                date: @entangle('date'),
+                time: @entangle('time'),
                 menu: '',
                 menuName: '',
                 beverage: '',
                 buttonDisabled: false,
-                incompleteFields: false,
+                incompleteFields: @entangle('incompleteFields'),
                 emcee: '',
                 christianWedding: '',
+                paymentPercent: '',
+                receiptImg: '',
                 step: 1,
 
                 get fullAddress() {
@@ -923,9 +937,54 @@
                     }
                 },
 
+                limitMaxPax(event) {
+                    // Get the key code of the pressed key
+                    const keyCode = event.keyCode;
+
+                    // Allow numeric keys (0-9) and backspace (8)
+                    if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
+                        event.preventDefault();
+                    }
+
+                    const value = parseInt(event.target.value + event.key);
+                    if (value > 300) {
+                        event.preventDefault();
+                    }
+
+                    // Limit to 3 characters
+                    if (event.target.value.length === 3) {
+                        event.preventDefault();
+                    }
+                },
+
                 updatePax() {
-                    this.pax = parseInt(this.adults || 0) + parseInt(this.kids || 0);
-                    this.$wire.set('pax', this.pax);
+                    const total = parseInt(this.adults || 0) + parseInt(this.kids || 0);
+                    if (total > 300) {
+                        this.invalidPax = true;
+                        this.pax = 300;
+                        this.$wire.set('pax', this.pax);
+                        // Adjust the individual inputs if needed
+                        if (this.adults + this.kids > 300) {
+                            if (this.adults > 300) {
+                                this.adults = 300 - (this.kids || 0);
+                            } else if (this.kids > 300) {
+                                this.kids = 300 - (this.adults || 0);
+                            } else {
+                                // Adjust both fields if necessary
+                                const excess = total - 300;
+                                if (this.kids >= excess) {
+                                    this.kids -= excess;
+                                } else {
+                                    this.adults -= (excess - this.kids);
+                                    this.kids = 0;
+                                }
+                            }
+                        }
+                    } else {
+                        this.invalidPax = false;
+                        this.pax = total;
+                        this.$wire.set('pax', this.pax);
+                    }
                 },
 
                 formHeading() {
@@ -941,6 +1000,8 @@
                     if (this.step === 1) {
                         return this.fullAddress &&
                             this.eventAddress &&
+                            this.date &&
+                            this.time &&
                             this.occasion != "Select Occasion" &&
                             this.package != "Select Package" &&
                             this.pax;
@@ -952,7 +1013,9 @@
                         } else {
                             return this.menu;
                         }
-                        // return true;   
+                    } else if (this.step === 5) {
+                        return this.paymentPercent !== 'Select Payment Percent' &&
+                            this.receiptImg;
                     } else {
                         return true;
                     }
@@ -960,12 +1023,14 @@
 
                 nextStep() {
                     if (this.fieldsValidated()) {
-                        this.step++;
                         this.incompleteFields = false;
-                        window.scrollTo({
-                            top: 100,
-                            behavior: 'smooth'
-                        });
+                        if(this.step !== 5){
+                            this.step++;
+                            window.scrollTo({
+                                top: 100,
+                                behavior: 'smooth'
+                            });
+                        }
                     } else {
                         this.incompleteFields = true;
                     }

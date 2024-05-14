@@ -27,6 +27,7 @@ class ReservationForm extends Component
     public $additionalItems = [];
     public $addOns = [];
     public $showingConfirmationModal;
+    public $incompleteFields = false;
 
     protected $listeners = [
         'dateSelected' => 'setDate',
@@ -206,7 +207,9 @@ class ReservationForm extends Component
 
     public function showConfimationModal()
     {
-        $this->showingConfirmationModal = !$this->showingConfirmationModal;
+        if(!$this->incompleteFields){
+            $this->showingConfirmationModal = !$this->showingConfirmationModal;
+        }
     }
 
     public function mount($packages)
