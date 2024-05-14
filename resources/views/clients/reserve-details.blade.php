@@ -24,7 +24,15 @@
                             <p>Name: <span>{{ $reservation->user->name }}</span></p>
                         </li>
                         <li>
-                            <p>Address: <span>{{ $reservation->address }}</span></p>
+                            <p>Phone Number: <span>{{ $reservation->phone_number}}</span></p>
+                        </li>
+                        @if ($reservation->additional_number)
+                            <li>
+                                <p>Additional Number: <span>{{ $reservation->additional_number}}</span></p>
+                            </li>
+                        @endif
+                        <li>
+                            <p>Event Address: <span>{{ $reservation->address }}</span></p>
                         </li>
                         <li>
                             <p>Occasion: <span>{{ $reservation->occasion }}</span></p>
@@ -32,13 +40,24 @@
                         <li>
                             <p>Pax: <span>{{ $reservation->pax }}</span></p>
                         </li>
+                        @if ($reservation->adults && $reservation->kids)
+                            <li>
+                                <p> - Adults: <span>{{ $reservation->adults }}</span></p>
+                            </li>
+                            <li>
+                                <p> - Kids: <span>{{ $reservation->kids }}</span></p>
+                            </li>
+                        @endif
                     </ul>
 
                     <x-form-divider value="Time and Date" />
 
                     <ul class="m-0 text-base lg:mx-10 font-noticia">
                         <li>
-                            <p>Date: <span>{{ $reservation->date->format('M d, Y') }}</span></p>
+                            <p>Date Reserved: <span>{{ $reservation->created_at->format('M d, Y') }}</span></p>
+                        </li>
+                        <li>
+                            <p>Event Date: <span>{{ $reservation->date->format('M d, Y') }}</span></p>
                         </li>
                         <li>
                             <p>Time: <span>{{ $reservation->time->format('g : i A') }}</span></p>
@@ -47,7 +66,7 @@
 
                     <x-form-divider value="Package Details" />
 
-                    <ul class="grid grid-cols-2 m-0 text-base lg:mx-10 font-noticia">
+                    <ul class="m-0 text-base lg:mx-10 font-noticia">
                         <div>
                             <li>
                                 <p>Package: <span>{{ $reservation->package->name }}</span></p>
@@ -55,6 +74,11 @@
                             <li>
                                 <p>Menu: <span>{{ $reservation->menu->name }}</span></p>
                             </li>
+                            @if ($reservation->beverage)
+                                <li>
+                                    <p>Beverage: <span>{{ $reservation->beverage }}</span></p>
+                                </li>
+                            @endif
                             <li>
                                 <p>Price: ₱<span>{{ number_format($reservation->menu->price, 2, '.', ',') }}</span></p>
                             </li>
@@ -176,9 +200,25 @@
                                     <p>Remaining Balance: </p>
                                     <span>₱{{ number_format($balance, 2, '.', ',') }}</span>
                                 </li>
+                                @if ($reservation->payment_percent !== 60)
+                                <li class="flex justify-between">
+                                    <p>Next Payment Due (60%): </p>
+                                    <span>{{ $nextPaymentDate->format('M d, Y') }}</span>
+                                </li>
+                                @endif
+                                <li class="flex justify-between">
+                                    <p>Next Payment Due (90%): </p>
+                                    <span>{{ $secondPaymentDate->format('M d, Y') }}</span>
+                                </li>
                             </ul>
 
-                            <x-payment-note />
+                            <x-payment-note>
+                                <p class="font-bold">PLEASE READ:</p> 
+                                <ul class="px-3 list-disc">
+                                    <li>Payment for your reservation is due by <b><u>{{ $reservation->payment_percent !== 60 ? $nextPaymentDate->format('M d, Y') : $secondPaymentDate->format('M d, Y') }}</u></b>. Failure to submit payment by this date may result in the <b><u>cancellation of your reservation</u></b>. We kindly remind you to settle the balance before the payment due date to secure your reservation. Thank you for your cooperation.</li>
+                                    <li>Paying 90% of the total cost will mark the payment as complete. However, remember that the remaining 10% must still be paid at the actual event. Thank you for your understanding.</li>
+                                </ul>
+                            </x-payment-note>
                         </div>
                     </div>
 

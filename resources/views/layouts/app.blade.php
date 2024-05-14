@@ -38,7 +38,7 @@
 
         @livewireStyles
     </head>
-    <body class="font-sans antialiased" x-data="{ loading: true }" x-init="$nextTick(() => loading = false)">
+    <body class="font-sans antialiased w-[100vw]" x-data="{ loading: true }" x-init="$nextTick(() => loading = false)">
         <!-- Loading screen -->
         <x-page-loader />
         

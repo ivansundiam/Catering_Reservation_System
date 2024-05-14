@@ -24,8 +24,13 @@ class ReservationRequest extends FormRequest
         return [
             'package_id' => 'required',
             'menu_id' => 'required',
+            'phone_number' => 'required|max:11|min:11',
+            'additional_number' => '',
+            'adults' => '',
+            'kids' => '',
+            'beverage' => '',
             'date' => 'required|date',
-            'time' => 'required|date_format:H:i|after:09:59|before:20:01',
+            'time' => 'required|date_format:H:i|after:07:59|before:20:01',
             'occasion' => 'required',
             'amount_paid' => 'numeric',
             'total_cost' => 'required',
@@ -51,6 +56,8 @@ class ReservationRequest extends FormRequest
     {
         return [
             'package.required' => 'Choose at least one package.',
+            'phone_number.max' => 'Must be correct format of phone number: 09XXXXXXXXX.',
+            'phone_number.min' => 'Must be correct format of phone number: 09XXXXXXXXX.',
             'date.required' => 'Select a reservation date.',
             'time.required' => 'Specify a reservation time.',
             'time.after' => 'Choose a time between 10:00 AM and 8:00 PM.',

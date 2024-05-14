@@ -10,6 +10,7 @@
 
     <!-- Personal Information -->
     <div x-show="step == 1">
+        <x-form-divider value="Personal Information" />
 
         <x-form-divider value="Personal Information" />
 
@@ -21,28 +22,63 @@
             </div>
 
             <div class="mt-5">
-                <x-label for="phone_number" required>Contact Number:</x-label>
-                <x-input x-model="phoneNumber" name="phone_number" class="w-full" id="phone_number" />
-                <x-input-error for="phone_number" />
+                <x-label for="city" required>Select City:</x-label>
+                <select name="city" id="city" x-model.fill="city" class="w-full input-field">
+                    <option selected>Select a city</option>
+                    <option value="Manila">Manila</option>
+                    <option value="Quezon City">Quezon City</option>
+                    <option value="Caloocan City">Caloocan City</option>
+                    <option value="Las Piñas City">Las Piñas City</option>
+                    <option value="Makati City">Makati City</option>
+                    <option value="Malabon City">Malabon City</option>
+                    <option value="Mandaluyong City">Mandaluyong City</option>
+                    <option value="Marikina City">Marikina City</option>
+                    <option value="Muntinlupa City">Muntinlupa City</option>
+                    <option value="Navotas City">Navotas City</option>
+                    <option value="Parañaque City">Parañaque City</option>
+                    <option value="Pasay City">Pasay City</option>
+                    <option value="Pasig City">Pasig City</option>
+                    <option value="Pateros">Pateros</option>
+                    <option value="San Juan City">San Juan City</option>
+                    <option value="Taguig City">Taguig City</option>
+                    <option value="Valenzuela City">Valenzuela City</option>
+                </select>
             </div>
 
             <div class="mt-5">
-                <x-label for="address" required>Event Address: (Must be around Metro Manila Only)</x-label>
-                <x-input x-model="address" name="address" class="w-full" id="address" />
+                <x-label for="event-address" required>Event Address:</x-label>
+                <div class="flex">
+                    <x-input x-model="eventAddress" name="event-address" class="w-full !rounded-r-none"
+                        x-bind:disabled="city == 'Select a city'"
+                        placeholder="House/Unit Number Street Name, Barangay/Subdivision" id="event-address" />
+                    <x-input x-model="city" name="city" class="input-field !rounded-l-none pointer-events-none w-1/2"
+                        readonly />
+                </div>
                 <x-input-error for="address" />
+                <input type="text" name="address" x-model="fullAddress" hidden />
             </div>
 
             <div class="mt-5">
-                <x-label for="phone_number">Optional Number:</x-label>
-                <x-input x-model="optionalNumber" name="phone_number" class="w-full" id="phone_number" />
+                <x-label for="phone_number" required>Phone Number:</x-label>
+                <x-input x-model="phoneNumber" name="phone_number" class="w-full" id="phone_number"
+                    x-on:keypress="limitCharacterCount" />
                 <x-input-error for="phone_number" />
             </div>
+
+            <div class="mt-5">
+                <x-label for="additional_number">Additional Number <span
+                        class="text-gray-500">(optional)</span>:</x-label>
+                <x-input x-model="additionalNumber" name="additional_number" class="w-full" id="additional_number"
+                    x-on:keypress="limitCharacterCount" />
+                <x-input-error for="additional_number" />
+            </div>
+
+
         </div>
 
-        <!-- Event Details -->
         <x-form-divider value="Event Details" />
 
-        <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
+        <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 md:grid-rows-2 md:grid-flow-col gap-x-16">
             <div class="mt-5">
                 <x-label for="occasion" required>Occasion:</x-label>
                 <select x-model.fill="occasion" name="occasion" class="w-full input-field" id="occasion">
@@ -78,9 +114,28 @@
             <div class="mt-5">
                 <x-label for="pax" required>Pax:</x-label>
                 <x-input x-model="pax" wire:model.change="pax" x-on:change="$wire.setPax()" name="pax"
-                    type="number" min="1" max="300" :value="old('pax')" class="w-full" id="pax"
+                    type="number" min="1" max="300" x-on:keypress="limitMaxPax" :value="old('pax')"
+                    x-bind:readonly="occasion === 'Birthday'" class="w-full" id="pax"
                     placeholder="Enter Number of Attendees" />
                 <x-input-error for="pax" />
+                <p class="text-sm text-red-600 dark:text-red-400" x-show="invalidPax">Maximum number of pax is 300</p>
+            </div>
+
+            <div class="flex mt-5 gap-x-5" x-show="occasion === 'Birthday'">
+                <div class="w-full">
+                    <x-label for="adults" required>Adults:</x-label>
+                    <x-input x-model="adults" wire:model.change="adults" name="adults" type="number"
+                        min="1" max="300" :value="old('adults')" x-on:input="updatePax()" class="w-full"
+                        id="adults" placeholder="Enter adult Attendees" />
+                </div>
+
+                <div class="w-full">
+                    <x-label for="kids" required>Kids:</x-label>
+                    <x-input x-model="kids" wire:model.change="kids" name="kids" type="number" min="1"
+                        max="300" :value="old('kids')" x-on:input="updatePax()" class="w-full" id="kids"
+                        placeholder="Enter kid Attendees" />
+                </div>
+
             </div>
         </div>
 
@@ -126,7 +181,7 @@
             <span class="underline underline-offset-4" x-text="packageText"></span>:
         </h2>
 
-        <div class="flex w-[85%] mx-auto flex-col justify-between pb-12 md:flex-row">
+        <div class="flex md:w-[85%] mx-auto w-full flex-col justify-between pb-12 md:flex-row">
             <div class="relative w-full">
                 <!-- tooltip -->
                 <div class="absolute top-0 right-7">
@@ -143,7 +198,7 @@
                     </x-tooltip>
                 </div>
                 <ul
-                    class="grid w-full gap-4 px-5 py-3 mt-10 overflow-y-scroll font-noticia max-h-72 md:max-h-80 lg:max-h-96">
+                    class="grid w-full gap-4 px-2 py-3 mt-10 overflow-y-scroll md:w-auto md:px-5 font-noticia max-h-72 md:max-h-80 lg:max-h-96">
 
                     @if ($menus)
                         @foreach ($menus as $menu)
@@ -162,6 +217,32 @@
                         @endforeach
                     @endif
                 </ul>
+
+                @if ($packageName !== 'special' && $packageName !== 'ordinary')
+                    <h2 class="mx-5 mt-5 mb-3 text-md md:text-lg font-noticia">
+                        Select Beverage:
+                    </h2>
+                    <ul class="grid w-full grid-cols-2 gap-4 px-2 md:px-5 font-noticia">
+                        <li>
+                            <input type="radio" x-model="beverage" wire:model.change="beverage" id="beverage-1"
+                                name="beverage" value="Iced Tea" class="hidden peer" />
+                            <label for="beverage-1" class="menu-card">
+                                <div class="flex justify-between w-full">
+                                    <div class="text-lg font-semibold ">Iced Tea</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" x-model="beverage" wire:model.change="beverage" id="beverage-2"
+                                name="beverage" value="Soft Drinks" class="hidden peer" />
+                            <label for="beverage-2" class="menu-card">
+                                <div class="flex justify-between w-full">
+                                    <div class="text-lg font-semibold ">Soft Drinks</div>
+                                </div>
+                            </label>
+                        </li>
+                    </ul>
+                @endif
             </div>
 
             <div class="flex flex-col items-center w-full lg:w-72">
@@ -176,7 +257,7 @@
             </div>
         </div>
 
-        <div class="flex w-[85%] mx-auto md:flex-row">
+        <div class="flex w-full md:w-[85%] mx-auto md:flex-row">
             <div
                 class="flex flex-col items-center w-full p-5 mx-auto capitalize bg-gray-200 border-2 border-gray-300 rounded-lg">
 
@@ -451,9 +532,9 @@
                         <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Inclusion :</span>
                         <p>
                             {{ __('With chairs and tables and colored ribbon With motif,
-                                                                                                                                                                                                                                                                                                                                                                                                                            With buffet table and decor, With complete catering equipment,
-                                                                                                                                                                                                                                                                                                                                                                                                                            With uniformed waiters, With purified water and ice, no individual flowers,
-                                                                                                                                                                                                                                                                                                                                                                                                                            With floor length clothe and colored toppings, no table set up.') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        With buffet table and decor, With complete catering equipment,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        With uniformed waiters, With purified water and ice, no individual flowers,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        With floor length clothe and colored toppings, no table set up.') }}
                         </p>
                     @break
 
@@ -461,9 +542,9 @@
                         <span class="text-base font-semibold text-gray-700 capitalize md:text-lg">Inclusion :</span>
                         <p>
                             {{ __('With chairs and tables and colored ribbon With motif,
-                                                                                                                                                                                                                                                                                                                                                                                                                            With buffet table and decor, With complete catering equipment, With uniformed
-                                                                                                                                                                                                                                                                                                                                                                                                                            waiters, With purified water and ice, With individual flowers, With floor
-                                                                                                                                                                                                                                                                                                                                                                                                                            length cloth and colored toppings.') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        With buffet table and decor, With complete catering equipment, With uniformed
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        waiters, With purified water and ice, With individual flowers, With floor
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        length cloth and colored toppings.') }}
                         </p>
                     @break
 
@@ -581,7 +662,15 @@
                 <p>Name: <span x-text="name"></span></p>
             </li>
             <li>
-                <p>Address: <span x-text="address"></span></p>
+                <p>Phone Number: <span x-text="phoneNumber"></span></p>
+            </li>
+            <div x-show="additionalNumber !== ''">
+                <li>
+                    <p>Additional Number: <span x-text="additionalNumber"></span></p>
+                </li>
+            </div>
+            <li>
+                <p>Event Address: <span x-text="fullAddress"></span></p>
             </li>
             <li>
                 <p>Occasion: <span x-text="occasion"></span></p>
@@ -589,6 +678,14 @@
             <li>
                 <p>Pax: <span x-text="pax"></span></p>
             </li>
+            <div x-show="occasion === 'Birthday'">
+                <li>
+                    <p> - Adults: <span x-text="adults"></span></p>
+                </li>
+                <li>
+                    <p> - Kids: <span x-text="kids"></span></p>
+                </li>
+            </div>
         </ul>
 
         <x-form-divider value="Time and Date" />
@@ -611,6 +708,11 @@
             <li>
                 <p>Menu: <span x-text="menuName"></span></p>
             </li>
+            @if ($packageName !== 'special' && $packageName !== 'ordinary')
+                <li>
+                    <p>Beverage: <span x-text="beverage"></span></p>
+                </li>
+            @endif
             <li>
                 <p>Price: ₱<span>{{ number_format($menuPrice, 2, '.', ',') }}</span></p>
             </li>
@@ -698,8 +800,9 @@
                     <p>{{ __('Enter the percentage of the total cost you want to pay now') }}</p>
                 </x-tooltip>
             </div>
-            <select name="payment_percent" x-on:change="$wire.calculateAmountToPay($event.target.value)"
-                class="w-full input-field" id="payment_percent">
+            <select name="payment_percent" x-model.fill="paymentPercent"
+                x-on:change="$wire.calculateAmountToPay($event.target.value)" class="w-full input-field"
+                id="payment_percent" required>
                 <option selected disabled>{{ __('Select Payment Percent') }}</option>
                 <option value="20">{{ __('20') }}</option>
                 <option value="60">{{ __('60') }}</option>
@@ -708,7 +811,11 @@
             </select>
             <x-input-error for="payment_percent" />
 
-            <x-payment-note />
+            <x-payment-note>
+                <span class="font-bold">PLEASE NOTE:</span> Paying 90% of the total cost will mark the payment as
+                complete. However, remember that the remaining 10% must still be paid at the actual event. Thank you for
+                your understanding.
+            </x-payment-note>
 
             <h2 x-show="$wire.amountToPay" class="mt-5 text-md md:text-lg font-noticia">
                 Amount to pay: ₱{{ number_format($amountToPay, 2, '.', ',') }}
@@ -725,14 +832,21 @@
             @livewire('reservation.payment-display-modal')
 
             <x-label for="receipt-img" required>Receipt Photo:</x-label>
-            <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img" />
+            <x-dropbox id="receipt-img" label="Click to upload" name="receipt-img" wire:ignore
+                x-model="receiptImg" />
             <x-input-error for="receipt-img" />
         </div>
 
-        <div class="flex justify-center w-full mt-8 md:justify-end">
+        <div class="relative flex justify-center w-full mt-8 md:justify-end">
+            <div x-show="incompleteFields" x-on:click.outside="incompleteFields = false"
+                class="absolute p-2 mb-1 text-sm text-gray-400 bg-gray-100 rounded-md shadow-lg top-[-45px]"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 translate-y-5" x-transition:enter-end="opacity-100 translate-y-0">
+                {{ __('Fill required fields before proceeding') }}
+            </div>
             <x-secondary-button x-on:click="prevStep()" type="button" class="mr-3">back</x-secondary-button>
-            <button type="button" wire:click="showConfimationModal" wire:loading.attr="disabled"
-                class="btn-success">
+            <button type="button" x-on:click="nextStep()" x-bind:disabled="incompleteFields"
+                wire:click="showConfimationModal" class="btn-success">
                 <div role="status" wire:loading wire:loading.class="min-w-[3.8rem]" class="w-full">
                     <svg class="mx-auto animate-spin" width="20px" height="20px" viewBox="0 0 24 24"
                         fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
@@ -777,13 +891,11 @@
                 <x-slot name="footer">
                     <x-secondary-button wire:click="showConfimationModal" class="mr-3">Back</x-secondary-button>
 
-                    <button class="min-w-24 btn-success" x-bind:disabled="buttonDisabled">
+                    <button type="submit" class="min-w-24 btn-success" x-bind:disabled="buttonDisabled">
                         <span>{{ __('Reserve') }}</span>
                     </button>
                 </x-slot>
             </x-dialog-modal>
-        </div>
-    </div>
 </form>
 
 @push('scripts')
@@ -791,20 +903,98 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('reservationForm', () => ({
                 name: '{{ auth()->user()->name }}',
-                address: '{{ auth()->user()->address }}',
+                eventAddress: '',
+                city: '',
                 phoneNumber: '{{ auth()->user()->phone_number }}',
-                optionalNumber: '',
+                additionalNumber: '',
+                adults: '',
+                kids: '',
                 pax: '',
+                invalidPax: false,
                 occasion: '',
                 packageText: '',
                 package: '',
+                date: @entangle('date'),
+                time: @entangle('time'),
                 menu: '',
                 menuName: '',
+                beverage: '',
                 buttonDisabled: false,
-                incompleteFields: false,
+                incompleteFields: @entangle('incompleteFields'),
                 emcee: '',
                 christianWedding: '',
+                paymentPercent: '',
+                receiptImg: '',
                 step: 1,
+
+                get fullAddress() {
+                    return `${this.eventAddress}, ${this.city}`;
+                },
+
+                limitCharacterCount(event) {
+                    // Get the key code of the pressed key
+                    const keyCode = event.keyCode;
+
+                    // Allow numeric keys (0-9) and backspace (8)
+                    if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
+                        event.preventDefault();
+                    }
+
+                    // Limit to 11 characters
+                    if (event.target.value.length === 11) {
+                        event.preventDefault();
+                    }
+                },
+
+                limitMaxPax(event) {
+                    // Get the key code of the pressed key
+                    const keyCode = event.keyCode;
+
+                    // Allow numeric keys (0-9) and backspace (8)
+                    if ((keyCode < 48 || keyCode > 57) && keyCode !== 8) {
+                        event.preventDefault();
+                    }
+
+                    const value = parseInt(event.target.value + event.key);
+                    if (value > 300) {
+                        event.preventDefault();
+                    }
+
+                    // Limit to 3 characters
+                    if (event.target.value.length === 3) {
+                        event.preventDefault();
+                    }
+                },
+
+                updatePax() {
+                    const total = parseInt(this.adults || 0) + parseInt(this.kids || 0);
+                    if (total > 300) {
+                        this.invalidPax = true;
+                        this.pax = 300;
+                        this.$wire.set('pax', this.pax);
+                        // Adjust the individual inputs if needed
+                        if (this.adults + this.kids > 300) {
+                            if (this.adults > 300) {
+                                this.adults = 300 - (this.kids || 0);
+                            } else if (this.kids > 300) {
+                                this.kids = 300 - (this.adults || 0);
+                            } else {
+                                // Adjust both fields if necessary
+                                const excess = total - 300;
+                                if (this.kids >= excess) {
+                                    this.kids -= excess;
+                                } else {
+                                    this.adults -= (excess - this.kids);
+                                    this.kids = 0;
+                                }
+                            }
+                        }
+                    } else {
+                        this.invalidPax = false;
+                        this.pax = total;
+                        this.$wire.set('pax', this.pax);
+                    }
+                },
 
                 formHeading() {
                     if (this.step == 4)
@@ -817,16 +1007,25 @@
 
                 fieldsValidated() {
                     if (this.step === 1) {
-                        return this.address &&
-                            this.phoneNumber &&
+                        return this.fullAddress &&
+                            this.eventAddress &&
+                            this.date &&
+                            this.time &&
                             this.occasion != "Select Occasion" &&
                             this.package != "Select Package" &&
                             this.pax;
 
                         // return true;   
                     } else if (this.step === 2) {
-                        return this.menu
-                        // return true;   
+                        if (this.packageText !== 'Dinner / Lunch Buffet (Special)' && this
+                            .packageText !== 'Dinner / Lunch Buffet (Ordinary)') {
+                            return this.menu && this.beverage;
+                        } else {
+                            return this.menu;
+                        }
+                    } else if (this.step === 5) {
+                        return this.paymentPercent !== 'Select Payment Percent' &&
+                            this.receiptImg;
                     } else {
                         return true;
                     }
@@ -834,12 +1033,14 @@
 
                 nextStep() {
                     if (this.fieldsValidated()) {
-                        this.step++;
                         this.incompleteFields = false;
-                        window.scrollTo({
-                            top: 180,
-                            behavior: 'smooth'
-                        });
+                        if (this.step !== 5) {
+                            this.step++;
+                            window.scrollTo({
+                                top: 100,
+                                behavior: 'smooth'
+                            });
+                        }
                     } else {
                         this.incompleteFields = true;
                     }

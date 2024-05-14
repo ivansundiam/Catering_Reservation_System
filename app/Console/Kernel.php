@@ -18,6 +18,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('reservations:remove-has-notice')->everyFourHours();
+        $schedule->command('reservations:remove-unpaid')->everyFourHours();
+        $schedule->command('app:test-command')->everyTenSeconds();
     }
 
     /**
@@ -29,4 +32,6 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+
+    
 }

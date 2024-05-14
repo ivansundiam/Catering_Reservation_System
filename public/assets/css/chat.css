@@ -7,6 +7,12 @@ body {
     font-family: "figtree";
 }
 
+.mobile-closed-message-avatar{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
 .desktop-closed-message-avatar {
     background: rgb(31, 41, 55);
     display: flex;

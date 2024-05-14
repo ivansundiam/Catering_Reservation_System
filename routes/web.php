@@ -36,9 +36,7 @@ Route::post('/register', [RegisterController::class, 'create'])->name('register'
 Route::group(['middleware' => 'auth'], function (){
     Route::group(['middleware' => 'AllowUser:client'], function () {
         Route::resource('reservation', ReservationController::class)
-        ->middleware(['AllowUser:client'
-        // , 'verified.id'
-        ]);
+        ->middleware(['AllowUser:client', 'verified.id']);
     Route::put('update-reservation-notice/{id}', [ReservationController::class, 'updateNotice'])->name('reservation.updateNotice');
 
     });
@@ -54,6 +52,7 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('/archive', [UserController::class, 'archives'])->name('users.archive');
         Route::post('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
         Route::post('/report-pdf', [PDFController::class, 'reportPdf'])->name('report-pdf');
+        Route::post('/inventory-report-pdf', [PDFController::class, 'inventoryReportPdf'])->name('inventory-report-pdf');
         Route::get('/receipt-pdf', [PDFController::class, 'receiptPdf'])->name('receipt-pdf');
         Route::get('/mail', [AdminController::class, 'sendMail'])->name('send-mail');
     });

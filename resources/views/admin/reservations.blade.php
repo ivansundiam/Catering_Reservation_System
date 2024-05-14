@@ -165,7 +165,9 @@
                                                     {{ __('View') }}
                                                 </x-dropdown-link>
 
-                                                @livewire('reservation.cancel-modal', ['reservation' => $reservation])
+                                                @if ($reservation->payment_percent < 90)
+                                                    @livewire('reservation.cancel-modal', ['reservation' => $reservation])
+                                                @endif
                                                 
                                             </x-slot>
 

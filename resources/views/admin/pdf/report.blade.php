@@ -68,7 +68,7 @@
         }
 
         main {
-            margin: 1in 0 1.6in 0;
+            margin: 1in 0 2.4in 0;
         }
 
         .page-break {

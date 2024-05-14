@@ -138,7 +138,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY', base64_decode('AkiC/fl8TXHIJEBH2HjL/smAbqCJUUeKyvimH0eyQd8=')),
 
     'cipher' => 'AES-256-CBC',
 
@@ -198,7 +198,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
         /*
          * Package Service Providers...
          */

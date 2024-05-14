@@ -2,7 +2,7 @@
 {{-- Header --}}
 <x-slot:header>
 <x-mail::header :url="config('app.url')">
-<img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('assets/images/logo-black.png')))}}" style="max-width: 56px;" alt="brand logo">
+<img src="{{ config('app.url') . '/images/logo-black.png' }}" style="max-width: 56px;" alt="brand logo">
 {{ config('app.name') }}
 </x-mail::header>
 </x-slot:header>

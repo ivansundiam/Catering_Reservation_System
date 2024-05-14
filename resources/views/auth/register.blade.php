@@ -13,13 +13,13 @@
             x-on:submit="buttonDisabled = true">
             @csrf
 
-            <div class="flex items-center flex-col mb-5">
+            <div class="flex flex-col items-center mb-5">
                 <h2 class="forms-heading-text">Register Account</h2>
-                <span class="text-sm md:text-base text-gray-500">for full access</span>
+                <span class="text-sm text-gray-500 md:text-base">for full access</span>
             </div>
 
-            <div class="grid md:grid-cols-2 m-5">
-                <div class="pr-0 md:pr-10 border-gray-400 md:border-r-2">
+            <div class="grid m-5 md:grid-cols-2">
+                <div class="pr-0 border-gray-400 md:pr-10 md:border-r-2">
                     <div>
                         <x-label for="name" value="{{ __('Name') }}" />
                         <x-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" placeholder="Lastname, Firstname, M.I." required autofocus autocomplete="name" />
@@ -59,7 +59,7 @@
         
                     <div class="mt-4">
                         <x-label for="id_type" value="{{ __('Select ID Type') }}" />
-                        <select id="id_type" class="block w-full mt-1 input-field" type="text" name="id_type" :value="old('id_type')" required>
+                        <select id="id_type" class="block w-full mt-1 input-field" type="text" name="id_type" required>
                             <option value="" selected disabled>Id Type</option>
                             <option value="Voters ID">Voter's ID</option>
                             <option value="Passport">Passport</option>

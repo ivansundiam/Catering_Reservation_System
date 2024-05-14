@@ -6,6 +6,7 @@ use App\Models\Menu;
 use Livewire\Component;
 use Carbon\Carbon;
 use App\Models\Inventory;
+use Livewire\Attributes\On; 
 
 class ReservationForm extends Component
 {
@@ -14,8 +15,11 @@ class ReservationForm extends Component
     public $inventoryItems;
     public $packages;
     public $pax;
+    public $adults;
+    public $kids;
     public $packageName;
     public $menus;
+    public $beverage;
     public $menuPrice;
     public $totalCost;
     public $amountToPay;
@@ -23,6 +27,7 @@ class ReservationForm extends Component
     public $additionalItems = [];
     public $addOns = [];
     public $showingConfirmationModal;
+    public $incompleteFields = false;
 
     protected $listeners = [
         'dateSelected' => 'setDate',
@@ -160,7 +165,7 @@ class ReservationForm extends Component
     {
         $this->calculateCost();
     }
-
+    
     public function calculateCost()
     {
         // Calculate the cost based on menu price and number of pax
@@ -202,7 +207,9 @@ class ReservationForm extends Component
 
     public function showConfimationModal()
     {
-        $this->showingConfirmationModal = !$this->showingConfirmationModal;
+        if(!$this->incompleteFields){
+            $this->showingConfirmationModal = !$this->showingConfirmationModal;
+        }
     }
 
     public function mount($packages)
