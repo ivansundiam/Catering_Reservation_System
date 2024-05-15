@@ -67,8 +67,9 @@
                     
                                             <x-slot name="content">
                                                 @livewire('users.restore-modal', ['user' => $user])
+                                                @livewire('users.delete-modal', ['user' => $user])
                                             </x-slot>
-                    
+                                            
                                         </x-dropdown>
                                     </td>
                                 </tr>

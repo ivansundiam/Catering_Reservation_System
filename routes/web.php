@@ -46,11 +46,15 @@ Route::group(['middleware' => 'auth'], function (){
         Route::delete('delete-reservation/{id}', [AdminController::class, 'destroy'])->name('admin.reservation-delete');
         Route::put('update-reservation/{id}', [AdminController::class, 'update'])->name('admin.reservation-update');
         Route::get('/reservation/{id}', [AdminController::class , 'showReservation'])->name('admin.reservation.show');
+
         Route::resource('inventory', InventoryController::class);
         Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+
         Route::resource('users', UserController::class);
         Route::get('/archive', [UserController::class, 'archives'])->name('users.archive');
         Route::post('/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+        Route::delete('/delete/{id}', [UserController::class, 'forceDelete'])->name('users.delete');
+        
         Route::post('/report-pdf', [PDFController::class, 'reportPdf'])->name('report-pdf');
         Route::post('/inventory-report-pdf', [PDFController::class, 'inventoryReportPdf'])->name('inventory-report-pdf');
         Route::get('/receipt-pdf', [PDFController::class, 'receiptPdf'])->name('receipt-pdf');

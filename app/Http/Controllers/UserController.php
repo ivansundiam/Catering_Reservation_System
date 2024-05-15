@@ -130,4 +130,21 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'An error occurred while creating an account.');
         }
     }
+
+    public function forceDelete($id)
+    {
+        try {
+            $user = User::withTrashed()->findOrFail($id); 
+    
+            $user->forceDelete();
+
+            return redirect()->route('users.archive')->with('success', 'User deleted permanently.');
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            Log::error('An error occurred while deleting an account: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            
+            return redirect()->back()->with('error', 'An error occurred while deleting an account.');
+        }
+    }
 }
