@@ -11,10 +11,8 @@
     <!-- Personal Information -->
     <div x-show="step == 1">
         <x-form-divider value="Personal Information" />
-
-        <x-form-divider value="Personal Information" />
-
-        <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 gap-x-16">
+        
+        <div class="grid w-full grid-cols-1 mx-auto md:grid-cols-2 md:grid-rows-3 md:grid-flow-col gap-x-16">
             <div class="mt-5">
                 <x-label for="name" required>Name:</x-label>
                 <x-input type="text" name="name" class="w-full" id="name" x-model="name" readonly />
@@ -812,9 +810,14 @@
             <x-input-error for="payment_percent" />
 
             <x-payment-note>
-                <span class="font-bold">PLEASE NOTE:</span> Paying 90% of the total cost will mark the payment as
-                complete. However, remember that the remaining 10% must still be paid at the actual event. Thank you for
-                your understanding.
+                <span class="font-bold">PLEASE NOTE:</span>
+                <ul class="p-3 list-disc">
+                    <li>Please take a screenshot of your Gcash or Maya Payment and attach it in the dropbox below for the admin to verify your payment</li>
+                    <li><p class="mb-4">Please note that cancellation is <span class="font-bold underline">irreversible</span>, and canceled reservations are <span class="font-bold underline">non-refundable</span></p></li>
+                    <li>Paying 90% of the total cost will mark the payment as
+                        complete. However, remember that the remaining 10% must still be paid at the actual event. Thank you for
+                        your understanding.</li>
+                </ul> 
             </x-payment-note>
 
             <h2 x-show="$wire.amountToPay" class="mt-5 text-md md:text-lg font-noticia">

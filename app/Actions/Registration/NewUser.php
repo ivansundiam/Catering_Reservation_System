@@ -7,6 +7,7 @@ use App\Actions\Fortify\PasswordValidationRules;
 use App\Actions\Uploads\StoreImage;
 use App\Events\NewUserCreated;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Hash;
@@ -42,6 +43,7 @@ class NewUser
             'id_verify_img' => $idVerifyPhotoPath,
             'phone_number' => $input['phone_number'],
             'password' => Hash::make($input['password']),
+            'last_login' => Carbon::now(),
         ]);
 
         event(new NewUserCreated($user));

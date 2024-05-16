@@ -200,22 +200,26 @@
                                     <p>Remaining Balance: </p>
                                     <span>₱{{ number_format($balance, 2, '.', ',') }}</span>
                                 </li>
-                                @if ($reservation->payment_percent !== 60)
-                                <li class="flex justify-between">
-                                    <p>Next Payment Due (60%): </p>
-                                    <span>{{ $nextPaymentDate->format('M d, Y') }}</span>
-                                </li>
+                                @if ($reservation->payment_percent < 90)
+                                    @if ($reservation->payment_percent !== 60)
+                                    <li class="flex justify-between">
+                                        <p>Next Payment Due (60%): </p>
+                                        <span>{{ $nextPaymentDate->format('M d, Y') }}</span>
+                                    </li>
+                                    @endif
+                                    <li class="flex justify-between">
+                                        <p>Next Payment Due (90%): </p>
+                                        <span>{{ $secondPaymentDate->format('M d, Y') }}</span>
+                                    </li>
                                 @endif
-                                <li class="flex justify-between">
-                                    <p>Next Payment Due (90%): </p>
-                                    <span>{{ $secondPaymentDate->format('M d, Y') }}</span>
-                                </li>
                             </ul>
 
                             <x-payment-note>
                                 <p class="font-bold">PLEASE READ:</p> 
                                 <ul class="px-3 list-disc">
-                                    <li>Payment for your reservation is due by <b><u>{{ $reservation->payment_percent !== 60 ? $nextPaymentDate->format('M d, Y') : $secondPaymentDate->format('M d, Y') }}</u></b>. Failure to submit payment by this date may result in the <b><u>cancellation of your reservation</u></b>. We kindly remind you to settle the balance before the payment due date to secure your reservation. Thank you for your cooperation.</li>
+                                    @if ($reservation->payment_percent < 90)
+                                        <li>Payment for your reservation is due by <b><u>{{ $reservation->payment_percent !== 60 ? $nextPaymentDate->format('M d, Y') : $secondPaymentDate->format('M d, Y') }}</u></b>. Failure to submit payment by this date may result in the <b><u>cancellation of your reservation</u></b>. We kindly remind you to settle the balance before the payment due date to secure your reservation. Thank you for your cooperation.</li>
+                                    @endif
                                     <li>Paying 90% of the total cost will mark the payment as complete. However, remember that the remaining 10% must still be paid at the actual event. Thank you for your understanding.</li>
                                 </ul>
                             </x-payment-note>
